@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body>
+    <div class="desktop1">
+        <!-- Sidebar -->
+        <div class="report-sidebar">
+            <div class="sidebar-background"></div>
+            <div class="report-header">
+                <h1>Reports</h1>
+                <hr />
+            </div>
+            <div class="reports">
+                <div class="selected-report">
+                    <div class="selected-background"></div>
+                    <p class="report-text">Coffee Stores</p>
+                </div>
+                <p class="report-text">Employees</p>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="statistic1">
+            <div class="stat-background"></div>
+            <p>Statistic 1</p>
+        </div>
+        <div class="statistic2">
+            <div class="stat-background"></div>
+            <p>Statistic 2</p>
+        </div>
+
+        <!-- Graph -->
+        <div class="statistic3">
+            <div class="graph-background">
+                <!-- Inserăm graficul generat -->
+                {{ graph_html | safe }}
+            </div>
+        </div>
+        
+        
+    </div>
+</body>
+</html>

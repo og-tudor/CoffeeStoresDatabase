@@ -1,0 +1,119 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', Arial, sans-serif;
+}
+
+body {
+    background: #120F1F;
+    color: white;
+    font-size: 24px;
+}
+
+.desktop1 {
+    width: 1440px;
+    height: 1024px;
+    position: relative;
+    margin: 0 auto;
+}
+
+/* Sidebar */
+/* Sidebar */
+.report-sidebar {
+    width: 262px;
+    height: 100vh; /* Full viewport height */
+    position: fixed; /* Fixes the sidebar to the left */
+    left: 0;
+    top: 0;
+    background: #292441;
+    padding: 20px;
+    z-index: 1000; /* Ensures the sidebar stays on top */
+}
+
+.report-header {
+    margin-top: 20px;
+}
+
+.report-header h1 {
+    font-size: 36px;
+    font-weight: 800;
+    color: white;
+}
+
+.report-header hr {
+    border: 1px solid white;
+    margin-top: 10px;
+}
+
+.reports {
+    margin-top: 40px;
+}
+
+.report-text {
+    margin: 20px 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+}
+
+.selected-report {
+    background: #514A73;
+    border-radius: 13px;
+    padding: 10px 0 10px 20px;
+}
+
+.selected-report .report-text {
+    margin: 0;
+}
+
+
+/* Statistics */
+.statistic1, .statistic2 {
+    position: absolute;
+    top: 72px;
+    background: #BE7462;
+    border-radius: 18px;
+    text-align: center;
+    padding: 20px;
+    color: white;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.statistic1 {
+    left: 388px;
+    width: 273px;
+    height: 243px;
+}
+
+.statistic2 {
+    left: 720px;
+    width: 612px;
+    height: 243px;
+    background: #B1A0D8;
+}
+
+/* Content */
+.content {
+    margin-left: 262px; /* Same width as the sidebar */
+    padding: 20px;
+}
+
+
+/* Graph */
+.statistic3 {
+    position: absolute;
+    top: 374px;
+    left: 388px;
+    width: 944px;
+    height: 564px;
+    background: #514A73;
+    border-radius: 18px;
+    text-align: center;
+    padding-top: 30px;
+    font-size: 32px;
+    font-weight: 600;
+}
