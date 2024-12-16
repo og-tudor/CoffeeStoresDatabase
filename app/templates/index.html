@@ -5,26 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
 </head>
 <body>
+    <script>
+        $(document).ready(function() {
+            console.log("jQuery is loaded!");
+        });
+    </script>
+    
+    <!-- Wrapper General -->
     <div class="desktop1">
         <!-- Sidebar -->
         <div class="report-sidebar">
-            <div class="sidebar-background"></div>
             <div class="report-header">
                 <h1>Reports</h1>
                 <hr />
             </div>
             <div class="reports">
-                <div class="selected-report">
-                    <div class="selected-background"></div>
+                <div class="selected-report" id="coffee-stores-btn">
                     <p class="report-text">Coffee Stores</p>
                 </div>
-                <p class="report-text">Employees</p>
+                <div id="employees-btn">
+                    <p class="report-text">Employees</p>
+                </div>
             </div>
         </div>
 
-        <!-- Statistics -->
+        <!-- Statistic Boxes -->
         <div class="statistic1">
             <div class="stat-background"></div>
             <p>Statistic 1</p>
@@ -34,15 +43,72 @@
             <p>Statistic 2</p>
         </div>
 
-        <!-- Graph -->
+        <!-- Grafic -->
         <div class="statistic3">
-            <div class="graph-background">
-                <!-- Inserăm graficul generat -->
-                {{ graph_html | safe }}
-            </div>
+            <div class="graph-background" id="chart"></div>
         </div>
-        
-        
     </div>
+
+    <!-- Script pentru AJAX și Plotly -->
+    <script>
+        $(document).ready(function () {
+            function loadReport(apiUrl, title) {
+                $.get(apiUrl, function (data) {
+                    console.log("Data received from API:", data); // Verifică datele primite
+                    
+                    const names = data.map(item => item.name);
+                    const values = data.map(item => item.quantity || item.products); // Ajustare
+
+                    console.log("Names:", names); // Verifică numele
+                    console.log("Values:", values); // Verifică valorile
+
+                    const graphData = [{
+                        x: names,
+                        y: values,
+                        type: 'bar',
+                        marker: { color: '#BE7462' }
+                    }];
+
+                    const layout = {
+                        title: title,
+                        paper_bgcolor: '#514A73',
+                        plot_bgcolor: '#514A73',
+                        font: { color: 'white' }
+                    };
+
+                    Plotly.newPlot('chart', graphData, layout);
+                });
+
+         
+            }
+
+
+
+            // Default Report
+            loadReport('/api/coffee_stores', 'Coffee Stores Sales');
+
+            // Sidebar Navigation (Corectat pentru delegare)
+            $('.reports').on('click', '#coffee-stores-btn, #employees-btn', function () {
+                // Eliminăm clasa selectată din toate butoanele
+                $('.reports > div').removeClass('selected-report');
+                $('.report-text').removeClass('active');
+
+                // Adăugăm clasa activă la butonul curent
+                $(this).addClass('selected-report');
+                $(this).find('.report-text').addClass('active');
+
+                // Verificăm butonul selectat și încărcăm raportul corespunzător
+                if (this.id === 'coffee-stores-btn') {
+                    console.log('Loading Coffee Stores Report');
+                    loadReport('/api/coffee_stores', 'Coffee Stores Sales');
+                } else if (this.id === 'employees-btn') {
+                    console.log('Loading Employees Report');
+                    loadReport('/api/employees', 'Employee Performance');
+                }
+            });
+
+        });
+
+    </script>
 </body>
 </html>

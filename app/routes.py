@@ -1,50 +1,40 @@
-import plotly.graph_objs as go
-from flask import render_template, current_app
+from flask import jsonify, render_template
 from sqlalchemy.sql import text
 from . import db
 
-@current_app.route('/')
-def dashboard():
-    # Execută query-ul pentru datele necesare
-    query = text("""
-        SELECT p.name AS product_name, SUM(od.quantity) AS total_quantity
-        FROM Products p
-        JOIN OrderDetails od ON p.product_id = od.product_id
-        GROUP BY p.name
-        ORDER BY total_quantity DESC;
-    """)
-    result = db.session.execute(query)
-    data = result.fetchall()
+def register_routes(app):
+    @app.route('/')
+    def index():
+        return render_template('index.html')
 
-    # Extrage datele
-    product_names = [row[0] for row in data]
-    quantities = [row[1] for row in data]
+    @app.route('/api/coffee_stores')
+    def api_coffee_stores():
+        query = text("""
+            SELECT p.name AS product_name, SUM(od.quantity) AS total_quantity
+            FROM Products p
+            JOIN OrderDetails od ON p.product_id = od.product_id
+            GROUP BY p.name
+            ORDER BY total_quantity DESC;
+        """)
+        result = db.session.execute(query)
+        data = [{'name': row[0], 'quantity': row[1]} for row in result.fetchall()]
+        return jsonify(data)
 
-    # Creează graficul interactiv folosind Plotly
-    fig = go.Figure(
-        data=[go.Bar(
-            x=product_names,
-            y=quantities,
-            marker=dict(color='#BE7462'),  # Culoarea coloanelor
-            hoverinfo='x+y',
-            text=quantities,
-            textposition='outside'
-        )]
-    )
+    @app.route('/api/employees')
+    def api_employees():
+        query = text("""
+            SELECT 
+                e.first_name + ' ' + e.last_name AS employee_name, 
+                SUM(od.quantity) AS total_products
+            FROM Employees e
+            JOIN Orders o ON e.employee_id = o.employee_id
+            JOIN OrderDetails od ON o.order_id = od.order_id
+            GROUP BY e.employee_id, e.first_name, e.last_name
+            ORDER BY total_products DESC;
+        """)
+        result = db.session.execute(query)
+        data = [{'name': row[0], 'products': row[1]} for row in result.fetchall()]
+        return jsonify(data)
 
-    # Setează background-ul graficului
-    fig.update_layout(
-        title='Total Quantity Sold per Product',
-        xaxis_title='Product Name',
-        yaxis_title='Total Quantity',
-        xaxis_tickangle=-45,
-        template='plotly_dark',
-        paper_bgcolor='#514A73',  # Background general
-        plot_bgcolor='#514A73',   # Background grafic
-        font=dict(color='white')  # Culoarea textului
-    )
 
-    # Convertește graficul într-un HTML embeddable
-    graph_html = fig.to_html(full_html=False)
 
-    return render_template('index.html', graph_html=graph_html)

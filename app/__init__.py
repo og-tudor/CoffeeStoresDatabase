@@ -9,9 +9,9 @@ def create_app():
     app.config.from_object(Config)
     db.init_app(app)
 
-    # Importăm rutele aici, după inițializarea aplicației
     with app.app_context():
-        from . import routes  # Importă routes fără a crea ciclu
-        db.create_all()  # Creează tabelele
+        from .routes import register_routes
+        register_routes(app)
+        db.create_all()
 
     return app
