@@ -97,12 +97,14 @@
             }
         });
         
-
         function fetchAndPlotGraph() {
             const storeId = $('#coffee-store-select').val(); // Get store ID from dropdown
             const year = $('#year-select').val(); // Get selected year from dropdown
 
             if (storeId && year) {
+                // Clear the existing graph before rendering a new one
+                Plotly.purge('graph-container'); 
+
                 $.get('/api/monthly_sales_expenses', { store_id: storeId, year: year }, function (data) {
                     if (data.error) {
                         console.error(data.error);
@@ -118,7 +120,6 @@
                     const months = data.map(item => monthNames[item.month - 1]).reverse();
                     const revenues = data.map(item => item.monthly_revenue).reverse();
                     const expenses = data.map(item => item.monthly_expenses).reverse();
-
 
                     // Define traces for revenue and expenses as lines
                     const revenueTrace = {
@@ -161,7 +162,6 @@
             }
         }
 
-            
 
     // Attach event to fetch and plot graph when dropdowns are changed
     $('.dropdown-container select').change(fetchAndPlotGraph);

@@ -69,26 +69,26 @@ SET IDENTITY_INSERT Customers OFF;
 SET IDENTITY_INSERT Products ON;
 INSERT INTO Products (product_id, supplier_id, name, category, unit_price)
 VALUES
-    (1, 1, 'Arabica Coffee', 'CoffeeBag', 40.0),
-    (2, 2, 'Brazilian Beans', 'CoffeeBag', 45.00),
-    (3, 3, 'Colombian Roast', 'CoffeeBag', 50.00),
-    (4, 4, 'Peruvian Coffee', 'CoffeeBag', 55.00),
-    (5, 5, 'Turkey Sandwich', 'Food', 35.00),
-    (6, 1, 'Chocolate Cookies', 'Food', 23.00),
-    (7, 2, 'Chicken Sandwich', 'Food', 30.00),
-    (8, 3, 'Crackers', 'Food', 20.00),
-    (9, 4, 'Latte', 'Beverage', 22.00),
-    (10, 5, 'Mocha', 'Beverage', 25.00),
+    (1, 1, 'Arabica Coffee', 'CoffeeBag', 50.0),
+    (2, 2, 'Brazilian Beans', 'CoffeeBag', 60.00),
+    (3, 3, 'Colombian Roast', 'CoffeeBag', 60.00),
+    (4, 4, 'Peruvian Coffee', 'CoffeeBag', 65.00),
+    (5, 5, 'Turkey Sandwich', 'Food', 39.00),
+    (6, 1, 'Chocolate Cookies', 'Food', 24.00),
+    (7, 2, 'Chicken Sandwich', 'Food', 33.00),
+    (8, 3, 'Crackers', 'Food', 22.00),
+    (9, 4, 'Latte', 'Beverage', 25.00),
+    (10, 5, 'Mocha', 'Beverage', 29.00),
     (11, 1, 'Espresso', 'Beverage', 15.00),
     (12, 2, 'Cappuccino', 'Beverage', 25.00),
-    (13, 3, 'Americano', 'Beverage', 18.00),
-    (14, 4, 'Macchiato', 'Beverage', 22.00),
-    (15, 5, 'Flat White', 'Beverage', 23.00),
-    (16, 1, 'Tea', 'Beverage', 15.00),
-    (17, 2, 'Hot Chocolate', 'Beverage', 20.00),
-    (18, 3, 'Iced Coffee', 'Beverage', 25.00),
-    (19, 4, 'Iced Tea', 'Beverage', 18.00),
-    (20, 5, 'Smoothie', 'Beverage', 30.00);
+    (13, 3, 'Americano', 'Beverage', 20.00),
+    (14, 4, 'Macchiato', 'Beverage', 25.00),
+    (15, 5, 'Flat White', 'Beverage', 24.00),
+    (16, 1, 'Tea', 'Beverage', 18.00),
+    (17, 2, 'Hot Chocolate', 'Beverage', 28.00),
+    (18, 3, 'Iced Coffee', 'Beverage', 28.00),
+    (19, 4, 'Iced Tea', 'Beverage', 25.00),
+    (20, 5, 'Smoothie', 'Beverage', 32.00);
 SET IDENTITY_INSERT Products OFF;
 
 
