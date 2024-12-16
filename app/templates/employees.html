@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/employees.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="statistic2">
+        <p>Statistic 2: Employees Data</p>
+        <table id="employees-table">
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Total Products</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be populated here -->
+            </tbody>
+        </table>
+    </div>
+    <div id="chart" class="statistic3"></div>
+</div>
+<script>
+    $(document).ready(function () {
+        // Load table and chart data
+        $.get('/api/employees', function (data) {
+            const tableBody = $('#employees-table tbody');
+            tableBody.empty();
+
+            const names = [];
+            const values = [];
+
+            data.forEach(item => {
+                tableBody.append(`
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>${item.products}</td>
+                    </tr>
+                `);
+                names.push(item.name);
+                values.push(item.products);
+            });
+
+            const chartData = [{
+                x: names,
+                y: values,
+                type: 'bar',
+                marker: { color: '#6C757D' }
+            }];
+
+            Plotly.newPlot('chart', chartData, {
+                title: 'Employee Performance',
+                paper_bgcolor: '#514A73',
+                plot_bgcolor: '#514A73',
+                font: { color: 'white' }
+            });
+        });
+    });
+</script>
+{% endblock %}

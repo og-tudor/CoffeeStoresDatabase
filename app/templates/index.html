@@ -16,42 +16,55 @@
     </script>
     
     <!-- Wrapper General -->
-    <div class="desktop1">
-        <!-- Sidebar -->
-        <div class="report-sidebar">
-            <div class="report-header">
-                <h1>Reports</h1>
-                <hr />
+    <div class="report-sidebar">
+        <div class="report-header">
+            <h1>Reports</h1>
+            <hr />
+        </div>
+        <div class="reports">
+            <div class="selected-report" id="coffee-stores-btn">
+                <p class="report-text">Coffee Stores</p>
             </div>
-            <div class="reports">
-                <div class="selected-report" id="coffee-stores-btn">
-                    <p class="report-text">Coffee Stores</p>
-                </div>
-                <div id="employees-btn">
-                    <p class="report-text">Employees</p>
-                </div>
+            <div id="employees-btn">
+                <p class="report-text">Employees</p>
             </div>
         </div>
+    </div>
 
+    <!-- Wrapper Principal -->
+    <div class="main-wrapper">
         <!-- Statistic Boxes -->
-        <div class="statistic1">
-            <div class="stat-background"></div>
-            <p>Statistic 1</p>
-        </div>
-        <div class="statistic2">
-            <div class="stat-background"></div>
-            <p>Statistic 2</p>
-        </div>
+        <div class="main-content">
+            <div class="statistic1">
+                <p>Statistic 1: Coffee Stores Data</p>
+                <table id="statistic1-table">
+                    <thead>
+                        <tr>
+                            <th>Store</th>
+                            <th>City</th>
+                            <th>Revenue Goal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Datele vor fi populate aici -->
+                    </tbody>
+                </table>
+            </div>
 
-        <!-- Grafic -->
-        <div class="statistic3">
-            <div class="graph-background" id="chart"></div>
+            <div class="statistic2">
+                <p>Statistic 2</p>
+            </div>
+
+            <div class="statistic3">
+                <div id="chart"></div>
+            </div>
         </div>
     </div>
 
     <!-- Script pentru AJAX și Plotly -->
     <script>
         $(document).ready(function () {
+            loadStatistic1();
             function loadReport(apiUrl, title) {
                 $.get(apiUrl, function (data) {
                     console.log("Data received from API:", data); // Verifică datele primite
@@ -108,6 +121,24 @@
             });
 
         });
+
+        function loadStatistic1() {
+            $.get('/api/statistic1', function (data) {
+                const tableBody = $('#statistic1-table tbody');
+                tableBody.empty(); // Șterge rândurile existente
+
+                data.forEach(item => {
+                    const row = `<tr>
+                        <td>${item.Cafea}</td>
+                        <td>${item.Oras}</td>
+                        <td>${item.Obiectiv_Venit}</td>
+                    </tr>`;
+                    tableBody.append(row); // Adaugă un rând pentru fiecare element
+                });
+            });
+        }
+
+
 
     </script>
 </body>

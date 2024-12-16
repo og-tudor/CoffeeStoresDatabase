@@ -11,24 +11,20 @@ body {
     color: white;
     font-size: 1.2vw;
     height: 100vh;
+    display: flex; /* Flex pentru sidebar și conținut */
     overflow: hidden;
-}
-
-.desktop1 {
-    width: 100%;
-    height: 100%;
-    position: relative;
 }
 
 /* Sidebar */
 .report-sidebar {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 18%;
-    height: 100%;
+    width: 18%; /* Fixăm lățimea sidebar-ului */
+    height: 100vh; /* Sidebar pe toată înălțimea ecranului */
     background: #292441;
     padding: 2%;
+    display: flex;
+    flex-direction: column;
+    position: sticky; /* Sticky la stânga */
+    top: 0;
 }
 
 .report-header h1 {
@@ -50,9 +46,10 @@ body {
     cursor: pointer;
     color: white;
 }
+
 .report-text.active {
-    color: #FFFFFF; /* Text alb */
-    font-weight: bold; /* Bold pentru text activ */
+    color: #FFFFFF;
+    font-weight: bold;
 }
 
 .selected-report {
@@ -61,44 +58,60 @@ body {
     padding: 10px;
 }
 
+/* Main Wrapper */
+.main-wrapper {
+    flex: 1; /* Ocupă restul spațiului */
+    display: flex;
+    flex-direction: column;
+    padding: 2vw;
+    overflow-y: auto; /* Permite scroll pe conținut */
+}
+
 /* Statistic Boxes */
-.statistic1, .statistic2 {
-    position: absolute;
-    top: 5%;
-    border-radius: 1.5vw;
-    text-align: center;
-    color: white;
-    font-size: 1.5vw;
-    font-weight: 600;
-    padding: 20px;
+.main-content {
+    display: flex;
+    flex-wrap: wrap; /* Flexibilitate pentru poziționare */
+    gap: 2vw;
+    align-content: flex-start;
 }
 
-.statistic1 {
-    left: 20%;
-    width: 18%;
-    height: 20%;
+.statistic1, .statistic2, .statistic3 {
     background: #BE7462;
+    border-radius: 1.5vw;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 1.5vw;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px; /* Formă pătrată */
 }
 
-.statistic2 {
-    left: 40%;
-    width: 38%;
-    height: 20%;
-    background: #B1A0D8;
+.statistic1, .statistic2 {
+    flex: 1 1 30%; /* Ajustare proporțională */
+    min-width: 250px;
+    max-width: 30%;
 }
 
-/* Grafic */
 .statistic3 {
-    position: absolute;
-    top: 30%;
-    left: 20%;
-    width: 65%;
-    height: 65%;
+    flex: 1 1 60%; /* Adjusted to take 60% of parent container */
+    max-width: 80%px; 
+    max-height: 400px;
+    min-height: 400px; /* Minimum height */
     background: #514A73;
     border-radius: 1.5vw;
-    padding: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto; /* Center horizontally */
+    padding: 1.5vw;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+
+
+/* Grafic */
 #chart {
     width: 100%;
     height: 100%;

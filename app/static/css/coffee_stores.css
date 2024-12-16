@@ -1,0 +1,31 @@
+/* Tabel Stilizat */
+#statistic1-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#statistic1-table th, #statistic1-table td {
+    border: 1px solid #ffffff;
+    padding: 0.8vw;
+    text-align: center;
+    font-size: 1vw;
+    color: #ffffff;
+}
+
+#statistic1-table th {
+    background: #514A73;
+    font-weight: bold;
+}
+
+#statistic1-table tr:nth-child(even) {
+    background-color: #714C7B;
+}
+
+#statistic1-table tr:nth-child(odd) {
+    background-color: #8B5E89;
+}
+
+#statistic1-table tr:hover {
+    background-color: #A6789B;
+    cursor: pointer;
+}
