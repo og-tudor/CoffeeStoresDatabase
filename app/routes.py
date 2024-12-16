@@ -54,5 +54,32 @@ def register_routes(app):
     def statistic1():
         query = text("EXEC GetCoffeeStoresRevenue")
         result = db.session.execute(query)
-        data = [{"Cafea": row[0], "Oras": row[1], "Obiectiv_Venit": row[2]} for row in result.fetchall()]
+        data = [{"Chain": row[0], "City": row[1], "RevenueGoal": row[2], "Manager": row[3]} for row in result.fetchall()]
         return jsonify(data)
+
+    @app.route('/api/coffee_stores_list', methods=['GET'])
+    def coffee_stores_list():
+        query = text("EXECUTE GetCoffeeStores;")
+        result = db.session.execute(query)
+        data = [{'id': row[0], 'name': row[1]} for row in result.fetchall()]
+        return jsonify(data)
+
+
+    @app.route('/api/coffee_store_details/<int:store_id>/<int:month>/<int:year>', methods=['GET'])
+    def coffee_store_details(store_id, month, year):
+        query = text("EXEC GetCoffeeStoreDetails @store_id = :store_id, @month = :month, @year = :year")
+        result = db.session.execute(query, {'store_id': store_id, 'month': month, 'year': year}).fetchone()
+
+        if result:
+            data = {
+                'name': result[0],
+                'city': result[1],
+                'revenue_goal': result[2],
+                'manager': result[3],
+                'top_product': result[4] if result[4] else "No data",
+                'total_revenue': result[5] if result[5] else 0,
+            }
+            return jsonify(data)
+        else:
+            return jsonify({'error': 'Store not found'}), 404
+

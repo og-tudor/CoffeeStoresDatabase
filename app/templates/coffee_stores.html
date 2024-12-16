@@ -6,66 +6,72 @@
 
 {% block content %}
 <div class="main-content">
-    <div class="statistic1">
-        <p>Statistic 1: Coffee Stores Data</p>
-        <table id="statistic1-table">
-            <thead>
-                <tr>
-                    <th>Store</th>
-                    <th>City</th>
-                    <th>Revenue Goal</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Data will be populated here -->
-            </tbody>
-        </table>
+    <div class="details_container">
+        <div class="dropdown-container">
+            <label for="coffee-store-select">Select Coffee Store:</label>
+            <select id="coffee-store-select">
+                <option value="" disabled selected>Choose a coffee store</option>
+            </select>
+    
+            <label for="month-select">Select Month:</label>
+            <select id="month-select">
+                <option value="" disabled selected>Choose a month</option>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <!-- Continuă pentru toate lunile -->
+            </select>
+    
+            <label for="year-select">Select Year:</label>
+            <select id="year-select">
+                <option value="" disabled selected>Choose a year</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <!-- Adaugă alte opțiuni de ani -->
+            </select>
+        </div>
+    
+        <div id="coffee-store-details" style="margin-top: 20px;">
+            <!-- Detaliile cafenelei vor fi afișate aici -->
+        </div>
     </div>
-    <div id="chart" class="statistic3"></div>
 </div>
+
 <script>
     $(document).ready(function () {
-        // Load table and chart data for Statistic 1
-        $.get('/api/statistic1', function (data) { // Correct endpoint
-            const tableBody = $('#statistic1-table tbody');
-            tableBody.empty();
-
-            const stores = [];
-            const goals = [];
-
-            // Populate table rows and prepare data for chart
+        // Populează dropdown-ul cu cafenele
+        $.get('/api/coffee_stores_list', function (data) {
+            const dropdown = $('#coffee-store-select');
             data.forEach(item => {
-                tableBody.append(`
-                    <tr>
-                        <td>${item.Cafea}</td>
-                        <td>${item.Oras}</td>
-                        <td>${item.Obiectiv_Venit}</td>
-                    </tr>
-                `);
-                stores.push(item.Cafea); // Store names for chart
-                goals.push(item.Obiectiv_Venit); // Revenue goals for chart
+                dropdown.append(`<option value="${item.id}">${item.name}</option>`);
             });
+        });
 
-            // Generate bar chart
-            const chartData = [{
-                x: stores,
-                y: goals,
-                type: 'line',
-                marker: { color: '#BE7462' }
-            }];
+        // Eveniment pentru selectarea cafenelei și a datei
+        $('.dropdown-container select').change(function () {
+            const storeId = $('#coffee-store-select').val();
+            const month = $('#month-select').val();
+            const year = $('#year-select').val();
 
-            const layout = {
-                title: 'Coffee Stores Revenue Goals',
-                paper_bgcolor: '#514A73',
-                plot_bgcolor: '#514A73',
-                font: { color: 'white' }
-            };
-
-            Plotly.newPlot('chart', chartData, layout);
-        }).fail(function (error) {
-            console.error("Error fetching data:", error);
+            if (storeId && month && year) {
+                $.get(`/api/coffee_store_details/${storeId}/${month}/${year}`, function (data) {
+                    const detailsDiv = $('#coffee-store-details');
+                    detailsDiv.empty();
+                    detailsDiv.append(`
+                        <h3>${data.name}</h3>
+                        <p>City: ${data.city}</p>
+                        <p>Revenue Goal: ${data.revenue_goal}</p>
+                        <p>Manager: ${data.manager}</p>
+                        <p>Top Product: ${data.top_product}</p>
+                        <p>Total Revenue: ${data.total_revenue}</p>
+                    `);
+                }).fail(function () {
+                    alert('Failed to load details.');
+                });
+            }
         });
     });
 </script>
+
 
 {% endblock %}
