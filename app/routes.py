@@ -1,4 +1,4 @@
-from flask import jsonify, render_template
+from flask import jsonify, render_template, request
 from sqlalchemy.sql import text
 from . import db
 
@@ -83,3 +83,33 @@ def register_routes(app):
         else:
             return jsonify({'error': 'Store not found'}), 404
 
+    @app.route('/api/monthly_sales_expenses', methods=['GET'])
+    def monthly_sales_expenses():
+        # Get parameters from query string
+        store_id = request.args.get('store_id')
+        year = request.args.get('year')
+
+        # Validate inputs
+        if not store_id or not year:
+            return jsonify({'error': 'store_id and year are required'}), 400
+
+        try:
+            # Execute the procedure with parameters
+            query = text("""
+                EXEC GetMonthlySalesAndExpenses @store_id = :store_id, @year = :year
+            """)
+            result = db.session.execute(query, {'store_id': store_id, 'year': year}).fetchall()
+
+            # Process the data into a JSON response
+            data = [{
+                'store_name': row[0],
+                'month': row[1],
+                'year': row[2],
+                'monthly_revenue': float(row[3]) if row[3] else 0,
+                'monthly_expenses': float(row[4]) if row[4] else 0
+            } for row in result]
+
+            return jsonify(data)
+
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500

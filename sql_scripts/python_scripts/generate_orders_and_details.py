@@ -2,17 +2,17 @@ import random
 from datetime import datetime, timedelta
 
 # Constraints
-PRODUCT_IDS = range(1, 11)  # Product IDs 1-10
+PRODUCT_IDS = range(1, 21)  # Product IDs 1-20
 CUSTOMER_IDS = range(1, 11)  # Customer IDs 1-10
 COFFEE_STORES = {
     1: [5, 6],  # Employees for store 1
     2: [7, 8],  # Employees for store 2
     3: [9, 10]  # Employees for store 3
 }
-ORDER_COUNT = 60  # Total number of orders
-START_DATE = datetime(2023, 12, 1)  # Start date for orders
-END_DATE = datetime(2024, 4, 29)  # End date for orders
-MAX_PRODUCTS_PER_ORDER = 10  # Max items per order
+ORDER_COUNT = 151  # Total number of orders
+START_DATE = datetime(2023, 10, 1)  # Start date for orders
+END_DATE = datetime(2024, 6, 1)     # End date for orders
+MAX_PRODUCTS_PER_ORDER = 11  # Max items per order
 
 # Function to generate random datetime within a range
 def random_datetime(start, end):
@@ -51,18 +51,22 @@ order_details_file = "order_details.sql"
 with open(orders_file, "w") as f_orders:
     f_orders.write("-- Populating Orders\n")
     f_orders.write("SET IDENTITY_INSERT Orders ON;\n")
-    for order in orders:
-        f_orders.write(f"INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) "
-                       f"VALUES ({order[0]}, {order[1]}, {order[2]}, {order[3]}, '{order[4]}');\n")
+    f_orders.write("INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date)\nVALUES\n")
+    order_values = ",\n".join(
+        f"({order[0]}, {order[1]}, {order[2]}, {order[3]}, '{order[4]}')" for order in orders
+    )
+    f_orders.write(order_values + ";\n")
     f_orders.write("SET IDENTITY_INSERT Orders OFF;\n\n")
 
 # Write OrderDetails to file
 with open(order_details_file, "w") as f_details:
     f_details.write("-- Populating OrderDetails\n")
     f_details.write("SET IDENTITY_INSERT OrderDetails ON;\n")
-    for detail in order_details:
-        f_details.write(f"INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) "
-                        f"VALUES ({detail[0]}, {detail[1]}, {detail[2]}, {detail[3]});\n")
+    f_details.write("INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity)\nVALUES\n")
+    order_detail_values = ",\n".join(
+        f"({detail[0]}, {detail[1]}, {detail[2]}, {detail[3]})" for detail in order_details
+    )
+    f_details.write(order_detail_values + ";\n")
     f_details.write("SET IDENTITY_INSERT OrderDetails OFF;\n")
 
 print(f"SQL files successfully written:\n- {orders_file}\n- {order_details_file}")

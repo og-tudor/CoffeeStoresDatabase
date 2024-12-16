@@ -69,16 +69,26 @@ SET IDENTITY_INSERT Customers OFF;
 SET IDENTITY_INSERT Products ON;
 INSERT INTO Products (product_id, supplier_id, name, category, unit_price)
 VALUES
-    (1, 1, 'Arabica Coffee', 'Beverage', 10.50),
-    (2, 2, 'Brazilian Beans', 'Beverage', 12.00),
-    (3, 3, 'Colombian Roast', 'Beverage', 15.00),
-    (4, 4, 'Peruvian Coffee', 'Beverage', 8.00),
-    (5, 5, 'Turkey Sandwich', 'Food', 25.00),
-    (6, 1, 'Chocolate Cookies', 'Food', 18.00),
-    (7, 2, 'Chicken Sandwich', 'Food', 15.00),
-    (8, 3, 'Crackers', 'Food', 10.00),
-    (9, 4, 'Latte', 'Beverage', 12.00),
-    (10, 5, 'Mocha', 'Beverage', 8.00);
+    (1, 1, 'Arabica Coffee', 'CoffeeBag', 40.0),
+    (2, 2, 'Brazilian Beans', 'CoffeeBag', 45.00),
+    (3, 3, 'Colombian Roast', 'CoffeeBag', 50.00),
+    (4, 4, 'Peruvian Coffee', 'CoffeeBag', 55.00),
+    (5, 5, 'Turkey Sandwich', 'Food', 35.00),
+    (6, 1, 'Chocolate Cookies', 'Food', 23.00),
+    (7, 2, 'Chicken Sandwich', 'Food', 30.00),
+    (8, 3, 'Crackers', 'Food', 20.00),
+    (9, 4, 'Latte', 'Beverage', 22.00),
+    (10, 5, 'Mocha', 'Beverage', 25.00),
+    (11, 1, 'Espresso', 'Beverage', 15.00),
+    (12, 2, 'Cappuccino', 'Beverage', 25.00),
+    (13, 3, 'Americano', 'Beverage', 18.00),
+    (14, 4, 'Macchiato', 'Beverage', 22.00),
+    (15, 5, 'Flat White', 'Beverage', 23.00),
+    (16, 1, 'Tea', 'Beverage', 15.00),
+    (17, 2, 'Hot Chocolate', 'Beverage', 20.00),
+    (18, 3, 'Iced Coffee', 'Beverage', 25.00),
+    (19, 4, 'Iced Tea', 'Beverage', 18.00),
+    (20, 5, 'Smoothie', 'Beverage', 30.00);
 SET IDENTITY_INSERT Products OFF;
 
 
@@ -86,532 +96,1275 @@ SET IDENTITY_INSERT Products OFF;
 SET IDENTITY_INSERT ProductInventory ON;
 INSERT INTO ProductInventory (inventory_id, coffee_store_id, product_id, quantity, last_updated)
 VALUES
-    -- Cluj Coffee House
-    (1, 1, 1, 100, '2023-12-01'), -- Arabica Coffee
-    (2, 1, 2, 50, '2023-12-01'),  -- Brazilian Beans
-    (3, 1, 5, 20, '2023-12-01'),  -- Turkey Sandwich
-    (4, 1, 6, 30, '2023-12-01'),  -- Chocolate Cookies
+    -- BOB constanta
+    (1, 1, 1, 100, '2023-12-01'),
+    (2, 1, 2, 50, '2023-12-01'),
+    (3, 1, 5, 20, '2023-12-01'),
+    (4, 1, 6, 30, '2023-12-01'),
+    (5, 1, 9, 40, '2023-12-01'),
+    (6, 1, 10, 30, '2023-12-01'),
+    (7, 1, 11, 50, '2023-12-01'),
+    (8, 1, 12, 40, '2023-12-01'),
+    (9, 1, 15, 20, '2023-12-01'),
+    (10, 1, 16, 30, '2023-12-01'),
+    (11, 1, 17, 40, '2023-12-01'),
+    (12, 1, 18, 50, '2023-12-01'),
+    (13, 1, 19, 30, '2023-12-01'),
+    (14, 1, 20, 20, '2023-12-01'),
 
-    -- Bucharest Espresso
-    (5, 2, 3, 80, '2023-12-01'),  -- Colombian Roast
-    (6, 2, 4, 70, '2023-12-01'),  -- Peruvian Coffee
-    (7, 2, 7, 40, '2023-12-01'),  -- Chicken Sandwich
-    (8, 2, 9, 60, '2023-12-01'),  -- Latte
+    -- Energy by BOB Bucharest
+    (15, 2, 3, 100, '2023-11-15'),
+    (16, 2, 4, 50, '2023-11-15'),
+    (17, 2, 7, 20, '2023-11-15'),
+    (18, 2, 8, 30, '2023-11-15'),
+    (19, 2, 9, 40, '2023-11-15'),
+    (20, 2, 10, 30, '2023-11-15'),
+    (21, 2, 13, 50, '2023-11-15'),
+    (22, 2, 14, 40, '2023-11-15'),
+    (23, 2, 15, 20, '2023-11-15'),
+    (24, 2, 16, 30, '2023-11-15'),
+    (25, 2, 17, 40, '2023-11-15'),
+    (26, 2, 18, 50, '2023-11-15'),
+    (27, 2, 19, 30, '2023-11-15'),
+    (28, 2, 20, 20, '2023-11-15'),
 
-    -- Timisoara Caffe
-    (9, 3, 8, 100, '2023-12-01'), -- Crackers
-    (10, 3, 10, 50, '2023-12-01'); -- Mocha
+    -- BOB and all Sinaia
+    (29, 3, 1, 100, '2023-10-20'),
+    (30, 3, 2, 50, '2023-10-20'),
+    (31, 3, 5, 20, '2023-10-20'),
+    (32, 3, 6, 30, '2023-10-20'),
+    (33, 3, 9, 40, '2023-10-20'),
+    (34, 3, 10, 30, '2023-10-20'),
+    (35, 3, 11, 50, '2023-10-20'),
+    (36, 3, 12, 40, '2023-10-20'),
+    (37, 3, 15, 20, '2023-10-20'),
+    (38, 3, 16, 30, '2023-10-20'),
+    (39, 3, 17, 40, '2023-10-20'),
+    (40, 3, 18, 50, '2023-10-20'),
+    (41, 3, 19, 30, '2023-10-20'),
+    (42, 3, 20, 20, '2023-10-20');
+
 SET IDENTITY_INSERT ProductInventory OFF;
 
 -- Populating Orders
 SET IDENTITY_INSERT Orders ON;
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (1, 5, 6, 1, '2023-12-24 04:21:19');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (2, 6, 8, 2, '2024-04-28 06:33:18');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (3, 5, 6, 1, '2024-03-13 07:25:50');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (4, 5, 6, 1, '2024-03-24 20:09:52');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (5, 3, 9, 3, '2023-12-13 18:46:46');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (6, 8, 9, 3, '2024-04-04 17:19:04');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (7, 1, 8, 2, '2024-01-03 00:49:42');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (8, 9, 7, 2, '2024-03-08 12:18:28');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (9, 10, 9, 3, '2024-04-06 00:01:03');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (10, 10, 9, 3, '2023-12-15 20:30:05');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (11, 5, 10, 3, '2024-03-10 23:39:52');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (12, 3, 7, 2, '2024-01-05 09:11:21');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (13, 3, 7, 2, '2024-03-20 04:34:53');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (14, 2, 9, 3, '2024-01-14 18:38:26');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (15, 8, 7, 2, '2024-01-04 00:54:53');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (16, 5, 10, 3, '2024-02-24 11:47:57');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (17, 6, 9, 3, '2024-02-01 13:30:06');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (18, 2, 9, 3, '2024-04-08 14:16:45');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (19, 1, 9, 3, '2024-02-05 08:28:52');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (20, 5, 9, 3, '2024-04-03 00:37:33');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (21, 1, 6, 1, '2024-03-24 06:30:31');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (22, 5, 5, 1, '2024-03-11 08:35:36');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (23, 5, 7, 2, '2024-02-27 23:39:35');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (24, 7, 7, 2, '2024-02-14 19:54:19');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (25, 1, 7, 2, '2023-12-02 18:59:04');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (26, 2, 5, 1, '2024-01-10 21:14:15');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (27, 1, 8, 2, '2023-12-03 16:31:04');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (28, 2, 10, 3, '2024-01-29 23:36:57');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (29, 1, 6, 1, '2024-04-18 11:47:10');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (30, 5, 9, 3, '2024-03-15 15:58:12');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (31, 8, 6, 1, '2024-01-22 11:29:35');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (32, 2, 5, 1, '2024-01-15 04:48:36');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (33, 9, 10, 3, '2023-12-04 04:12:54');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (34, 8, 7, 2, '2024-04-28 20:22:58');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (35, 1, 5, 1, '2024-03-09 06:31:38');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (36, 9, 6, 1, '2023-12-28 08:58:16');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (37, 10, 10, 3, '2024-03-27 17:09:52');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (38, 9, 5, 1, '2024-01-14 18:48:15');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (39, 3, 7, 2, '2024-02-12 10:24:56');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (40, 4, 9, 3, '2024-02-09 03:57:37');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (41, 6, 7, 2, '2023-12-14 06:40:13');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (42, 2, 8, 2, '2024-02-04 02:50:24');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (43, 9, 5, 1, '2024-02-05 15:27:16');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (44, 2, 10, 3, '2024-02-02 03:54:22');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (45, 8, 10, 3, '2024-02-20 06:12:12');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (46, 3, 10, 3, '2024-03-04 12:48:07');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (47, 6, 6, 1, '2023-12-07 17:02:58');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (48, 8, 10, 3, '2024-03-18 19:12:38');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (49, 1, 6, 1, '2024-03-11 11:44:46');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (50, 10, 7, 2, '2024-01-18 02:41:55');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (51, 3, 10, 3, '2024-02-28 12:33:04');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (52, 6, 7, 2, '2023-12-14 08:53:21');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (53, 1, 7, 2, '2023-12-16 22:29:06');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (54, 1, 8, 2, '2024-04-21 23:20:20');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (55, 5, 10, 3, '2024-04-12 07:21:17');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (56, 7, 5, 1, '2024-04-01 20:34:41');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (57, 1, 10, 3, '2024-03-23 19:05:53');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (58, 10, 10, 3, '2024-01-22 10:13:57');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (59, 3, 9, 3, '2024-01-02 12:19:54');
-INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date) VALUES (60, 9, 5, 1, '2024-03-20 18:04:13');
+INSERT INTO Orders (order_id, customer_id, employee_id, coffee_store_id, order_date)
+VALUES
+    (1, 4, 5, 1, '2024-03-08 10:43:06'),
+    (2, 10, 6, 1, '2023-12-26 22:16:34'),
+    (3, 3, 9, 3, '2023-10-05 00:39:53'),
+    (4, 4, 10, 3, '2023-12-30 21:02:53'),
+    (5, 5, 8, 2, '2023-10-16 12:40:36'),
+    (6, 9, 10, 3, '2023-10-26 08:45:39'),
+    (7, 3, 8, 2, '2023-12-28 03:19:32'),
+    (8, 9, 10, 3, '2024-02-24 09:59:08'),
+    (9, 1, 5, 1, '2024-03-07 18:55:10'),
+    (10, 3, 7, 2, '2024-04-18 15:52:38'),
+    (11, 9, 8, 2, '2024-02-12 17:00:47'),
+    (12, 9, 9, 3, '2024-04-15 01:21:34'),
+    (13, 7, 9, 3, '2023-11-29 18:39:11'),
+    (14, 9, 7, 2, '2023-12-28 11:00:54'),
+    (15, 2, 6, 1, '2024-03-28 08:15:22'),
+    (16, 6, 10, 3, '2023-10-20 07:06:38'),
+    (17, 1, 6, 1, '2023-12-20 19:24:20'),
+    (18, 5, 5, 1, '2024-04-18 01:57:57'),
+    (19, 4, 9, 3, '2024-01-17 04:58:26'),
+    (20, 2, 9, 3, '2024-01-30 17:54:12'),
+    (21, 6, 5, 1, '2023-12-28 02:41:20'),
+    (22, 7, 9, 3, '2024-04-12 11:58:08'),
+    (23, 6, 7, 2, '2023-12-31 09:02:51'),
+    (24, 1, 9, 3, '2024-01-01 20:43:12'),
+    (25, 1, 7, 2, '2024-02-02 22:31:59'),
+    (26, 5, 9, 3, '2023-11-24 00:32:46'),
+    (27, 10, 7, 2, '2023-10-08 11:38:07'),
+    (28, 8, 8, 2, '2023-12-21 16:37:36'),
+    (29, 9, 9, 3, '2023-12-01 20:34:22'),
+    (30, 1, 8, 2, '2024-04-27 22:07:45'),
+    (31, 6, 6, 1, '2024-02-13 04:40:42'),
+    (32, 1, 10, 3, '2023-12-08 19:40:58'),
+    (33, 3, 6, 1, '2023-11-20 16:59:13'),
+    (34, 10, 9, 3, '2024-01-16 09:21:35'),
+    (35, 6, 5, 1, '2023-10-25 16:15:47'),
+    (36, 3, 8, 2, '2023-11-21 17:03:30'),
+    (37, 8, 9, 3, '2024-04-03 13:10:31'),
+    (38, 9, 10, 3, '2023-11-27 10:50:11'),
+    (39, 2, 9, 3, '2024-02-23 00:24:23'),
+    (40, 10, 10, 3, '2023-11-03 10:48:35'),
+    (41, 8, 7, 2, '2023-11-19 04:26:45'),
+    (42, 2, 8, 2, '2024-03-26 05:02:49'),
+    (43, 5, 7, 2, '2024-02-21 09:26:46'),
+    (44, 2, 7, 2, '2023-10-29 23:26:41'),
+    (45, 8, 5, 1, '2024-01-06 19:44:33'),
+    (46, 2, 5, 1, '2023-11-01 15:43:48'),
+    (47, 10, 6, 1, '2024-04-25 06:13:39'),
+    (48, 3, 8, 2, '2024-05-31 02:17:16'),
+    (49, 2, 5, 1, '2024-04-23 18:16:38'),
+    (50, 10, 7, 2, '2024-04-17 09:06:25'),
+    (51, 5, 6, 1, '2023-12-29 17:31:07'),
+    (52, 1, 6, 1, '2024-03-10 13:12:04'),
+    (53, 9, 7, 2, '2024-04-23 18:05:22'),
+    (54, 7, 7, 2, '2024-05-18 18:37:23'),
+    (55, 6, 7, 2, '2023-11-24 11:18:48'),
+    (56, 10, 7, 2, '2023-11-12 02:14:30'),
+    (57, 1, 8, 2, '2023-12-05 02:06:56'),
+    (58, 6, 10, 3, '2024-01-26 09:43:58'),
+    (59, 6, 7, 2, '2024-02-21 16:47:29'),
+    (60, 2, 7, 2, '2024-02-28 06:21:09'),
+    (61, 7, 6, 1, '2024-05-17 16:00:30'),
+    (62, 3, 6, 1, '2024-05-18 17:11:45'),
+    (63, 3, 8, 2, '2024-03-05 22:50:31'),
+    (64, 6, 5, 1, '2024-05-29 00:34:58'),
+    (65, 7, 9, 3, '2024-04-24 03:08:06'),
+    (66, 10, 6, 1, '2023-11-22 10:51:48'),
+    (67, 9, 6, 1, '2023-11-26 17:06:38'),
+    (68, 1, 6, 1, '2024-02-08 00:54:46'),
+    (69, 7, 10, 3, '2023-12-29 18:55:49'),
+    (70, 6, 7, 2, '2024-03-17 13:47:43'),
+    (71, 9, 8, 2, '2024-05-12 11:32:33'),
+    (72, 6, 7, 2, '2024-02-21 01:52:42'),
+    (73, 6, 10, 3, '2024-03-23 09:17:35'),
+    (74, 6, 6, 1, '2024-05-25 04:00:29'),
+    (75, 6, 9, 3, '2024-02-11 14:10:16'),
+    (76, 8, 7, 2, '2023-12-11 23:16:58'),
+    (77, 7, 9, 3, '2023-12-29 22:53:47'),
+    (78, 4, 6, 1, '2024-05-17 18:01:50'),
+    (79, 3, 8, 2, '2023-10-08 10:10:02'),
+    (80, 7, 5, 1, '2024-04-25 16:02:11'),
+    (81, 4, 9, 3, '2024-02-22 10:45:38'),
+    (82, 6, 10, 3, '2024-01-07 19:57:33'),
+    (83, 6, 9, 3, '2023-10-06 20:54:04'),
+    (84, 7, 6, 1, '2023-11-17 06:57:32'),
+    (85, 8, 5, 1, '2023-11-13 21:27:10'),
+    (86, 2, 5, 1, '2023-10-18 10:08:48'),
+    (87, 6, 5, 1, '2024-05-06 21:21:07'),
+    (88, 4, 6, 1, '2024-04-17 03:28:23'),
+    (89, 2, 8, 2, '2024-03-19 12:45:20'),
+    (90, 7, 10, 3, '2024-04-10 01:59:18'),
+    (91, 2, 5, 1, '2023-10-21 20:23:12'),
+    (92, 7, 8, 2, '2024-04-11 12:37:11'),
+    (93, 4, 5, 1, '2023-12-09 05:12:03'),
+    (94, 7, 5, 1, '2024-05-17 16:38:52'),
+    (95, 1, 7, 2, '2024-04-12 05:59:31'),
+    (96, 9, 9, 3, '2024-03-01 01:52:08'),
+    (97, 6, 10, 3, '2023-10-29 10:22:07'),
+    (98, 5, 8, 2, '2023-12-24 20:05:57'),
+    (99, 7, 7, 2, '2024-04-24 07:20:31'),
+    (100, 4, 5, 1, '2023-11-23 19:21:58'),
+    (101, 3, 8, 2, '2024-05-24 08:31:01'),
+    (102, 8, 6, 1, '2023-11-13 21:09:44'),
+    (103, 3, 10, 3, '2023-12-10 07:27:30'),
+    (104, 2, 5, 1, '2023-11-05 22:15:08'),
+    (105, 10, 7, 2, '2024-01-05 10:30:24'),
+    (106, 3, 5, 1, '2024-04-05 13:31:57'),
+    (107, 8, 9, 3, '2024-04-12 11:47:09'),
+    (108, 6, 7, 2, '2024-03-30 16:34:16'),
+    (109, 8, 7, 2, '2024-04-14 00:08:06'),
+    (110, 9, 7, 2, '2023-12-19 03:45:39'),
+    (111, 1, 5, 1, '2023-10-20 11:05:45'),
+    (112, 6, 9, 3, '2023-12-15 04:46:16'),
+    (113, 4, 9, 3, '2023-10-28 03:25:06'),
+    (114, 10, 10, 3, '2024-04-22 00:01:10'),
+    (115, 8, 5, 1, '2024-01-07 06:46:36'),
+    (116, 10, 10, 3, '2023-12-29 07:22:46'),
+    (117, 3, 10, 3, '2024-01-27 02:59:54'),
+    (118, 4, 5, 1, '2024-04-08 01:15:13'),
+    (119, 10, 9, 3, '2024-05-04 08:37:02'),
+    (120, 2, 6, 1, '2024-04-06 16:18:21'),
+    (121, 8, 9, 3, '2023-10-28 08:30:15'),
+    (122, 2, 5, 1, '2024-01-15 18:57:59'),
+    (123, 10, 10, 3, '2023-11-14 15:04:19'),
+    (124, 6, 10, 3, '2023-12-17 11:49:04'),
+    (125, 5, 9, 3, '2024-05-07 07:45:17'),
+    (126, 6, 9, 3, '2024-01-19 16:46:33'),
+    (127, 9, 5, 1, '2024-03-04 13:30:02'),
+    (128, 9, 7, 2, '2023-10-04 22:26:00'),
+    (129, 6, 8, 2, '2023-12-02 11:33:40'),
+    (130, 6, 8, 2, '2023-12-28 05:57:02'),
+    (131, 7, 6, 1, '2024-04-22 11:21:17'),
+    (132, 5, 5, 1, '2023-11-25 16:45:56'),
+    (133, 5, 8, 2, '2023-10-26 05:58:02'),
+    (134, 10, 10, 3, '2024-05-28 02:39:16'),
+    (135, 6, 10, 3, '2024-01-05 07:56:40'),
+    (136, 6, 9, 3, '2023-11-13 17:41:27'),
+    (137, 7, 5, 1, '2023-12-16 19:05:57'),
+    (138, 9, 10, 3, '2023-12-17 20:22:33'),
+    (139, 9, 9, 3, '2024-03-12 22:14:19'),
+    (140, 6, 5, 1, '2023-10-23 20:01:50'),
+    (141, 6, 10, 3, '2024-02-17 11:38:00'),
+    (142, 1, 9, 3, '2023-10-08 06:42:34'),
+    (143, 6, 8, 2, '2024-01-15 08:00:57'),
+    (144, 9, 8, 2, '2024-01-01 10:59:22'),
+    (145, 8, 7, 2, '2023-10-11 17:49:11'),
+    (146, 1, 10, 3, '2023-12-31 10:30:26'),
+    (147, 6, 7, 2, '2024-03-27 23:53:54'),
+    (148, 2, 5, 1, '2023-11-18 14:46:53'),
+    (149, 9, 5, 1, '2023-12-12 18:11:14'),
+    (150, 10, 8, 2, '2023-10-08 09:10:57'),
+    (151, 8, 5, 1, '2024-02-12 21:32:30');
 SET IDENTITY_INSERT Orders OFF;
+
+
+
 
 
 
 -- Populating OrderDetails
 SET IDENTITY_INSERT OrderDetails ON;
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (1, 1, 10, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (2, 1, 6, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (3, 2, 1, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (4, 2, 2, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (5, 2, 7, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (6, 3, 6, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (7, 4, 4, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (8, 4, 6, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (9, 4, 7, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (10, 4, 5, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (11, 4, 2, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (12, 4, 8, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (13, 4, 1, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (14, 4, 3, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (15, 5, 3, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (16, 5, 8, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (17, 5, 6, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (18, 5, 5, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (19, 5, 7, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (20, 5, 1, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (21, 5, 2, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (22, 5, 10, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (23, 5, 9, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (24, 5, 4, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (25, 6, 5, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (26, 7, 3, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (27, 7, 5, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (28, 7, 8, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (29, 7, 4, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (30, 7, 1, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (31, 7, 7, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (32, 7, 9, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (33, 7, 2, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (34, 8, 10, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (35, 8, 1, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (36, 8, 6, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (37, 8, 9, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (38, 8, 2, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (39, 8, 8, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (40, 8, 3, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (41, 8, 7, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (42, 9, 4, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (43, 9, 5, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (44, 10, 2, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (45, 11, 5, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (46, 11, 9, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (47, 11, 1, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (48, 11, 2, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (49, 12, 4, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (50, 12, 7, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (51, 12, 9, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (52, 12, 3, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (53, 12, 10, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (54, 13, 1, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (55, 14, 6, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (56, 14, 7, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (57, 14, 2, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (58, 14, 9, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (59, 14, 3, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (60, 14, 8, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (61, 14, 4, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (62, 15, 10, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (63, 15, 9, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (64, 15, 3, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (65, 15, 2, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (66, 15, 4, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (67, 15, 8, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (68, 16, 7, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (69, 16, 8, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (70, 16, 4, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (71, 16, 9, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (72, 16, 3, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (73, 17, 6, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (74, 17, 1, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (75, 17, 3, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (76, 17, 10, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (77, 17, 5, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (78, 17, 9, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (79, 17, 4, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (80, 18, 6, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (81, 18, 8, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (82, 18, 3, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (83, 18, 9, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (84, 19, 9, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (85, 19, 4, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (86, 20, 1, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (87, 20, 9, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (88, 20, 8, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (89, 20, 7, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (90, 20, 2, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (91, 20, 6, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (92, 20, 10, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (93, 21, 3, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (94, 21, 9, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (95, 21, 5, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (96, 21, 7, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (97, 21, 4, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (98, 21, 8, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (99, 21, 1, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (100, 21, 2, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (101, 21, 10, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (102, 21, 6, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (103, 22, 6, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (104, 22, 9, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (105, 22, 5, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (106, 22, 2, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (107, 22, 4, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (108, 22, 8, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (109, 22, 7, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (110, 22, 1, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (111, 22, 10, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (112, 23, 8, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (113, 23, 7, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (114, 23, 2, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (115, 23, 5, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (116, 23, 3, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (117, 23, 9, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (118, 23, 6, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (119, 23, 10, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (120, 24, 5, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (121, 24, 8, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (122, 24, 2, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (123, 25, 1, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (124, 26, 3, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (125, 26, 7, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (126, 27, 1, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (127, 27, 3, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (128, 27, 7, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (129, 27, 2, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (130, 27, 4, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (131, 28, 4, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (132, 29, 9, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (133, 29, 7, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (134, 29, 2, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (135, 29, 10, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (136, 29, 6, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (137, 29, 8, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (138, 29, 5, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (139, 30, 9, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (140, 30, 10, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (141, 30, 5, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (142, 30, 7, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (143, 30, 8, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (144, 30, 2, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (145, 31, 5, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (146, 31, 2, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (147, 31, 4, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (148, 32, 7, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (149, 33, 5, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (150, 33, 7, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (151, 33, 8, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (152, 33, 9, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (153, 33, 10, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (154, 33, 2, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (155, 34, 7, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (156, 34, 1, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (157, 34, 3, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (158, 34, 2, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (159, 34, 4, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (160, 34, 6, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (161, 34, 9, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (162, 34, 10, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (163, 34, 8, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (164, 35, 6, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (165, 35, 5, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (166, 35, 4, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (167, 35, 2, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (168, 35, 8, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (169, 36, 9, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (170, 37, 5, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (171, 37, 8, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (172, 37, 10, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (173, 37, 9, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (174, 37, 7, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (175, 38, 2, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (176, 38, 8, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (177, 38, 7, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (178, 38, 5, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (179, 38, 10, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (180, 39, 4, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (181, 39, 3, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (182, 39, 10, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (183, 39, 2, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (184, 39, 9, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (185, 39, 5, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (186, 40, 10, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (187, 40, 1, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (188, 40, 6, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (189, 40, 7, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (190, 40, 2, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (191, 40, 9, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (192, 40, 4, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (193, 41, 7, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (194, 41, 5, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (195, 42, 5, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (196, 42, 4, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (197, 42, 1, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (198, 42, 7, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (199, 42, 10, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (200, 42, 8, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (201, 42, 2, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (202, 43, 5, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (203, 43, 3, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (204, 43, 6, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (205, 43, 7, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (206, 43, 9, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (207, 44, 5, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (208, 44, 8, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (209, 44, 6, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (210, 45, 6, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (211, 45, 10, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (212, 45, 3, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (213, 45, 9, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (214, 45, 1, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (215, 45, 4, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (216, 45, 5, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (217, 45, 8, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (218, 45, 2, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (219, 45, 7, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (220, 46, 3, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (221, 46, 4, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (222, 46, 7, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (223, 46, 5, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (224, 46, 6, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (225, 46, 9, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (226, 46, 1, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (227, 46, 2, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (228, 46, 10, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (229, 46, 8, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (230, 47, 9, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (231, 47, 3, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (232, 47, 5, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (233, 47, 4, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (234, 47, 10, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (235, 47, 1, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (236, 47, 8, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (237, 48, 2, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (238, 48, 1, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (239, 48, 3, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (240, 48, 8, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (241, 48, 9, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (242, 48, 4, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (243, 49, 3, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (244, 49, 4, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (245, 49, 1, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (246, 49, 6, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (247, 50, 2, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (248, 50, 3, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (249, 50, 7, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (250, 50, 1, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (251, 50, 9, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (252, 51, 9, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (253, 51, 1, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (254, 51, 6, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (255, 51, 5, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (256, 51, 2, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (257, 51, 3, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (258, 51, 7, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (259, 51, 8, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (260, 51, 10, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (261, 52, 7, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (262, 52, 3, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (263, 52, 10, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (264, 52, 9, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (265, 52, 6, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (266, 52, 4, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (267, 52, 5, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (268, 52, 8, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (269, 53, 10, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (270, 53, 7, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (271, 53, 3, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (272, 53, 6, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (273, 53, 2, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (274, 54, 9, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (275, 54, 10, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (276, 54, 8, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (277, 54, 7, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (278, 54, 6, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (279, 54, 3, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (280, 55, 2, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (281, 55, 9, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (282, 55, 5, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (283, 55, 8, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (284, 55, 1, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (285, 55, 3, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (286, 55, 4, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (287, 55, 10, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (288, 55, 6, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (289, 55, 7, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (290, 56, 8, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (291, 56, 5, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (292, 56, 1, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (293, 56, 7, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (294, 56, 10, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (295, 56, 4, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (296, 56, 6, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (297, 56, 3, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (298, 56, 9, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (299, 56, 2, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (300, 57, 10, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (301, 57, 6, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (302, 57, 9, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (303, 57, 3, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (304, 57, 8, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (305, 57, 1, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (306, 57, 4, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (307, 57, 2, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (308, 57, 5, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (309, 58, 3, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (310, 58, 4, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (311, 58, 10, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (312, 58, 8, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (313, 58, 2, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (314, 58, 1, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (315, 58, 7, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (316, 58, 9, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (317, 58, 5, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (318, 59, 3, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (319, 59, 7, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (320, 59, 2, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (321, 59, 8, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (322, 59, 10, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (323, 59, 5, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (324, 59, 1, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (325, 60, 1, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (326, 60, 2, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (327, 60, 6, 3);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (328, 60, 10, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (329, 60, 5, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (330, 60, 4, 2);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (331, 60, 9, 1);
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES (332, 60, 8, 2);
+INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity)
+VALUES
+    (1, 1, 15, 1),
+    (2, 2, 5, 1),
+    (3, 2, 14, 2),
+    (4, 3, 9, 2),
+    (5, 3, 19, 3),
+    (6, 3, 1, 1),
+    (7, 3, 20, 1),
+    (8, 3, 2, 1),
+    (9, 3, 4, 1),
+    (10, 3, 3, 2),
+    (11, 3, 14, 3),
+    (12, 3, 10, 3),
+    (13, 3, 6, 3),
+    (14, 4, 16, 1),
+    (15, 4, 12, 3),
+    (16, 5, 13, 3),
+    (17, 5, 12, 3),
+    (18, 5, 19, 1),
+    (19, 5, 18, 3),
+    (20, 5, 4, 2),
+    (21, 5, 3, 2),
+    (22, 6, 9, 1),
+    (23, 7, 18, 2),
+    (24, 7, 17, 1),
+    (25, 7, 14, 3),
+    (26, 7, 6, 3),
+    (27, 8, 7, 2),
+    (28, 8, 8, 2),
+    (29, 8, 13, 3),
+    (30, 8, 11, 3),
+    (31, 8, 6, 2),
+    (32, 8, 3, 1),
+    (33, 8, 16, 1),
+    (34, 8, 19, 3),
+    (35, 9, 8, 1),
+    (36, 9, 5, 3),
+    (37, 9, 6, 3),
+    (38, 9, 16, 2),
+    (39, 9, 10, 2),
+    (40, 9, 20, 2),
+    (41, 9, 2, 2),
+    (42, 9, 18, 2),
+    (43, 9, 7, 3),
+    (44, 9, 19, 1),
+    (45, 9, 17, 3),
+    (46, 10, 10, 1),
+    (47, 10, 20, 3),
+    (48, 10, 9, 3),
+    (49, 10, 16, 2),
+    (50, 10, 8, 1),
+    (51, 10, 6, 1),
+    (52, 10, 2, 2),
+    (53, 10, 5, 3),
+    (54, 11, 4, 2),
+    (55, 11, 7, 2),
+    (56, 11, 19, 3),
+    (57, 11, 20, 3),
+    (58, 11, 12, 3),
+    (59, 11, 16, 2),
+    (60, 12, 13, 3),
+    (61, 12, 11, 3),
+    (62, 12, 15, 2),
+    (63, 12, 14, 2),
+    (64, 12, 20, 1),
+    (65, 12, 17, 3),
+    (66, 12, 12, 2),
+    (67, 12, 2, 1),
+    (68, 12, 4, 3),
+    (69, 12, 6, 1),
+    (70, 13, 3, 1),
+    (71, 13, 11, 1),
+    (72, 13, 7, 3),
+    (73, 13, 2, 1),
+    (74, 13, 16, 3),
+    (75, 13, 1, 2),
+    (76, 13, 18, 2),
+    (77, 13, 9, 3),
+    (78, 13, 6, 1),
+    (79, 13, 10, 3),
+    (80, 14, 20, 1),
+    (81, 14, 14, 2),
+    (82, 14, 11, 3),
+    (83, 14, 15, 3),
+    (84, 14, 5, 2),
+    (85, 14, 16, 2),
+    (86, 14, 2, 3),
+    (87, 15, 7, 2),
+    (88, 16, 9, 2),
+    (89, 16, 16, 2),
+    (90, 16, 14, 3),
+    (91, 16, 3, 1),
+    (92, 16, 15, 2),
+    (93, 16, 7, 1),
+    (94, 16, 8, 1),
+    (95, 16, 12, 1),
+    (96, 16, 10, 1),
+    (97, 17, 20, 1),
+    (98, 17, 1, 3),
+    (99, 17, 8, 3),
+    (100, 17, 19, 2),
+    (101, 17, 16, 3),
+    (102, 17, 5, 2),
+    (103, 18, 17, 1),
+    (104, 18, 5, 3),
+    (105, 18, 12, 2),
+    (106, 18, 2, 1),
+    (107, 18, 15, 2),
+    (108, 18, 11, 1),
+    (109, 18, 19, 2),
+    (110, 18, 18, 1),
+    (111, 18, 20, 2),
+    (112, 18, 6, 3),
+    (113, 18, 4, 1),
+    (114, 19, 8, 3),
+    (115, 19, 9, 1),
+    (116, 19, 11, 1),
+    (117, 19, 18, 2),
+    (118, 19, 1, 1),
+    (119, 19, 3, 3),
+    (120, 20, 12, 3),
+    (121, 20, 4, 3),
+    (122, 20, 8, 3),
+    (123, 20, 14, 2),
+    (124, 20, 17, 2),
+    (125, 21, 1, 3),
+    (126, 21, 2, 3),
+    (127, 21, 14, 3),
+    (128, 21, 6, 3),
+    (129, 22, 8, 2),
+    (130, 22, 5, 1),
+    (131, 22, 6, 2),
+    (132, 22, 10, 2),
+    (133, 22, 18, 3),
+    (134, 22, 12, 1),
+    (135, 23, 17, 1),
+    (136, 23, 7, 1),
+    (137, 23, 2, 2),
+    (138, 23, 1, 3),
+    (139, 23, 9, 1),
+    (140, 23, 6, 2),
+    (141, 23, 18, 2),
+    (142, 23, 14, 2),
+    (143, 23, 10, 3),
+    (144, 24, 17, 1),
+    (145, 24, 9, 1),
+    (146, 24, 10, 1),
+    (147, 24, 12, 1),
+    (148, 24, 19, 2),
+    (149, 24, 6, 2),
+    (150, 24, 14, 1),
+    (151, 24, 13, 1),
+    (152, 24, 5, 2),
+    (153, 25, 17, 1),
+    (154, 25, 2, 2),
+    (155, 25, 3, 1),
+    (156, 25, 11, 1),
+    (157, 25, 4, 1),
+    (158, 25, 15, 1),
+    (159, 25, 19, 1),
+    (160, 26, 11, 1),
+    (161, 26, 14, 1),
+    (162, 26, 7, 3),
+    (163, 26, 19, 2),
+    (164, 26, 10, 2),
+    (165, 26, 8, 1),
+    (166, 26, 2, 1),
+    (167, 26, 18, 1),
+    (168, 27, 7, 2),
+    (169, 27, 12, 3),
+    (170, 27, 8, 1),
+    (171, 27, 3, 3),
+    (172, 27, 13, 3),
+    (173, 27, 14, 2),
+    (174, 27, 5, 3),
+    (175, 27, 18, 3),
+    (176, 28, 20, 3),
+    (177, 29, 14, 1),
+    (178, 29, 8, 3),
+    (179, 29, 11, 2),
+    (180, 29, 1, 1),
+    (181, 30, 6, 1),
+    (182, 30, 8, 3),
+    (183, 31, 18, 3),
+    (184, 31, 7, 3),
+    (185, 31, 3, 3),
+    (186, 31, 6, 3),
+    (187, 31, 13, 3),
+    (188, 31, 5, 1),
+    (189, 31, 1, 1),
+    (190, 31, 4, 3),
+    (191, 31, 11, 2),
+    (192, 31, 2, 3),
+    (193, 32, 5, 2),
+    (194, 32, 11, 2),
+    (195, 32, 13, 2),
+    (196, 32, 19, 3),
+    (197, 32, 7, 3),
+    (198, 33, 10, 1),
+    (199, 33, 19, 3),
+    (200, 33, 7, 3),
+    (201, 33, 5, 1),
+    (202, 33, 16, 3),
+    (203, 33, 4, 3),
+    (204, 33, 12, 1),
+    (205, 33, 11, 1),
+    (206, 33, 9, 2),
+    (207, 34, 7, 1),
+    (208, 34, 12, 1),
+    (209, 34, 17, 1),
+    (210, 34, 14, 1),
+    (211, 34, 2, 2),
+    (212, 34, 16, 2),
+    (213, 35, 13, 3),
+    (214, 35, 16, 2),
+    (215, 35, 11, 2),
+    (216, 35, 17, 1),
+    (217, 35, 8, 1),
+    (218, 36, 7, 2),
+    (219, 36, 19, 1),
+    (220, 36, 14, 3),
+    (221, 37, 16, 1),
+    (222, 37, 10, 1),
+    (223, 37, 8, 1),
+    (224, 37, 11, 2),
+    (225, 37, 17, 3),
+    (226, 37, 3, 1),
+    (227, 37, 12, 2),
+    (228, 38, 7, 3),
+    (229, 38, 17, 1),
+    (230, 39, 18, 2),
+    (231, 39, 17, 3),
+    (232, 39, 2, 2),
+    (233, 39, 12, 2),
+    (234, 39, 8, 1),
+    (235, 39, 15, 2),
+    (236, 39, 20, 3),
+    (237, 39, 4, 3),
+    (238, 39, 1, 3),
+    (239, 39, 14, 3),
+    (240, 40, 19, 2),
+    (241, 40, 8, 1),
+    (242, 40, 10, 1),
+    (243, 40, 11, 1),
+    (244, 40, 7, 2),
+    (245, 40, 5, 2),
+    (246, 40, 14, 3),
+    (247, 40, 9, 2),
+    (248, 41, 7, 3),
+    (249, 41, 2, 1),
+    (250, 41, 15, 1),
+    (251, 41, 18, 3),
+    (252, 41, 13, 3),
+    (253, 41, 5, 2),
+    (254, 41, 4, 1),
+    (255, 41, 16, 2),
+    (256, 41, 20, 2),
+    (257, 42, 18, 1),
+    (258, 42, 16, 2),
+    (259, 42, 20, 3),
+    (260, 42, 10, 1),
+    (261, 43, 19, 3),
+    (262, 43, 16, 2),
+    (263, 43, 3, 3),
+    (264, 43, 7, 1),
+    (265, 43, 20, 1),
+    (266, 43, 14, 1),
+    (267, 43, 9, 3),
+    (268, 43, 1, 3),
+    (269, 43, 12, 3),
+    (270, 43, 10, 3),
+    (271, 44, 20, 3),
+    (272, 44, 12, 3),
+    (273, 44, 3, 3),
+    (274, 45, 3, 3),
+    (275, 45, 9, 1),
+    (276, 45, 6, 1),
+    (277, 45, 4, 2),
+    (278, 45, 10, 1),
+    (279, 45, 12, 1),
+    (280, 45, 2, 1),
+    (281, 45, 15, 3),
+    (282, 45, 8, 2),
+    (283, 45, 1, 3),
+    (284, 46, 14, 2),
+    (285, 46, 17, 1),
+    (286, 46, 7, 3),
+    (287, 46, 10, 1),
+    (288, 46, 3, 2),
+    (289, 46, 11, 1),
+    (290, 47, 20, 2),
+    (291, 47, 6, 3),
+    (292, 47, 13, 2),
+    (293, 47, 16, 1),
+    (294, 47, 2, 1),
+    (295, 48, 16, 3),
+    (296, 48, 20, 3),
+    (297, 48, 15, 2),
+    (298, 49, 19, 2),
+    (299, 49, 5, 1),
+    (300, 49, 4, 2),
+    (301, 50, 13, 1),
+    (302, 50, 17, 2),
+    (303, 50, 20, 3),
+    (304, 51, 10, 2),
+    (305, 51, 19, 2),
+    (306, 51, 12, 3),
+    (307, 51, 1, 3),
+    (308, 51, 17, 3),
+    (309, 51, 7, 1),
+    (310, 51, 16, 1),
+    (311, 51, 2, 2),
+    (312, 51, 20, 3),
+    (313, 51, 6, 3),
+    (314, 52, 17, 3),
+    (315, 52, 12, 1),
+    (316, 52, 20, 2),
+    (317, 52, 9, 1),
+    (318, 52, 6, 2),
+    (319, 52, 7, 1),
+    (320, 52, 1, 3),
+    (321, 52, 16, 3),
+    (322, 52, 8, 1),
+    (323, 52, 10, 3),
+    (324, 52, 11, 2),
+    (325, 53, 13, 2),
+    (326, 53, 12, 2),
+    (327, 53, 18, 1),
+    (328, 53, 11, 3),
+    (329, 53, 3, 2),
+    (330, 53, 4, 3),
+    (331, 53, 9, 2),
+    (332, 53, 15, 2),
+    (333, 54, 19, 3),
+    (334, 54, 8, 2),
+    (335, 54, 11, 3),
+    (336, 54, 4, 2),
+    (337, 55, 14, 2),
+    (338, 55, 20, 3),
+    (339, 55, 8, 2),
+    (340, 55, 7, 3),
+    (341, 55, 9, 3),
+    (342, 56, 1, 2),
+    (343, 56, 9, 3),
+    (344, 56, 17, 1),
+    (345, 57, 3, 2),
+    (346, 57, 5, 2),
+    (347, 57, 10, 1),
+    (348, 57, 8, 2),
+    (349, 57, 6, 1),
+    (350, 57, 16, 3),
+    (351, 57, 18, 3),
+    (352, 57, 12, 3),
+    (353, 57, 20, 3),
+    (354, 58, 15, 3),
+    (355, 58, 10, 2),
+    (356, 59, 6, 1),
+    (357, 59, 8, 1),
+    (358, 59, 12, 1),
+    (359, 59, 18, 2),
+    (360, 59, 14, 1),
+    (361, 59, 19, 1),
+    (362, 59, 9, 1),
+    (363, 59, 17, 2),
+    (364, 59, 5, 1),
+    (365, 60, 18, 2),
+    (366, 60, 3, 3),
+    (367, 60, 19, 3),
+    (368, 60, 5, 2),
+    (369, 60, 9, 2),
+    (370, 60, 6, 2),
+    (371, 60, 7, 3),
+    (372, 60, 8, 3),
+    (373, 60, 13, 2),
+    (374, 61, 18, 2),
+    (375, 61, 7, 2),
+    (376, 61, 6, 2),
+    (377, 62, 2, 3),
+    (378, 62, 4, 3),
+    (379, 62, 8, 2),
+    (380, 62, 12, 2),
+    (381, 62, 15, 1),
+    (382, 62, 11, 1),
+    (383, 62, 5, 1),
+    (384, 62, 3, 3),
+    (385, 62, 18, 3),
+    (386, 62, 13, 2),
+    (387, 62, 14, 2),
+    (388, 63, 20, 3),
+    (389, 63, 19, 1),
+    (390, 63, 16, 2),
+    (391, 63, 11, 2),
+    (392, 63, 13, 3),
+    (393, 63, 7, 1),
+    (394, 63, 8, 2),
+    (395, 63, 4, 3),
+    (396, 64, 8, 3),
+    (397, 64, 16, 2),
+    (398, 64, 1, 3),
+    (399, 65, 13, 3),
+    (400, 65, 16, 1),
+    (401, 65, 14, 1),
+    (402, 65, 20, 1),
+    (403, 65, 7, 2),
+    (404, 65, 12, 1),
+    (405, 66, 3, 1),
+    (406, 66, 7, 1),
+    (407, 66, 9, 3),
+    (408, 66, 20, 3),
+    (409, 66, 12, 1),
+    (410, 66, 6, 1),
+    (411, 67, 18, 1),
+    (412, 67, 14, 1),
+    (413, 67, 8, 3),
+    (414, 67, 9, 1),
+    (415, 67, 4, 1),
+    (416, 67, 2, 2),
+    (417, 68, 5, 1),
+    (418, 68, 18, 2),
+    (419, 69, 5, 2),
+    (420, 69, 6, 1),
+    (421, 69, 18, 3),
+    (422, 69, 13, 3),
+    (423, 69, 11, 3),
+    (424, 69, 2, 2),
+    (425, 69, 17, 1),
+    (426, 69, 10, 2),
+    (427, 69, 7, 3),
+    (428, 69, 4, 1),
+    (429, 70, 9, 1),
+    (430, 71, 2, 1),
+    (431, 71, 18, 2),
+    (432, 71, 4, 2),
+    (433, 71, 6, 1),
+    (434, 71, 7, 2),
+    (435, 71, 11, 2),
+    (436, 71, 13, 1),
+    (437, 71, 5, 1),
+    (438, 72, 2, 2),
+    (439, 72, 6, 2),
+    (440, 72, 16, 3),
+    (441, 72, 11, 2),
+    (442, 72, 18, 2),
+    (443, 72, 1, 3),
+    (444, 72, 19, 1),
+    (445, 72, 15, 2),
+    (446, 72, 10, 2),
+    (447, 73, 20, 3),
+    (448, 73, 12, 3),
+    (449, 73, 15, 3),
+    (450, 73, 9, 1),
+    (451, 73, 4, 3),
+    (452, 74, 7, 3),
+    (453, 74, 3, 2),
+    (454, 74, 20, 1),
+    (455, 74, 15, 2),
+    (456, 74, 14, 3),
+    (457, 74, 1, 2),
+    (458, 74, 10, 3),
+    (459, 74, 13, 3),
+    (460, 74, 12, 1),
+    (461, 74, 9, 3),
+    (462, 75, 10, 3),
+    (463, 75, 14, 1),
+    (464, 75, 3, 3),
+    (465, 75, 12, 2),
+    (466, 75, 4, 3),
+    (467, 75, 5, 3),
+    (468, 75, 15, 3),
+    (469, 75, 1, 3),
+    (470, 75, 19, 3),
+    (471, 75, 9, 2),
+    (472, 75, 17, 3),
+    (473, 76, 13, 3),
+    (474, 77, 11, 1),
+    (475, 77, 16, 3),
+    (476, 77, 3, 3),
+    (477, 77, 7, 1),
+    (478, 77, 19, 1),
+    (479, 78, 4, 1),
+    (480, 78, 12, 1),
+    (481, 78, 19, 2),
+    (482, 78, 5, 2),
+    (483, 78, 2, 2),
+    (484, 78, 10, 3),
+    (485, 78, 17, 3),
+    (486, 78, 16, 2),
+    (487, 79, 4, 1),
+    (488, 79, 1, 2),
+    (489, 79, 18, 2),
+    (490, 79, 3, 2),
+    (491, 79, 9, 1),
+    (492, 79, 10, 3),
+    (493, 79, 20, 3),
+    (494, 79, 8, 1),
+    (495, 80, 14, 1),
+    (496, 80, 6, 2),
+    (497, 80, 16, 3),
+    (498, 80, 11, 2),
+    (499, 80, 13, 3),
+    (500, 81, 2, 3),
+    (501, 81, 20, 3),
+    (502, 81, 17, 2),
+    (503, 82, 11, 1),
+    (504, 82, 9, 1),
+    (505, 82, 15, 1),
+    (506, 82, 18, 3),
+    (507, 83, 16, 3),
+    (508, 83, 15, 1),
+    (509, 83, 3, 1),
+    (510, 83, 14, 1),
+    (511, 83, 1, 2),
+    (512, 83, 5, 1),
+    (513, 83, 19, 2),
+    (514, 83, 8, 1),
+    (515, 83, 2, 2),
+    (516, 84, 15, 3),
+    (517, 84, 3, 1),
+    (518, 84, 7, 3),
+    (519, 84, 19, 2),
+    (520, 84, 10, 1),
+    (521, 84, 2, 1),
+    (522, 85, 17, 1),
+    (523, 85, 20, 1),
+    (524, 85, 10, 1),
+    (525, 85, 4, 1),
+    (526, 85, 19, 3),
+    (527, 86, 13, 3),
+    (528, 86, 9, 1),
+    (529, 86, 19, 3),
+    (530, 86, 4, 2),
+    (531, 87, 3, 1),
+    (532, 87, 10, 3),
+    (533, 87, 5, 3),
+    (534, 87, 12, 3),
+    (535, 87, 16, 3),
+    (536, 87, 17, 2),
+    (537, 87, 1, 3),
+    (538, 87, 4, 1),
+    (539, 88, 15, 3),
+    (540, 88, 9, 1),
+    (541, 88, 4, 1),
+    (542, 88, 7, 3),
+    (543, 88, 14, 1),
+    (544, 88, 19, 3),
+    (545, 89, 18, 2),
+    (546, 89, 13, 2),
+    (547, 89, 2, 3),
+    (548, 89, 7, 2),
+    (549, 89, 3, 3),
+    (550, 89, 9, 2),
+    (551, 89, 5, 2),
+    (552, 89, 15, 3),
+    (553, 89, 14, 3),
+    (554, 89, 6, 1),
+    (555, 90, 13, 2),
+    (556, 90, 2, 3),
+    (557, 90, 18, 2),
+    (558, 90, 16, 3),
+    (559, 90, 6, 1),
+    (560, 90, 15, 3),
+    (561, 91, 13, 2),
+    (562, 91, 9, 3),
+    (563, 91, 16, 3),
+    (564, 91, 3, 2),
+    (565, 91, 1, 2),
+    (566, 91, 8, 1),
+    (567, 92, 4, 2),
+    (568, 92, 8, 1),
+    (569, 92, 17, 3),
+    (570, 92, 6, 2),
+    (571, 92, 5, 3),
+    (572, 93, 2, 2),
+    (573, 94, 12, 3),
+    (574, 95, 16, 1),
+    (575, 95, 7, 2),
+    (576, 96, 10, 3),
+    (577, 96, 11, 3),
+    (578, 96, 14, 2),
+    (579, 97, 16, 2),
+    (580, 97, 20, 3),
+    (581, 97, 17, 1),
+    (582, 97, 13, 2),
+    (583, 97, 15, 3),
+    (584, 97, 3, 1),
+    (585, 98, 7, 2),
+    (586, 98, 8, 2),
+    (587, 98, 10, 2),
+    (588, 98, 3, 2),
+    (589, 98, 20, 1),
+    (590, 98, 18, 2),
+    (591, 98, 5, 1),
+    (592, 98, 15, 2),
+    (593, 98, 17, 1),
+    (594, 99, 16, 3),
+    (595, 99, 19, 3),
+    (596, 99, 1, 2),
+    (597, 99, 7, 2),
+    (598, 99, 15, 3),
+    (599, 99, 2, 1),
+    (600, 99, 18, 3),
+    (601, 99, 13, 3),
+    (602, 99, 12, 3),
+    (603, 99, 6, 3),
+    (604, 100, 20, 3),
+    (605, 100, 17, 2),
+    (606, 100, 13, 2),
+    (607, 100, 2, 1),
+    (608, 100, 11, 3),
+    (609, 100, 10, 2),
+    (610, 100, 4, 2),
+    (611, 100, 9, 1),
+    (612, 101, 19, 3),
+    (613, 101, 7, 1),
+    (614, 101, 1, 3),
+    (615, 102, 8, 3),
+    (616, 102, 3, 1),
+    (617, 102, 14, 3),
+    (618, 102, 10, 1),
+    (619, 103, 7, 1),
+    (620, 104, 4, 1),
+    (621, 105, 6, 3),
+    (622, 105, 9, 1),
+    (623, 105, 1, 1),
+    (624, 106, 12, 3),
+    (625, 106, 15, 3),
+    (626, 106, 5, 2),
+    (627, 106, 20, 3),
+    (628, 106, 18, 3),
+    (629, 106, 19, 1),
+    (630, 106, 9, 1),
+    (631, 106, 4, 1),
+    (632, 106, 17, 3),
+    (633, 106, 14, 3),
+    (634, 107, 16, 2),
+    (635, 107, 11, 1),
+    (636, 107, 2, 3),
+    (637, 107, 10, 2),
+    (638, 107, 8, 3),
+    (639, 107, 6, 3),
+    (640, 107, 19, 1),
+    (641, 107, 7, 1),
+    (642, 107, 3, 3),
+    (643, 107, 13, 3),
+    (644, 107, 4, 1),
+    (645, 108, 11, 2),
+    (646, 108, 19, 2),
+    (647, 108, 7, 3),
+    (648, 108, 16, 2),
+    (649, 108, 1, 1),
+    (650, 108, 20, 3),
+    (651, 109, 1, 3),
+    (652, 109, 9, 3),
+    (653, 109, 14, 2),
+    (654, 109, 16, 2),
+    (655, 109, 15, 1),
+    (656, 109, 10, 3),
+    (657, 109, 17, 2),
+    (658, 109, 19, 1),
+    (659, 109, 18, 3),
+    (660, 110, 11, 3),
+    (661, 110, 20, 2),
+    (662, 111, 2, 2),
+    (663, 111, 20, 3),
+    (664, 111, 14, 3),
+    (665, 111, 7, 1),
+    (666, 111, 8, 2),
+    (667, 111, 1, 2),
+    (668, 112, 3, 1),
+    (669, 112, 7, 2),
+    (670, 112, 1, 3),
+    (671, 113, 15, 2),
+    (672, 113, 1, 3),
+    (673, 113, 16, 2),
+    (674, 113, 19, 2),
+    (675, 114, 19, 3),
+    (676, 114, 4, 2),
+    (677, 114, 18, 2),
+    (678, 114, 7, 3),
+    (679, 115, 5, 3),
+    (680, 115, 19, 1),
+    (681, 115, 18, 2),
+    (682, 115, 1, 1),
+    (683, 116, 18, 2),
+    (684, 116, 16, 1),
+    (685, 116, 6, 3),
+    (686, 116, 8, 2),
+    (687, 116, 15, 2),
+    (688, 116, 7, 2),
+    (689, 116, 10, 2),
+    (690, 116, 2, 2),
+    (691, 116, 17, 1),
+    (692, 116, 3, 1),
+    (693, 116, 1, 2),
+    (694, 117, 1, 1),
+    (695, 117, 17, 3),
+    (696, 117, 15, 2),
+    (697, 117, 20, 1),
+    (698, 117, 2, 1),
+    (699, 118, 12, 2),
+    (700, 118, 10, 3),
+    (701, 118, 14, 1),
+    (702, 118, 2, 3),
+    (703, 118, 9, 3),
+    (704, 118, 7, 1),
+    (705, 118, 16, 1),
+    (706, 118, 13, 1),
+    (707, 118, 1, 1),
+    (708, 119, 1, 2),
+    (709, 120, 10, 2),
+    (710, 120, 6, 2),
+    (711, 120, 8, 1),
+    (712, 120, 18, 1),
+    (713, 120, 3, 2),
+    (714, 121, 5, 2),
+    (715, 121, 6, 1),
+    (716, 121, 13, 1),
+    (717, 121, 1, 3),
+    (718, 121, 18, 3),
+    (719, 121, 20, 3),
+    (720, 122, 6, 2),
+    (721, 122, 8, 3),
+    (722, 122, 14, 2),
+    (723, 122, 19, 1),
+    (724, 122, 9, 1),
+    (725, 122, 10, 2),
+    (726, 122, 12, 2),
+    (727, 122, 4, 1),
+    (728, 122, 13, 2),
+    (729, 123, 1, 2),
+    (730, 123, 8, 3),
+    (731, 123, 9, 1),
+    (732, 123, 5, 1),
+    (733, 123, 20, 3),
+    (734, 124, 18, 2),
+    (735, 125, 17, 3),
+    (736, 125, 5, 3),
+    (737, 125, 1, 2),
+    (738, 125, 9, 2),
+    (739, 125, 6, 1),
+    (740, 125, 4, 1),
+    (741, 125, 13, 1),
+    (742, 125, 20, 3),
+    (743, 125, 3, 3),
+    (744, 125, 11, 2),
+    (745, 126, 3, 2),
+    (746, 126, 16, 2),
+    (747, 126, 19, 2),
+    (748, 126, 4, 3),
+    (749, 126, 2, 1),
+    (750, 126, 1, 1),
+    (751, 127, 18, 1),
+    (752, 127, 11, 2),
+    (753, 127, 1, 3),
+    (754, 127, 17, 2),
+    (755, 128, 17, 1),
+    (756, 128, 14, 3),
+    (757, 128, 7, 3),
+    (758, 128, 9, 3),
+    (759, 128, 8, 3),
+    (760, 128, 12, 1),
+    (761, 128, 13, 3),
+    (762, 129, 1, 3),
+    (763, 129, 16, 3),
+    (764, 129, 2, 1),
+    (765, 129, 8, 3),
+    (766, 129, 18, 1),
+    (767, 129, 3, 2),
+    (768, 129, 17, 1),
+    (769, 129, 4, 1),
+    (770, 130, 10, 1),
+    (771, 130, 2, 2),
+    (772, 130, 14, 3),
+    (773, 130, 11, 2),
+    (774, 130, 13, 3),
+    (775, 130, 9, 1),
+    (776, 130, 15, 2),
+    (777, 130, 1, 3),
+    (778, 131, 1, 2),
+    (779, 131, 17, 2),
+    (780, 132, 3, 1),
+    (781, 132, 16, 1),
+    (782, 132, 7, 3),
+    (783, 132, 18, 2),
+    (784, 132, 5, 2),
+    (785, 132, 8, 3),
+    (786, 132, 13, 3),
+    (787, 132, 4, 2),
+    (788, 133, 10, 3),
+    (789, 133, 13, 1),
+    (790, 133, 1, 3),
+    (791, 133, 15, 2),
+    (792, 133, 20, 2),
+    (793, 133, 16, 3),
+    (794, 133, 5, 3),
+    (795, 133, 6, 3),
+    (796, 133, 7, 1),
+    (797, 133, 11, 1),
+    (798, 134, 10, 3),
+    (799, 134, 4, 3),
+    (800, 134, 2, 3),
+    (801, 134, 7, 2),
+    (802, 134, 5, 3),
+    (803, 134, 16, 3),
+    (804, 134, 11, 1),
+    (805, 134, 12, 2),
+    (806, 134, 3, 3),
+    (807, 134, 19, 1),
+    (808, 134, 8, 3),
+    (809, 135, 4, 3),
+    (810, 135, 1, 2),
+    (811, 135, 8, 2),
+    (812, 135, 18, 3),
+    (813, 135, 3, 2),
+    (814, 136, 15, 2),
+    (815, 136, 20, 3),
+    (816, 136, 13, 1),
+    (817, 136, 16, 1),
+    (818, 136, 19, 2),
+    (819, 136, 7, 1),
+    (820, 137, 6, 3),
+    (821, 137, 11, 3),
+    (822, 138, 3, 1),
+    (823, 138, 11, 1),
+    (824, 139, 19, 1),
+    (825, 139, 8, 1),
+    (826, 139, 9, 2),
+    (827, 139, 3, 1),
+    (828, 140, 19, 2),
+    (829, 140, 3, 1),
+    (830, 140, 7, 2),
+    (831, 140, 11, 2),
+    (832, 140, 6, 2),
+    (833, 140, 13, 3),
+    (834, 140, 2, 1),
+    (835, 141, 9, 3),
+    (836, 141, 18, 2),
+    (837, 141, 20, 2),
+    (838, 141, 11, 1),
+    (839, 141, 3, 2),
+    (840, 141, 6, 2),
+    (841, 142, 16, 1),
+    (842, 142, 19, 2),
+    (843, 142, 13, 2),
+    (844, 143, 13, 3),
+    (845, 143, 4, 3),
+    (846, 143, 11, 1),
+    (847, 143, 1, 1),
+    (848, 143, 18, 2),
+    (849, 143, 2, 1),
+    (850, 143, 17, 1),
+    (851, 143, 16, 3),
+    (852, 143, 10, 1),
+    (853, 144, 6, 2),
+    (854, 144, 18, 3),
+    (855, 144, 13, 1),
+    (856, 144, 5, 3),
+    (857, 144, 15, 1),
+    (858, 144, 2, 3),
+    (859, 144, 4, 3),
+    (860, 144, 8, 3),
+    (861, 144, 11, 3),
+    (862, 144, 12, 1),
+    (863, 144, 7, 1),
+    (864, 145, 1, 1),
+    (865, 145, 12, 3),
+    (866, 145, 11, 3),
+    (867, 145, 16, 3),
+    (868, 145, 6, 3),
+    (869, 146, 14, 2),
+    (870, 147, 9, 1),
+    (871, 147, 12, 2),
+    (872, 148, 7, 3),
+    (873, 148, 16, 1),
+    (874, 148, 12, 2),
+    (875, 148, 13, 2),
+    (876, 148, 20, 2),
+    (877, 148, 11, 1),
+    (878, 148, 14, 3),
+    (879, 149, 5, 1),
+    (880, 149, 11, 3),
+    (881, 149, 19, 3),
+    (882, 149, 20, 3),
+    (883, 149, 9, 3),
+    (884, 149, 14, 3),
+    (885, 149, 3, 2),
+    (886, 150, 5, 2),
+    (887, 150, 14, 1),
+    (888, 150, 1, 3),
+    (889, 150, 13, 1),
+    (890, 151, 16, 2),
+    (891, 151, 10, 3),
+    (892, 151, 4, 3),
+    (893, 151, 6, 3),
+    (894, 151, 9, 3),
+    (895, 151, 5, 2);
 SET IDENTITY_INSERT OrderDetails OFF;
 
 
 
 
--- Populating Expenses
+
+
+
 SET IDENTITY_INSERT Expenses ON;
 INSERT INTO Expenses (expense_id, coffee_store_id, cost, date, expense_type) VALUES
-     (1, 1, 480.13, '2023-12-01', 'Electricity'),
-     (2, 1, 180.72, '2023-12-01', 'Water'),
-     (3, 1, 1302.16, '2023-12-01', 'Salaries'),
-     (4, 1, 534.05, '2023-12-01', 'Rent'),
-     (5, 1, 288.39, '2023-12-01', 'Repairs'),
-     (6, 2, 571.98, '2023-12-01', 'Electricity'),
-     (7, 2, 246.75, '2023-12-01', 'Water'),
-     (8, 2, 1217.79, '2023-12-01', 'Salaries'),
-     (9, 2, 582.67, '2023-12-01', 'Rent'),
-     (10, 3, 570.28, '2023-12-01', 'Electricity'),
-     (11, 3, 200.49, '2023-12-01', 'Water'),
-     (12, 3, 1364.77, '2023-12-01', 'Salaries'),
-     (13, 3, 545.73, '2023-12-01', 'Rent'),
-     (14, 3, 755.8, '2023-12-01', 'Equipment'),
-     (15, 3, 315.99, '2023-12-01', 'Repairs'),
-     (16, 1, 540.83, '2023-12-31', 'Electricity'),
-     (17, 1, 169.49, '2023-12-31', 'Water'),
-     (18, 1, 1594.34, '2023-12-31', 'Salaries'),
-     (19, 1, 660.47, '2023-12-31', 'Rent'),
-     (20, 1, 856.88, '2023-12-31', 'Marketing'),
-     (21, 2, 492.39, '2023-12-31', 'Electricity'),
-     (22, 2, 162.33, '2023-12-31', 'Water'),
-     (23, 2, 1209.07, '2023-12-31', 'Salaries'),
-     (24, 2, 522.78, '2023-12-31', 'Rent'),
-     (25, 2, 1130.47, '2023-12-31', 'Marketing'),
-     (26, 2, 954.3, '2023-12-31', 'Equipment'),
-     (27, 3, 567.63, '2023-12-31', 'Electricity'),
-     (28, 3, 167.59, '2023-12-31', 'Water'),
-     (29, 3, 1500.26, '2023-12-31', 'Salaries'),
-     (30, 3, 543.42, '2023-12-31', 'Rent'),
-     (31, 3, 993.61, '2023-12-31', 'Equipment'),
-     (32, 3, 332.57, '2023-12-31', 'Repairs'),
-     (33, 1, 451.34, '2024-01-30', 'Electricity'),
-     (34, 1, 198.57, '2024-01-30', 'Water'),
-     (35, 1, 1570.41, '2024-01-30', 'Salaries'),
-     (36, 1, 759.52, '2024-01-30', 'Rent'),
-     (37, 2, 571.05, '2024-01-30', 'Electricity'),
-     (38, 2, 225.78, '2024-01-30', 'Water'),
-     (39, 2, 1316.35, '2024-01-30', 'Salaries'),
-     (40, 2, 730.75, '2024-01-30', 'Rent'),
-     (41, 2, 444.74, '2024-01-30', 'Repairs'),
-     (42, 3, 461.99, '2024-01-30', 'Electricity'),
-     (43, 3, 213.14, '2024-01-30', 'Water'),
-     (44, 3, 1448.84, '2024-01-30', 'Salaries'),
-     (45, 3, 748.96, '2024-01-30', 'Rent'),
-     (46, 3, 1168.04, '2024-01-30', 'Marketing'),
-     (47, 3, 704.64, '2024-01-30', 'Equipment'),
-     (48, 3, 231.11, '2024-01-30', 'Repairs'),
-     (49, 1, 590.61, '2024-02-29', 'Electricity'),
-     (50, 1, 217.47, '2024-02-29', 'Water'),
-     (51, 1, 1339.92, '2024-02-29', 'Salaries'),
-     (52, 1, 700.26, '2024-02-29', 'Rent'),
-     (53, 1, 735.11, '2024-02-29', 'Equipment'),
-     (54, 1, 455.96, '2024-02-29', 'Repairs'),
-     (55, 2, 595.6, '2024-02-29', 'Electricity'),
-     (56, 2, 187.93, '2024-02-29', 'Water'),
-     (57, 2, 1220.17, '2024-02-29', 'Salaries'),
-     (58, 2, 726.34, '2024-02-29', 'Rent'),
-     (59, 2, 1056.93, '2024-02-29', 'Marketing'),
-     (60, 2, 970.33, '2024-02-29', 'Equipment'),
-     (61, 2, 497.35, '2024-02-29', 'Repairs'),
-     (62, 3, 469.63, '2024-02-29', 'Electricity'),
-     (63, 3, 201.05, '2024-02-29', 'Water'),
-     (64, 3, 1511.22, '2024-02-29', 'Salaries'),
-     (65, 3, 716.53, '2024-02-29', 'Rent'),
-     (66, 3, 815.99, '2024-02-29', 'Marketing'),
-     (67, 3, 737.56, '2024-02-29', 'Equipment'),
-     (68, 1, 546.18, '2024-03-30', 'Electricity'),
-     (69, 1, 187.13, '2024-03-30', 'Water'),
-     (70, 1, 1438.89, '2024-03-30', 'Salaries'),
-     (71, 1, 794.05, '2024-03-30', 'Rent'),
-     (72, 1, 922.17, '2024-03-30', 'Marketing'),
-     (73, 1, 426.66, '2024-03-30', 'Repairs'),
-     (74, 2, 474.19, '2024-03-30', 'Electricity'),
-     (75, 2, 178.35, '2024-03-30', 'Water'),
-     (76, 2, 1404.41, '2024-03-30', 'Salaries'),
-     (77, 2, 520.58, '2024-03-30', 'Rent'),
-     (78, 2, 1170.93, '2024-03-30', 'Marketing'),
-     (79, 2, 839.12, '2024-03-30', 'Equipment'),
-     (80, 2, 225.91, '2024-03-30', 'Repairs'),
-     (81, 3, 435.11, '2024-03-30', 'Electricity'),
-     (82, 3, 193.31, '2024-03-30', 'Water'),
-     (83, 3, 1300.87, '2024-03-30', 'Salaries'),
-     (84, 3, 581.68, '2024-03-30', 'Rent'),
-     (85, 1, 529.02, '2024-04-29', 'Electricity'),
-     (86, 1, 201.59, '2024-04-29', 'Water'),
-     (87, 1, 1305.96, '2024-04-29', 'Salaries'),
-     (88, 1, 592.26, '2024-04-29', 'Rent'),
-     (89, 1, 1133.43, '2024-04-29', 'Marketing'),
-     (90, 1, 755.24, '2024-04-29', 'Equipment'),
-     (91, 1, 446.62, '2024-04-29', 'Repairs'),
-     (92, 2, 454.79, '2024-04-29', 'Electricity'),
-     (93, 2, 240.95, '2024-04-29', 'Water'),
-     (94, 2, 1554.67, '2024-04-29', 'Salaries'),
-     (95, 2, 535.74, '2024-04-29', 'Rent'),
-     (96, 2, 229.71, '2024-04-29', 'Repairs'),
-     (97, 3, 424.68, '2024-04-29', 'Electricity'),
-     (98, 3, 167.08, '2024-04-29', 'Water'),
-     (99, 3, 1222.25, '2024-04-29', 'Salaries'),
-     (100, 3, 700.83, '2024-04-29', 'Rent'),
-     (101, 3, 979.95, '2024-04-29', 'Marketing'),
-     (102, 3, 827.12, '2024-04-29', 'Equipment');
+     (1, 1, 195.56, '2023-10-01', 'Electricity'),
+     (2, 1, 163.17, '2023-10-01', 'Water'),
+     (3, 1, 1870.52, '2023-10-01', 'Salaries'),
+     (4, 1, 652.87, '2023-10-01', 'Rent'),
+     (5, 1, 1191.9, '2023-10-01', 'Marketing'),
+     (6, 1, 792.27, '2023-10-01', 'Equipment'),
+     (7, 1, 292.07, '2023-10-01', 'Repairs'),
+     (8, 2, 106.5, '2023-10-01', 'Electricity'),
+     (9, 2, 134.11, '2023-10-01', 'Water'),
+     (10, 2, 1621.66, '2023-10-01', 'Salaries'),
+     (11, 2, 630.85, '2023-10-01', 'Rent'),
+     (12, 2, 818.32, '2023-10-01', 'Marketing'),
+     (13, 2, 461.93, '2023-10-01', 'Repairs'),
+     (14, 3, 169.05, '2023-10-01', 'Electricity'),
+     (15, 3, 141.63, '2023-10-01', 'Water'),
+     (16, 3, 1707.73, '2023-10-01', 'Salaries'),
+     (17, 3, 574.9, '2023-10-01', 'Rent'),
+     (18, 1, 182.55, '2023-10-31', 'Electricity'),
+     (19, 1, 154.97, '2023-10-31', 'Water'),
+     (20, 1, 1594.1, '2023-10-31', 'Salaries'),
+     (21, 1, 625.56, '2023-10-31', 'Rent'),
+     (22, 1, 905.56, '2023-10-31', 'Marketing'),
+     (23, 1, 817.58, '2023-10-31', 'Equipment'),
+     (24, 2, 109.66, '2023-10-31', 'Electricity'),
+     (25, 2, 150.77, '2023-10-31', 'Water'),
+     (26, 2, 1701.91, '2023-10-31', 'Salaries'),
+     (27, 2, 707.45, '2023-10-31', 'Rent'),
+     (28, 2, 923.0, '2023-10-31', 'Equipment'),
+     (29, 3, 127.59, '2023-10-31', 'Electricity'),
+     (30, 3, 183.9, '2023-10-31', 'Water'),
+     (31, 3, 1932.63, '2023-10-31', 'Salaries'),
+     (32, 3, 730.6, '2023-10-31', 'Rent'),
+     (33, 3, 251.9, '2023-10-31', 'Repairs'),
+     (34, 1, 165.57, '2023-11-30', 'Electricity'),
+     (35, 1, 158.03, '2023-11-30', 'Water'),
+     (36, 1, 1813.41, '2023-11-30', 'Salaries'),
+     (37, 1, 675.6, '2023-11-30', 'Rent'),
+     (38, 1, 917.26, '2023-11-30', 'Equipment'),
+     (39, 1, 390.56, '2023-11-30', 'Repairs'),
+     (40, 2, 185.79, '2023-11-30', 'Electricity'),
+     (41, 2, 162.65, '2023-11-30', 'Water'),
+     (42, 2, 1705.82, '2023-11-30', 'Salaries'),
+     (43, 2, 551.6, '2023-11-30', 'Rent'),
+     (44, 2, 453.53, '2023-11-30', 'Repairs'),
+     (45, 3, 188.79, '2023-11-30', 'Electricity'),
+     (46, 3, 122.88, '2023-11-30', 'Water'),
+     (47, 3, 1954.57, '2023-11-30', 'Salaries'),
+     (48, 3, 530.52, '2023-11-30', 'Rent'),
+     (49, 3, 973.17, '2023-11-30', 'Marketing'),
+     (50, 1, 159.46, '2023-12-30', 'Electricity'),
+     (51, 1, 194.5, '2023-12-30', 'Water'),
+     (52, 1, 1579.51, '2023-12-30', 'Salaries'),
+     (53, 1, 654.92, '2023-12-30', 'Rent'),
+     (54, 1, 362.07, '2023-12-30', 'Repairs'),
+     (55, 2, 197.85, '2023-12-30', 'Electricity'),
+     (56, 2, 164.63, '2023-12-30', 'Water'),
+     (57, 2, 1910.78, '2023-12-30', 'Salaries'),
+     (58, 2, 621.14, '2023-12-30', 'Rent'),
+     (59, 2, 995.95, '2023-12-30', 'Equipment'),
+     (60, 2, 259.91, '2023-12-30', 'Repairs'),
+     (61, 3, 164.1, '2023-12-30', 'Electricity'),
+     (62, 3, 192.56, '2023-12-30', 'Water'),
+     (63, 3, 1658.04, '2023-12-30', 'Salaries'),
+     (64, 3, 599.62, '2023-12-30', 'Rent'),
+     (65, 3, 985.18, '2023-12-30', 'Equipment'),
+     (66, 1, 182.68, '2024-01-29', 'Electricity'),
+     (67, 1, 197.71, '2024-01-29', 'Water'),
+     (68, 1, 1941.31, '2024-01-29', 'Salaries'),
+     (69, 1, 565.0, '2024-01-29', 'Rent'),
+     (70, 1, 1053.97, '2024-01-29', 'Marketing'),
+     (71, 1, 977.97, '2024-01-29', 'Equipment'),
+     (72, 1, 333.5, '2024-01-29', 'Repairs'),
+     (73, 2, 108.95, '2024-01-29', 'Electricity'),
+     (74, 2, 195.37, '2024-01-29', 'Water'),
+     (75, 2, 1770.4, '2024-01-29', 'Salaries'),
+     (76, 2, 776.05, '2024-01-29', 'Rent'),
+     (77, 2, 750.67, '2024-01-29', 'Equipment'),
+     (78, 3, 164.39, '2024-01-29', 'Electricity'),
+     (79, 3, 135.65, '2024-01-29', 'Water'),
+     (80, 3, 1880.52, '2024-01-29', 'Salaries'),
+     (81, 3, 669.93, '2024-01-29', 'Rent'),
+     (82, 3, 378.61, '2024-01-29', 'Marketing'),
+     (83, 3, 344.52, '2024-01-29', 'Repairs'),
+     (84, 1, 194.61, '2024-02-28', 'Electricity'),
+     (85, 1, 120.46, '2024-02-28', 'Water'),
+     (86, 1, 1803.68, '2024-02-28', 'Salaries'),
+     (87, 1, 664.61, '2024-02-28', 'Rent'),
+     (88, 1, 571.25, '2024-02-28', 'Marketing'),
+     (89, 1, 752.63, '2024-02-28', 'Equipment'),
+     (90, 2, 156.28, '2024-02-28', 'Electricity'),
+     (91, 2, 145.04, '2024-02-28', 'Water'),
+     (92, 2, 1775.09, '2024-02-28', 'Salaries'),
+     (93, 2, 724.0, '2024-02-28', 'Rent'),
+     (94, 2, 979.73, '2024-02-28', 'Equipment'),
+     (95, 2, 338.54, '2024-02-28', 'Repairs'),
+     (96, 3, 143.79, '2024-02-28', 'Electricity'),
+     (97, 3, 196.05, '2024-02-28', 'Water'),
+     (98, 3, 1920.55, '2024-02-28', 'Salaries'),
+     (99, 3, 718.07, '2024-02-28', 'Rent'),
+     (100, 3, 748.73, '2024-02-28', 'Marketing'),
+     (101, 1, 196.28, '2024-03-29', 'Electricity'),
+     (102, 1, 144.93, '2024-03-29', 'Water'),
+     (103, 1, 1601.1, '2024-03-29', 'Salaries'),
+     (104, 1, 768.36, '2024-03-29', 'Rent'),
+     (105, 2, 144.8, '2024-03-29', 'Electricity'),
+     (106, 2, 128.74, '2024-03-29', 'Water'),
+     (107, 2, 1615.47, '2024-03-29', 'Salaries'),
+     (108, 2, 706.87, '2024-03-29', 'Rent'),
+     (109, 2, 439.68, '2024-03-29', 'Repairs'),
+     (110, 3, 141.0, '2024-03-29', 'Electricity'),
+     (111, 3, 174.24, '2024-03-29', 'Water'),
+     (112, 3, 1746.45, '2024-03-29', 'Salaries'),
+     (113, 3, 791.34, '2024-03-29', 'Rent'),
+     (114, 3, 870.07, '2024-03-29', 'Marketing'),
+     (115, 3, 794.27, '2024-03-29', 'Equipment'),
+     (116, 3, 291.3, '2024-03-29', 'Repairs'),
+     (117, 1, 186.06, '2024-04-28', 'Electricity'),
+     (118, 1, 124.08, '2024-04-28', 'Water'),
+     (119, 1, 1863.06, '2024-04-28', 'Salaries'),
+     (120, 1, 648.94, '2024-04-28', 'Rent'),
+     (121, 1, 931.82, '2024-04-28', 'Equipment'),
+     (122, 1, 466.33, '2024-04-28', 'Repairs'),
+     (123, 2, 166.59, '2024-04-28', 'Electricity'),
+     (124, 2, 141.83, '2024-04-28', 'Water'),
+     (125, 2, 1589.64, '2024-04-28', 'Salaries'),
+     (126, 2, 624.1, '2024-04-28', 'Rent'),
+     (127, 2, 319.68, '2024-04-28', 'Repairs'),
+     (128, 3, 135.47, '2024-04-28', 'Electricity'),
+     (129, 3, 156.91, '2024-04-28', 'Water'),
+     (130, 3, 1903.4, '2024-04-28', 'Salaries'),
+     (131, 3, 776.67, '2024-04-28', 'Rent'),
+     (132, 3, 853.79, '2024-04-28', 'Marketing'),
+     (133, 1, 142.65, '2024-05-28', 'Electricity'),
+     (134, 1, 192.63, '2024-05-28', 'Water'),
+     (135, 1, 1864.65, '2024-05-28', 'Salaries'),
+     (136, 1, 647.22, '2024-05-28', 'Rent'),
+     (137, 1, 804.9, '2024-05-28', 'Marketing'),
+     (138, 1, 703.35, '2024-05-28', 'Equipment'),
+     (139, 1, 267.64, '2024-05-28', 'Repairs'),
+     (140, 2, 164.46, '2024-05-28', 'Electricity'),
+     (141, 2, 122.3, '2024-05-28', 'Water'),
+     (142, 2, 1709.15, '2024-05-28', 'Salaries'),
+     (143, 2, 609.82, '2024-05-28', 'Rent'),
+     (144, 2, 533.59, '2024-05-28', 'Marketing'),
+     (145, 2, 732.65, '2024-05-28', 'Equipment'),
+     (146, 3, 110.23, '2024-05-28', 'Electricity'),
+     (147, 3, 179.15, '2024-05-28', 'Water'),
+     (148, 3, 1867.11, '2024-05-28', 'Salaries'),
+     (149, 3, 624.04, '2024-05-28', 'Rent'),
+     (150, 3, 301.0, '2024-05-28', 'Repairs');
 SET IDENTITY_INSERT Expenses OFF;
-

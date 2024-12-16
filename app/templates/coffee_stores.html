@@ -5,41 +5,55 @@
 {% endblock %}
 
 {% block content %}
-<div class="main-content">
-    <div class="details_container">
-        <div class="dropdown-container">
-            <label for="coffee-store-select">Select Coffee Store:</label>
-            <select id="coffee-store-select">
-                <option value="" disabled selected>Choose a coffee store</option>
-            </select>
-    
-            <label for="month-select">Select Month:</label>
-            <select id="month-select">
-                <option value="" disabled selected>Choose a month</option>
-                <option value="1">January</option>
-                <option value="2">February</option>
-                <option value="3">March</option>
-                <!-- Continuă pentru toate lunile -->
-            </select>
-    
-            <label for="year-select">Select Year:</label>
-            <select id="year-select">
-                <option value="" disabled selected>Choose a year</option>
-                <option value="2024">2024</option>
-                <option value="2023">2023</option>
-                <!-- Adaugă alte opțiuni de ani -->
-            </select>
+<div class="details_container">
+    <!-- Dropdowns Column -->
+    <div class="dropdown-container">
+        <label for="coffee-store-select">Select Coffee Store:</label>
+        <select id="coffee-store-select">
+            <option value="" disabled selected>Choose a coffee store</option>
+        </select>
+
+        <label for="year-select">Select Year:</label>
+        <select id="year-select">
+            <option value="" disabled selected>Choose a year</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+        </select>
+
+        <label for="month-select">Select Month:</label>
+        <select id="month-select">
+            <option value="" disabled selected>Choose a month</option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+        </select>
+
+
+    </div>
+
+    <!-- Details Column -->
+    <div id="coffee-store-details">
+        <div id="loading-spinner" class="text-center d-none">
+            <div class="spinner-border text-light" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p>Loading details...</p>
         </div>
-    
-        <div id="coffee-store-details" style="margin-top: 20px;">
-            <!-- Detaliile cafenelei vor fi afișate aici -->
+        <div id="details-content">
+            <h3 class="text-center">Details will appear here</h3>
         </div>
+    </div>
+</div>
+
+<div class="details_container">
+    <div id="graph-container">
+        <!-- Graph will be rendered here -->
     </div>
 </div>
 
 <script>
     $(document).ready(function () {
-        // Populează dropdown-ul cu cafenele
+        // Populate dropdown with coffee stores
         $.get('/api/coffee_stores_list', function (data) {
             const dropdown = $('#coffee-store-select');
             data.forEach(item => {
@@ -47,31 +61,111 @@
             });
         });
 
-        // Eveniment pentru selectarea cafenelei și a datei
+        // Fetch details when all dropdowns are selected
         $('.dropdown-container select').change(function () {
             const storeId = $('#coffee-store-select').val();
             const month = $('#month-select').val();
             const year = $('#year-select').val();
+            const detailsDiv = $('#details-content');
+            const spinner = $('#loading-spinner');
 
             if (storeId && month && year) {
+                detailsDiv.addClass('d-none'); // Hide content
+                spinner.removeClass('d-none'); // Show spinner
+
                 $.get(`/api/coffee_store_details/${storeId}/${month}/${year}`, function (data) {
-                    const detailsDiv = $('#coffee-store-details');
+                    spinner.addClass('d-none'); // Hide spinner
+                    detailsDiv.removeClass('d-none'); // Show content
                     detailsDiv.empty();
-                    detailsDiv.append(`
-                        <h3>${data.name}</h3>
-                        <p>City: ${data.city}</p>
-                        <p>Revenue Goal: ${data.revenue_goal}</p>
-                        <p>Manager: ${data.manager}</p>
-                        <p>Top Product: ${data.top_product}</p>
-                        <p>Total Revenue: ${data.total_revenue}</p>
-                    `);
+
+                    if (data.error) {
+                        detailsDiv.append(`<p class="text-danger text-center">${data.error}</p>`);
+                    } else {
+                        detailsDiv.append(`
+                            <h3 class="text-center">${data.name}</h3>
+                            <p><strong>City:</strong> ${data.city}</p>
+                            <p><strong>Revenue Goal:</strong> ${data.revenue_goal}</p>
+                            <p><strong>Manager:</strong> ${data.manager}</p>
+                            <p><strong>Top Product:</strong> ${data.top_product || 'No data'}</p>
+                            <p><strong>Total Revenue:</strong> ${data.total_revenue || 0}</p>
+                        `);
+                    }
                 }).fail(function () {
-                    alert('Failed to load details.');
+                    spinner.addClass('d-none');
+                    detailsDiv.removeClass('d-none').html('<p class="text-danger">Failed to load details. Please try again.</p>');
                 });
             }
         });
+        
+
+        function fetchAndPlotGraph() {
+            const storeId = $('#coffee-store-select').val(); // Get store ID from dropdown
+            const year = $('#year-select').val(); // Get selected year from dropdown
+
+            if (storeId && year) {
+                $.get('/api/monthly_sales_expenses', { store_id: storeId, year: year }, function (data) {
+                    if (data.error) {
+                        console.error(data.error);
+                        alert('Error fetching graph data.');
+                        return;
+                    }
+
+                    // Map for actual month names
+                    const monthNames = ["January", "February", "March", "April", "May", "June", 
+                                        "July", "August", "September", "October", "November", "December"];
+
+                    // Extract months, revenues, and expenses
+                    const months = data.map(item => monthNames[item.month - 1]).reverse();
+                    const revenues = data.map(item => item.monthly_revenue).reverse();
+                    const expenses = data.map(item => item.monthly_expenses).reverse();
+
+
+                    // Define traces for revenue and expenses as lines
+                    const revenueTrace = {
+                        x: months,
+                        y: revenues,
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        name: 'Revenue',
+                        line: { color: '#BE7462', width: 2 },
+                        marker: { size: 6 }
+                    };
+
+                    const expenseTrace = {
+                        x: months,
+                        y: expenses,
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        name: 'Expenses',
+                        line: { color: '#514A73', width: 2 },
+                        marker: { size: 6 }
+                    };
+
+                    // Layout for the graph
+                    const layout = {
+                        title: `Monthly Revenue and Expenses - Year ${year}`,
+                        paper_bgcolor: '#312a55',
+                        plot_bgcolor: '#312a55',
+                        font: { color: 'white' },
+                        xaxis: { title: 'Month', tickangle: -45 },
+                        yaxis: { title: 'Amount ($)' },
+                        margin: { t: 50, b: 80, l: 60, r: 30 },
+                        showlegend: true
+                    };
+
+                    // Render the graph with Plotly
+                    Plotly.newPlot('graph-container', [revenueTrace, expenseTrace], layout);
+                }).fail(function () {
+                    alert('Failed to fetch graph data. Please try again.');
+                });
+            }
+        }
+
+            
+
+    // Attach event to fetch and plot graph when dropdowns are changed
+    $('.dropdown-container select').change(fetchAndPlotGraph);
+
     });
 </script>
-
-
 {% endblock %}

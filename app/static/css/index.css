@@ -48,9 +48,21 @@ body {
 }
 
 .report-text.active {
-    color: #FFFFFF;
+    background: #3A324F;
+    border-radius: 0.5vw;
+    color: white;
     font-weight: bold;
+    padding: 10px;
 }
+
+.report-text:hover {
+    background: #564b72;
+    border-radius: 0.5vw;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+}
+
 
 .selected-report {
     background: #514A73;

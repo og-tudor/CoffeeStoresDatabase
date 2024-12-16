@@ -4,16 +4,16 @@ from datetime import datetime, timedelta
 # Define constants
 coffee_stores = [1, 2, 3]
 expense_types = {
-    "Electricity": (400, 600),
-    "Water": (150, 250),
-    "Salaries": (1200, 1600),
+    "Electricity": (100, 200),
+    "Water": (120, 200),
+    "Salaries": (1500, 2000),
     "Rent": (500, 800),
-    "Marketing": (800, 1200),
+    "Marketing": (300, 1200),
     "Equipment": (700, 1000),
     "Repairs": (200, 500)
 }
-start_date = datetime(2023, 12, 1)
-end_date = datetime(2024, 5, 1)
+start_date = datetime(2023, 10, 1)
+end_date = datetime(2024, 6, 1)
 
 # Generate expenses
 def generate_expenses():
