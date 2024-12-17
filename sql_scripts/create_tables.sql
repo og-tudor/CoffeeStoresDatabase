@@ -34,6 +34,7 @@ CREATE TABLE Employees (
                            chain_id BIGINT,
                            first_name VARCHAR(100) NOT NULL,
                            last_name VARCHAR(100) NOT NULL,
+                           salary DECIMAL(10, 2) NOT NULL,
                            birth_date DATE,
                            hire_date DATE NOT NULL,
                            phone VARCHAR(20),
@@ -58,13 +59,19 @@ CREATE TABLE Customers (
                            name VARCHAR(100) NOT NULL,
                            email VARCHAR(100) UNIQUE NOT NULL,
                            phone_number VARCHAR(20),
-                           registration_date DATE DEFAULT GETDATE()
+                           registration_date DATE DEFAULT GETDATE(),
+                           preffered_chain_id BIGINT NULL,
+                           CONSTRAINT FK_Customers_CoffeeStores FOREIGN KEY (preffered_chain_id)
+                               REFERENCES CoffeeStores(coffee_store_id)
 );
+
+
+
 
 -- 7. Orders
 CREATE TABLE Orders (
                         order_id BIGINT PRIMARY KEY IDENTITY(1,1),
-                        customer_id BIGINT,
+                        customer_id BIGINT NULL,
                         employee_id BIGINT,
                         coffee_store_id BIGINT,
                         order_date DATETIME DEFAULT GETDATE(),

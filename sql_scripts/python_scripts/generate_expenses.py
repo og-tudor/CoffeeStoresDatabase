@@ -6,10 +6,10 @@ coffee_stores = [1, 2, 3]
 expense_types = {
     "Electricity": (100, 200),
     "Water": (120, 200),
-    "Salaries": (1500, 2000),
-    "Rent": (500, 800),
+    "Salaries": (19000, 50000),
+    "Rent": (500, 500),
     "Marketing": (300, 1200),
-    "Equipment": (700, 1000),
+    "Equipment": (200, 1000),
     "Repairs": (200, 500)
 }
 start_date = datetime(2023, 10, 1)

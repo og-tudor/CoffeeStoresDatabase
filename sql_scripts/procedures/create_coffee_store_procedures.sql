@@ -1,19 +1,3 @@
--- afiseaza toate cafenelele, orasul in care se afla si obiectivul de venituri si managerul responsabil
-CREATE or ALTER PROCEDURE GetCoffeeStoresRevenue
-AS
-    BEGIN
-        SELECT cs.store_name AS 'Coffee Store',
-               l.city AS 'City',
-               cs.revenue_goal AS 'Revenue Goal',
-               e.last_name + ' ' + e.first_name as 'Manager'
-        FROM CoffeeStores cs
-            JOIN Locations l ON cs.location_id = l.location_id
-            JOIN Employees e on cs.manager_id = e.employee_id
-    end;
-
-EXECUTE GetCoffeeStoresRevenue;
-
-
 -- afiseaza veniturile si cheltuielile lunare per cafenea
 
 CREATE FUNCTION GetMonthlyRevenue
@@ -95,54 +79,68 @@ END;
 
 -- procedura pentru a afisa detalii despre o cafena
 CREATE OR ALTER PROCEDURE GetCoffeeStoreDetails
-    @store_id INT,
-    @month INT,
-    @year INT
+    @store_id INT
 AS
 BEGIN
-    -- Declarăm variabile locale
-    DECLARE @store_name NVARCHAR(100);
-    DECLARE @city NVARCHAR(100);
-    DECLARE @revenue_goal DECIMAL(10,2);
-    DECLARE @manager_name NVARCHAR(100);
-
-    -- Extragem datele principale pentru cafenea
-    SELECT
-        @store_name = cs.store_name,
-        @city = l.city,
-        @revenue_goal = cs.revenue_goal,
-        @manager_name = CONCAT(e.first_name, ' ', e.last_name)
+    SELECT cs.store_name AS 'Store Name',
+        l.city AS 'City',
+        l.address AS 'Address',
+        e.last_name + ' ' + e.first_name as 'Manager',
+        cs.revenue_goal AS 'Monthly Revenue Goal',
+        SUM(od.quantity * p.unit_price) as 'Total Revenue'
     FROM CoffeeStores cs
-             LEFT JOIN Employees e ON cs.manager_id = e.employee_id
-             JOIN Locations l ON cs.location_id = l.location_id
-    WHERE cs.coffee_store_id = @store_id;
-
-    -- Returnăm datele împreună cu subquery-urile filtrate
-    SELECT
-        @store_name AS store_name,
-        @city AS city,
-        @revenue_goal AS revenue_goal,
-        @manager_name AS manager_name,
-        -- Subquery pentru top product
-        (SELECT TOP 1 p.name
-         FROM Products p
-                  JOIN OrderDetails od ON p.product_id = od.product_id
-                  JOIN Orders o ON od.order_id = o.order_id
-         WHERE o.coffee_store_id = @store_id
-           AND MONTH(o.order_date) = @month
-           AND YEAR(o.order_date) = @year
-         GROUP BY p.name
-         ORDER BY SUM(od.quantity) DESC) AS top_product,
-        -- Subquery pentru total revenue
-        (SELECT SUM(od.quantity * p.unit_price)
-         FROM Products p
-                  JOIN OrderDetails od ON p.product_id = od.product_id
-                  JOIN Orders o ON od.order_id = o.order_id
-         WHERE o.coffee_store_id = @store_id
-           AND MONTH(o.order_date) = @month
-           AND YEAR(o.order_date) = @year) AS total_revenue;
+        JOIN Employees e on cs.manager_id = e.employee_id
+        JOIN Locations l on cs.location_id = l.location_id
+        JOIN Orders o on cs.coffee_store_id = o.coffee_store_id
+        JOIN OrderDetails od on o.order_id = od.order_id
+        JOIN Products p on od.product_id = p.product_id
+    WHERE cs.coffee_store_id = @store_id
+    group by cs.revenue_goal, e.last_name, l.address, l.city, cs.store_name, e.first_name;
 END;
 
 
 
-EXECUTE GetCoffeeStoreDetails @store_id = 1 , @month = 4, @year = 2024;
+EXECUTE GetCoffeeStoreDetails @store_id = 1;
+
+
+-- how many customers aren't registered in the loyalty program
+CREATE OR ALTER PROCEDURE GetUnregisteredCustomers
+AS
+BEGIN
+    SELECT count(*) as 'Unregistered Customers',
+           o.coffee_store_id
+    FROM Orders o
+    WHERE o.customer_id IS NULL
+    group by o.coffee_store_id
+END;
+
+-- how many customers are / aren't registered in the loyalty program per store
+    CREATE OR ALTER PROCEDURE GetRegisteredANDUnregisteredCustomers
+    @store_id INT
+    AS
+    BEGIN
+        SELECT
+            COALESCE(r.coffee_store_id, u.coffee_store_id) AS coffee_store_id,
+            ISNULL(r.Registered_Customers, 0) AS Registered_Customers,
+            ISNULL(u.Unregistered_Customers, 0) AS Unregistered_Customers
+        FROM
+            -- Subquery pentru clienți înregistrați
+            (SELECT
+                 preffered_chain_id AS coffee_store_id,
+                 COUNT(*) AS Registered_Customers
+             FROM Customers
+             GROUP BY preffered_chain_id) AS r
+                FULL OUTER JOIN
+            -- Subquery pentru clienți neînregistrați
+                (SELECT
+                     o.coffee_store_id,
+                     COUNT(*) AS Unregistered_Customers
+                 FROM Orders o
+                 WHERE o.customer_id IS NULL
+                 GROUP BY o.coffee_store_id) AS u
+            ON r.coffee_store_id = u.coffee_store_id
+        WHERE COALESCE(r.coffee_store_id, u.coffee_store_id) = @store_id;
+    END;
+
+
+EXECUTE GetRegisteredANDUnregisteredCustomers @store_id = 2;

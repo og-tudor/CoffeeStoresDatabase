@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block extra_styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/coffee_stores.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -20,6 +20,15 @@
             <option value="2023">2023</option>
         </select>
 
+        <!-- <label for="month-select">Select Month:</label>
+        <select id="month-select">
+            <option value="" disabled selected>Choose a month</option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+        </select> -->
+
+
     </div>
 
     <!-- Details Column -->
@@ -30,23 +39,16 @@
             </div>
             <p>Loading details...</p>
         </div>
-        <div class="details-and-chart">
-            <!-- Left Column: Details -->
-            <div id="details-content" class="details-column">
-                <h3 class="text-center">Details will appear here</h3>
-            </div>
-            
-            <!-- Right Column: Pie Chart -->
-            <div id="registerd_unregistered_customers" class="chart-column">
-                <!-- Pie chart will render here -->
-            </div>
+        <div id="details-content">
+            <h3 class="text-center">Details will appear here</h3>
         </div>
     </div>
-    
 </div>
 
-<div id="graph-container">
-    <!-- Graph will be rendered here -->
+<div class="details_container">
+    <div id="graph-container">
+        <!-- Graph will be rendered here -->
+    </div>
 </div>
 
 <script>
@@ -99,58 +101,6 @@
                 });
             }
         });
-
-        function fetchAndPlotPieChart() {
-            const storeId = $('#coffee-store-select').val(); // Get store ID from dropdown
-
-            if (storeId) {
-                $.get('/api/registered_unregistered_customers', { store_id: storeId }, function (data) {
-                    console.log('API Response:', data); // Debug: Check API response
-
-                    if (data.error) {
-                        console.error(data.error);
-                        alert('Error fetching pie chart data.');
-                        return;
-                    }
-
-                    console.log('API Response:', data);
-
-
-                    // Extract registered and unregistered customer counts
-                    const registeredCount = data.registered_customers || 0;
-                    const unregisteredCount = data.unregistered_customers || 0;
-
-                    // Define data for the pie chart
-                    const chartData = [{
-                        values: [registeredCount, unregisteredCount],
-                        labels: ['Registered Customers', 'Unregistered Customers'],
-                        type: 'pie',
-                        marker: {
-                            colors: ['#F2C94C', '#BE7462']
-                        }
-                    }];
-
-                    // Layout for the pie chart
-                    const layout = {
-                        title: 'Registered vs Unregistered Customers',
-                        width: 400,  // Setăm lățimea explicită
-                        height: 300, // Setăm înălțimea explicită
-                        paper_bgcolor: '#312a55',
-                        plot_bgcolor: '#312a55',
-                        font: { color: 'white' },
-                        showlegend: true
-                    };
-
-
-                    // Render the pie chart with Plotly
-                    Plotly.newPlot('registerd_unregistered_customers', chartData, layout);
-                }).fail(function () {
-                    alert('Failed to fetch pie chart data. Please try again.');
-                });
-            }
-        }
-
-
         
         function fetchAndPlotGraph() {
             const storeId = $('#coffee-store-select').val(); // Get store ID from dropdown
@@ -238,7 +188,6 @@
 
     // Attach event to fetch and plot graph when dropdowns are changed
     $('.dropdown-container select').change(fetchAndPlotGraph);
-    $('.dropdown-container select').change(fetchAndPlotPieChart);
 
     });
 </script>
