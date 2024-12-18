@@ -88,19 +88,22 @@
 
 
 #graph-container {
-    /* allign center  */
     margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #312a55;
     border-radius: 10px;
-    padding: 20px;
+    padding: 40px; /* Adaugă padding mai mare */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     color: white;
-    min-height: 400px;
-    min-width: 80%;
+    min-height: 400px; /* Înălțime minimă */
+    min-width: 100%; /* Lățime minimă */
+    max-width: 90%; /* Lățime maximă ajustată */
+    margin-left: auto;
+    margin-right: auto;
 }
+
 
 .details-and-chart {
     display: flex;
@@ -119,18 +122,16 @@
 }
 
 .chart-column {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #312a55;
-    border-radius: 10px;
+    width: 50%;
+    height: 300px;
+    margin: 0 auto;
+    background: #312a55;
+    border-radius: 1vw;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    height: 300px; /* Redus la 300px */
-    padding: 10px; /* Spațiu mai mic în interior */
-    overflow: hidden; /* Evită depășirea conținutului */
 }
-
 
 
 

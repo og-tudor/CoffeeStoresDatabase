@@ -9,10 +9,10 @@ COFFEE_STORES = {
     2: [7, 8],  # Employees for store 2
     3: [9, 10]  # Employees for store 3
 }
-ORDER_COUNT = 300  # Total number of orders
-START_DATE = datetime(2023, 10, 1)  # Start date for orders
-END_DATE = datetime(2024, 6, 1)     # End date for orders
-MAX_PRODUCTS_PER_ORDER = 11  # Max items per order
+ORDER_COUNT = 600  # Total number of orders
+START_DATE = datetime(2024, 8, 1)  # Start date for orders
+END_DATE = datetime(2025, 5, 1)     # End date for orders
+MAX_PRODUCTS_PER_ORDER = 15  # Max items per order
 MAX_VALUES_PER_INSERT = 1000  # Max rows per INSERT statement
 
 # Function to generate random datetime within a range

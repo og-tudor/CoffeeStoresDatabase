@@ -31,7 +31,7 @@ CREATE TABLE Products (
 -- 4. Employees
 CREATE TABLE Employees (
                            employee_id BIGINT PRIMARY KEY IDENTITY(1,1),
-                           chain_id BIGINT,
+                           chain_id BIGINT NULL,
                            first_name VARCHAR(100) NOT NULL,
                            last_name VARCHAR(100) NOT NULL,
                            salary DECIMAL(10, 2) NOT NULL,

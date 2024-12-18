@@ -144,3 +144,36 @@ END;
 
 
 EXECUTE GetRegisteredANDUnregisteredCustomers @store_id = 2;
+
+
+
+-- raport cu cheltuieli detaliate pe categorii
+-- pe luna / an
+-- pentru fiecare cafenea
+CREATE or ALTER PROCEDURE GetMonthlyExpensesByCategory
+    @store_id INT,
+    @year INT,
+    @month INT
+AS
+BEGIN
+    SELECT
+        FORMAT(ex.date, 'yyyy-MM') AS ExpenseMonth,
+        ex.coffee_store_id,
+        ex.expense_type,
+        SUM(ex.cost) AS TotalAmount
+    FROM Expenses ex
+    WHERE ex.coffee_store_id = @store_id
+        AND YEAR(ex.date) = @year
+        AND MONTH(ex.date) = @month
+    GROUP BY
+        FORMAT(ex.date, 'yyyy-MM'),
+        ex.coffee_store_id,
+        ex.expense_type
+    ORDER BY
+        ExpenseMonth,
+        ex.coffee_store_id,
+        ex.expense_type;
+END;
+
+
+    EXECUTE GetMonthlyExpensesByCategory @store_id = 1, @year = 2024, @month = 10;

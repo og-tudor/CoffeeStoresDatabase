@@ -17,7 +17,23 @@
         <select id="year-select">
             <option value="" disabled selected>Choose a year</option>
             <option value="2024">2024</option>
-            <option value="2023">2023</option>
+            <option value="2025">2025</option>
+        </select>
+        <label for="month-select">Select Month:</label>
+        <select id="month_select">
+            <option value="" disabled selected>Choose a month</option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
         </select>
 
     </div>
@@ -37,7 +53,7 @@
             </div>
             
             <!-- Right Column: Pie Chart -->
-            <div id="registerd_unregistered_customers" class="chart-column">
+            <div id="expenses_per_month" class="chart-column">
                 <!-- Pie chart will render here -->
             </div>
         </div>
@@ -101,54 +117,64 @@
         });
 
         function fetchAndPlotPieChart() {
-            const storeId = $('#coffee-store-select').val(); // Get store ID from dropdown
+            const storeId = $('#coffee-store-select').val(); // Store ID
+            const year = $('#year-select').val();           // Selected year
+            const month = $('#month_select').val();         // Selected month
 
-            if (storeId) {
-                $.get('/api/registered_unregistered_customers', { store_id: storeId }, function (data) {
-                    console.log('API Response:', data); // Debug: Check API response
-
+            if (storeId && year && month) {
+                $.get('/api/expenses_by_category', { store_id: storeId, month: month, year: year }, function (data) {
                     if (data.error) {
                         console.error(data.error);
-                        alert('Error fetching pie chart data.');
+                        alert('Error fetching expenses data.');
                         return;
                     }
 
-                    console.log('API Response:', data);
+                    if (data.length === 0) {
+                        // alert('No expenses found for the selected criteria.');
+                        $('#expenses_per_month').html('<p class="text-center">No expenses found for the selected criteria.</p>');
+                        return;
+                    }
+
+                    // in case the p is present, remove it
+                    $('#expenses_per_month p').empty();
 
 
-                    // Extract registered and unregistered customer counts
-                    const registeredCount = data.registered_customers || 0;
-                    const unregisteredCount = data.unregistered_customers || 0;
+                    // Extract categories and their total values
+                    const categories = data.map(item => item.category);
+                    const totals = data.map(item => item.total);
 
-                    // Define data for the pie chart
+                    // Define data for the Pie Chart
                     const chartData = [{
-                        values: [registeredCount, unregisteredCount],
-                        labels: ['Registered Customers', 'Unregistered Customers'],
+                        values: totals,
+                        labels: categories,
                         type: 'pie',
                         marker: {
-                            colors: ['#F2C94C', '#BE7462']
+                            colors: ['#F2C94C', '#BE7462', '#514A73', '#6C757D', '#9B5F50']
                         }
                     }];
 
-                    // Layout for the pie chart
+                    // Define layout for the chart
                     const layout = {
-                        title: 'Registered vs Unregistered Customers',
-                        width: 400,  // Setăm lățimea explicită
-                        height: 300, // Setăm înălțimea explicită
+                        title: 'Expenses by Category',
                         paper_bgcolor: '#312a55',
                         plot_bgcolor: '#312a55',
                         font: { color: 'white' },
+                        width: 350,  // Lățime mai mică
+                        height: 300, // Înălțime mai mică
+                        margin: { t: 90, b: 40, l: 40, r: 40 }, // Marginile ajustate
                         showlegend: true
                     };
 
 
-                    // Render the pie chart with Plotly
-                    Plotly.newPlot('registerd_unregistered_customers', chartData, layout);
+                    // Render the Pie Chart in the designated container
+                    Plotly.newPlot('expenses_per_month', chartData, layout);
+
                 }).fail(function () {
-                    alert('Failed to fetch pie chart data. Please try again.');
+                    alert('Failed to fetch expenses data. Please try again.');
                 });
             }
         }
+
 
 
         
@@ -223,9 +249,12 @@
                         font: { color: 'white' },
                         xaxis: { title: 'Month', tickangle: -45 },
                         yaxis: { title: 'Amount ($)' },
-                        margin: { t: 50, b: 80, l: 60, r: 30 },
+                        margin: { t: 60, b: 80, l: 80, r: 40 }, // Marginile ajustate
+                        width: 1400,  // Lățime mai mică
+                        height: 400, // Înălțime mai mică
                         showlegend: true
                     };
+
 
                     // Render the graph with Plotly
                     Plotly.newPlot('graph-container', [revenueGoalLine, revenueTrace, expenseTrace], layout);

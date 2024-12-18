@@ -104,3 +104,23 @@ def register_routes(app):
 
         except Exception as e:
             return jsonify({'error': str(e)}), 500
+        
+    @app.route('/api/expenses_by_category', methods=['GET'])
+    def expenses_by_category():
+        store_id = request.args.get('store_id')
+        month = request.args.get('month')
+        year = request.args.get('year')
+        if not store_id or not month or not year:
+            return jsonify({'error': 'store_id, month, and year are required'}), 400
+        try:
+            query = text("EXECUTE GetMonthlyExpensesByCategory @store_id = :store_id, @month = :month, @year = :year")
+            result = db.session.execute(query, {'store_id': store_id, 'month': month, 'year': year}).fetchall()
+            data = [{
+                'exp_month_year': row[0],
+                'store_id': row[1],
+                'category': row[2],
+                'total': float(row[3]) if row[3] else 0
+            } for row in result]
+            return jsonify(data)
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
