@@ -56,10 +56,17 @@ EXECUTE EmployeesOfTheMonth
 
 -- zile de nastere care urmeaza ale angajatilor in urmatoarea luna
 
-SELECT *
-FROM Employees e
-WHERE MONTH(e.birth_date) = MONTH(DATEADD(month, 1, GETDATE()))
-ORDER BY DAY(e.birth_date)
+CREATE or ALTER PROCEDURE GetUpcomingBirthdays
+AS
+    BEGIN
+        SELECT e.first_name + ' ' + e.last_name AS 'Employee Name',
+               e.birth_date AS 'Birth Date'
+        FROM Employees e
+        WHERE MONTH(e.birth_date) = MONTH(DATEADD(month, 1, GETDATE()))
+        ORDER BY DAY(e.birth_date)
+    end
+
+EXECUTE GetUpcomingBirthdays
 
 
 -- managerii care au performanta proasta si ar trebui sa fie inlocuiti
@@ -67,6 +74,7 @@ ORDER BY DAY(e.birth_date)
 -- salariul lor este dublu fata de salariul cel mai mare al unui angajat din aceeasi cafenea
 
 CREATE or ALTER PROCEDURE GetUnderperformingManagers
+    @store_id INT
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -113,8 +121,9 @@ BEGIN
              JOIN MaxEmpSalaries ms ON ms.coffee_store_id = cs.coffee_store_id
              JOIN UnderperformingStores us ON us.coffee_store_id = cs.coffee_store_id
     WHERE cs.manager_id = e.employee_id
-      AND e.salary > 2 * ms.max_salary
+        AND e.salary > 2 * ms.max_salary
+        AND cs.coffee_store_id = @store_id
     ORDER BY cs.store_name;
 END;
 
-    EXECUTE GetUnderperformingManagers;
+    EXECUTE GetUnderperformingManagers @store_id = 3;

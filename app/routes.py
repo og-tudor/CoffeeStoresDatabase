@@ -135,7 +135,27 @@ def register_routes(app):
     
     @app.route('/api/employees_eligible_for_promotion', methods=['GET'])
     def employees_eligible_for_promotion():
-        query = text("EXEC EmployeesEligibleForPromotion;")
-        result = db.session.execute(query)
+        store_id = request.args.get('store_id')
+        if not store_id:
+            return jsonify({'error': 'store_id is required'}), 400
+        query = text("EXEC EmployeesEligibleForPromotion @store_id = :store_id")
+        result = db.session.execute(query, {'store_id': store_id})
         data = [{'number_of_orders': row[0], 'employee_name': row[1], 'store_name': row[2]} for row in result.fetchall()]
+        return jsonify(data)
+
+    @app.route('/api/underperforming_managers', methods=['GET'])
+    def underperforming_managers():
+        store_id = request.args.get('store_id')
+        if not store_id:
+            return jsonify({'error': 'store_id is required'}), 400
+        query = text("EXEC GetUnderperformingManagers @store_id = :store_id")
+        result = db.session.execute(query, {'store_id': store_id})
+        data = [{'manager_name': row[0], 'store_name': row[1], 'manager_salary': row[2], 'max_employee_salary': row[3], 'revenue_goal': row[4]} for row in result.fetchall()]
+        return jsonify(data)
+    
+    @app.route('/api/upcoming_birthdays', methods=['GET'])
+    def get_upcoming_birthdays():
+        query = text("EXEC GetUpcomingBirthdays")
+        result = db.session.execute(query)
+        data = [{'employee_name': row[0], 'birth_date': row[1]} for row in result.fetchall()]
         return jsonify(data)

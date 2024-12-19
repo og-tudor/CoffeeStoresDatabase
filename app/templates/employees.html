@@ -6,25 +6,54 @@
 
 {% block content %}
 <div class="container-fluid">
+    <!-- Employees content -->
     <div class="row mb-4">
+        <!-- Employee of the month -->
         <div class="col-12 col-md-4">
-            <div class="bg-secondary p-3 rounded">
+            <div class="bg-medium-purple p-3 rounded">
                 <div id="employeeOfTheMonthChart"></div>
             </div>
         </div>
+        <!-- Birthdats -->
         <div class="col-12 col-md-4">
-            <div class="bg-secondary p-3 rounded">
-                <div class="container-full bg-primary text-white">.bg-primary</div>
+            <div id="birthday-container" class="bg-medium-purple p-4 rounded">
+                <h4 class="text-white">
+                    <i class="bi bi-gift me-2"></i>Upcoming Birthdays
+                </h4>
+                
+                <div id="birthday-timeline" class="timeline mt-3">
+                    <!-- Timeline items will be populated here -->
+                </div>
             </div>
         </div>
-        <div class="col-12 col-md-4">
-            <div class="bg-secondary p-3 rounded"></div>
+        
+        
+    </div>
+    <!-- Managers header -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h1 class="text-white">Managers</h1>
+            <hr class="bg-orange">
         </div>
     </div>
-    <div class="row">
+    <!-- Managers content -->
+    <div class="row bg-medium-purple rounded mb-2 pt-5">
         <div class="col-12 col-md-4">
-            <div class="bg-orange p-3 rounded">
-                <div id="employeeOfTheMonthChart"></div>
+            <div class="p-3 bg-medium-purple rounded">
+                <label for="coffee-store-select" class="form-label text-white">Select Coffee Store:</label>
+                <select id="coffee-store-select" class="form-select bg-orange text-white border-0 mb-3">
+                    <option value="" disabled selected>Choose a coffee store</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="p-3 bg-light-purple rounded">
+                <h4 class="text-white">Employees eligible for promotion</h1>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="p-3 bg-light-purple rounded">
+                <h4 class="text-white">Underperforming Manager</h1>
             </div>
         </div>
     </div>
@@ -36,9 +65,44 @@
 
 <script>
     $(document).ready(function () {
-        // Fetch data from the API
+        // Populate dropdown with coffee stores
+        $.get('/api/coffee_stores_list', function (data) {
+            const dropdown = $('#coffee-store-select');
+            data.forEach(item => {
+                dropdown.append(`<option value="${item.id}">${item.name}</option>`);
+            });
+        });
+
+
+        // Fetch Upcoming Birthdays
+        $.get('/api/upcoming_birthdays', function (data) {
+            const timeline = $('#birthday-timeline');
+            timeline.empty();
+
+            if (data.length === 0) {
+                timeline.append('<p class="text-white">No upcoming birthdays found.</p>');
+            } else {
+                data.forEach(item => {
+                    const birthDate = new Date(item.birth_date);
+                    const formattedDate = birthDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+
+                    timeline.append(`
+                        <div class="timeline-item">
+                            <div class="timeline-item-content">
+                                <h5>${item.employee_name}</h5>
+                                <p>${formattedDate}</p>
+                            </div>
+                        </div>
+                    `);
+                });
+            }
+        }).fail(function () {
+            $('#birthday-timeline').append('<p class="text-danger">Failed to load upcoming birthdays. Please try again later.</p>');
+        });
+
+
+        // Fetch Employee of the Month Data
         $.get('/api/employees_of_the_month', function (data) {
-            // Prepare data for the chart
             const storeNames = [];
             const employeeNames = [];
             const orderCounts = [];
@@ -49,7 +113,6 @@
                 orderCounts.push(item.number__of_orders);
             });
 
-            // Generate the chart
             const chartData = [{
                 x: storeNames,
                 y: orderCounts,
@@ -58,7 +121,7 @@
                 marker: {
                     color: '#CDA27E'
                 },
-                hovertemplate: 
+                hovertemplate:
                     'Store: %{x}<br>' +
                     'Employee: %{text}<br>' +
                     'Orders: %{y}<extra></extra>'
@@ -66,32 +129,17 @@
 
             const layout = {
                 title: 'Employee of the Month per Coffee Store',
-                xaxis: {
-                    title: 'Coffee Stores',
-                },
-                yaxis: {
-                    title: 'Number of Orders',
-                },
-                paper_bgcolor: '#514A73',
-                plot_bgcolor: '#514A73',
-                font: {
-                    color: 'white'
-                },
-                margin: {
-                    l: 100,
-                    r: 100,
-                    b: 100,
-                    t: 100,
-                    pad: 5
-                },
-                autosize: true, // Enable automatic resizing
-                responsive: true // Ensure responsiveness
+                xaxis: { title: 'Coffee Stores' },
+                yaxis: { title: 'Number of Orders' },
+                paper_bgcolor: '#312a55',
+                plot_bgcolor: '#312a55',
+                font: { color: 'white' },
+                margin: { l: 100, r: 100, b: 100, t: 100, pad: 5 },
+                autosize: true,
+                responsive: true
             };
 
-
-            const options = {
-                responsive: true,
-            };
+            const options = { responsive: true };
 
             Plotly.newPlot('employeeOfTheMonthChart', chartData, layout, options);
 
@@ -99,6 +147,58 @@
                 Plotly.Plots.resize('employeeOfTheMonthChart');
             });
         });
+
+        // Handle Coffee Store Selection
+        $('#coffee-store-select').change(function () {
+            const storeId = $(this).val();
+
+            // Fetch Employees Eligible for Promotion
+            $.get(`/api/employees_eligible_for_promotion?store_id=${storeId}`, function (data) {
+                const promotionDiv = $('.bg-light-purple:eq(0)'); // First light purple container
+                promotionDiv.empty().append('<h4 class="text-white">Employees eligible for promotion</h4>');
+
+                if (data.error) {
+                    promotionDiv.append(`<p class="text-danger">${data.error}</p>`);
+                } else if (data.length === 0) {
+                    promotionDiv.append('<p class="text-white">No employees eligible for promotion.</p>');
+                } else {
+                    data.forEach(item => {
+                        promotionDiv.append(`
+                            <p class="text-white">
+                                ${item.employee_name} (${item.store_name}) - ${item.number_of_orders} orders
+                            </p>
+                        `);
+                    });
+                }
+            });
+
+            // Fetch Underperforming Managers
+            $.get(`/api/underperforming_managers?store_id=${storeId}`, function (data) {
+                console.log(data); // Debug: Ensure data is logged to the console
+                
+                const underperformingDiv = $('.bg-light-purple:eq(1)'); // Second light purple container
+                underperformingDiv.empty().append('<h4 class="text-white">Underperforming Manager</h4>');
+
+                if (data.error) {
+                    underperformingDiv.append(`<p class="text-danger">${data.error}</p>`);
+                } else if (data.length === 0) {
+                    underperformingDiv.append('<p class="text-white">No underperforming managers found.</p>');
+                } else {
+                    data.forEach(item => {
+                        underperformingDiv.append(`
+                            <p class="text-white">
+                                <strong>Manager Name:</strong> ${item.manager_name}<br>
+                                <strong>Store:</strong> ${item.store_name}<br>
+                                <strong>Salary:</strong> $${parseFloat(item.manager_salary).toFixed(2)}<br>
+                                <strong>Max Employee Salary:</strong> $${parseFloat(item.max_employee_salary).toFixed(2)}<br>
+                                <strong>Revenue Goal:</strong> $${parseFloat(item.revenue_goal).toFixed(2)}
+                            </p>
+                        `);
+                    });
+                }
+            });
+        });
     });
 </script>
+
 {% endblock %}

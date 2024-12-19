@@ -46,6 +46,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
+
                     <div id="expenses_per_month" class="p-3 rounded text-white bg-medium-purple h-100">
                         <h3 class="text-center">Pie Chart</h3>
                     </div>
@@ -135,7 +136,8 @@
                     }
 
                     // in case the p is present, remove it
-                    $('#expenses_per_month p').empty();
+                    $('#expenses_per_month').empty();
+                    // $('#expenses_per_month p').empty();
 
 
                     // Extract categories and their total values
@@ -158,9 +160,9 @@
                         paper_bgcolor: '#312a55',
                         plot_bgcolor: '#312a55',
                         font: { color: 'white' },
-                        width: 350,  // Lățime mai mică
+                        width: 450,  // Lățime mai mică
                         height: 300, // Înălțime mai mică
-                        margin: { t: 90, b: 40, l: 40, r: 40 }, // Marginile ajustate
+                        margin: { t: 100, b: 40, l: 80, r: 40 }, // Marginile ajustate
                         showlegend: true
                     };
 
