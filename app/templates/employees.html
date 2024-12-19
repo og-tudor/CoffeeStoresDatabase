@@ -5,56 +5,98 @@
 {% endblock %}
 
 {% block content %}
-<div class="main-content">
-    <div class="statistic2">
-        <p>Statistic 2: Employees Data</p>
-        <table id="employees-table">
-            <thead>
-                <tr>
-                    <th>Employee Name</th>
-                    <th>Total Products</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Data will be populated here -->
-            </tbody>
-        </table>
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12 col-md-4">
+            <div class="bg-secondary p-3 rounded">
+                <div id="employeeOfTheMonthChart"></div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="bg-secondary p-3 rounded">
+                <div class="container-full bg-primary text-white">.bg-primary</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="bg-secondary p-3 rounded"></div>
+        </div>
     </div>
-    <div id="chart" class="statistic3"></div>
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <div class="bg-orange p-3 rounded">
+                <div id="employeeOfTheMonthChart"></div>
+            </div>
+        </div>
+    </div>
+        
 </div>
+
+
+
+
 <script>
     $(document).ready(function () {
-        // Load table and chart data
-        $.get('/api/employees', function (data) {
-            const tableBody = $('#employees-table tbody');
-            tableBody.empty();
-
-            const names = [];
-            const values = [];
+        // Fetch data from the API
+        $.get('/api/employees_of_the_month', function (data) {
+            // Prepare data for the chart
+            const storeNames = [];
+            const employeeNames = [];
+            const orderCounts = [];
 
             data.forEach(item => {
-                tableBody.append(`
-                    <tr>
-                        <td>${item.name}</td>
-                        <td>${item.products}</td>
-                    </tr>
-                `);
-                names.push(item.name);
-                values.push(item.products);
+                storeNames.push(item.store_name);
+                employeeNames.push(item.employee_name);
+                orderCounts.push(item.number__of_orders);
             });
 
+            // Generate the chart
             const chartData = [{
-                x: names,
-                y: values,
+                x: storeNames,
+                y: orderCounts,
+                text: employeeNames,
                 type: 'bar',
-                marker: { color: '#6C757D' }
+                marker: {
+                    color: '#CDA27E'
+                },
+                hovertemplate: 
+                    'Store: %{x}<br>' +
+                    'Employee: %{text}<br>' +
+                    'Orders: %{y}<extra></extra>'
             }];
 
-            Plotly.newPlot('chart', chartData, {
-                title: 'Employee Performance',
+            const layout = {
+                title: 'Employee of the Month per Coffee Store',
+                xaxis: {
+                    title: 'Coffee Stores',
+                },
+                yaxis: {
+                    title: 'Number of Orders',
+                },
                 paper_bgcolor: '#514A73',
                 plot_bgcolor: '#514A73',
-                font: { color: 'white' }
+                font: {
+                    color: 'white'
+                },
+                margin: {
+                    l: 100,
+                    r: 100,
+                    b: 100,
+                    t: 100,
+                    pad: 5
+                },
+                autosize: true, // Enable automatic resizing
+                responsive: true // Ensure responsiveness
+            };
+
+
+            const options = {
+                responsive: true,
+            };
+
+            Plotly.newPlot('employeeOfTheMonthChart', chartData, layout, options);
+
+            window.addEventListener('resize', () => {
+                Plotly.Plots.resize('employeeOfTheMonthChart');
             });
         });
     });

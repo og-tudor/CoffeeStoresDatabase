@@ -3,18 +3,63 @@
 -- nu sunt deja manageri (nu au manager_id = 1)
 -- numarul de comenzi procesate > de 40
 
-SELECT count(*) as 'Number of Orders', e.last_name + ' ' + e.first_name as 'Employee Name'
-from Employees e
-    join Orders on e.employee_id = Orders.employee_id
-    join CoffeeStores cs on e.chain_id = cs.coffee_store_id
-where cs.manager_id != e.employee_id
-    AND e.hire_date < DATEADD(YEAR, -2, GETDATE())
-group by e.first_name, e.last_name
-having count(*) > 0;
+CREATE or ALTER PROCEDURE EmployeesEligibleForPromotion
+    @store_id INT
+AS
+BEGIN
+    SELECT count(*) as 'Number of Orders',
+           e.last_name + ' ' + e.first_name as 'Employee Name',
+              cs.store_name as 'Store Name'
+    from Employees e
+             join Orders on e.employee_id = Orders.employee_id
+             join CoffeeStores cs on e.chain_id = cs.coffee_store_id
+    where cs.manager_id != e.employee_id
+        AND e.hire_date < DATEADD(YEAR, -2, GETDATE())
+        AND cs.coffee_store_id = @store_id
+    group by e.first_name, e.last_name, cs.store_name
+    having count(*) > 0;
+
+end;
+
+EXECUTE  EmployeesEligibleForPromotion 2;
+
+
+-- pentru fiecare cafenea, angajatul lunii
+-- cele mai multe comenzi procesate
+CREATE or ALTER PROCEDURE EmployeesOfTheMonth
+AS
+BEGIN
+    SELECT BestOrders.first_name + ' ' + BestOrders.last_name as EmployeeName,
+           BestOrders.NumberOfOrders,
+           cs.store_name
+    FROM (
+             SELECT e.employee_id,
+                    e.chain_id,
+                    e.first_name,
+                    e.last_name,
+                    count(*) as NumberOfOrders,
+                    ROW_NUMBER() over (PARTITION BY e.chain_id ORDER BY count(*) DESC) as RowNumber
+             FROM Employees e
+                      JOIN Orders o on e.employee_id = o.employee_id
+             WHERE o.order_date >= DATEADD(MONTH, -1, GETDATE())
+                AND o.order_date < GETDATE()
+             group by e.employee_id, e.first_name, e.last_name, e.chain_id
+         ) BestOrders
+             JOIN CoffeeStores cs on BestOrders.chain_id = cs.coffee_store_id
+    WHERE BestOrders.RowNumber = 1
+end
+
+EXECUTE EmployeesOfTheMonth
 
 
 
 
+-- zile de nastere care urmeaza ale angajatilor in urmatoarea luna
+
+SELECT *
+FROM Employees e
+WHERE MONTH(e.birth_date) = MONTH(DATEADD(month, 1, GETDATE()))
+ORDER BY DAY(e.birth_date)
 
 
 -- managerii care au performanta proasta si ar trebui sa fie inlocuiti

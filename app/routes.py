@@ -13,11 +13,6 @@ def register_routes(app):
     def coffee_stores():
         return render_template('coffee_stores.html', title="Coffee Stores")
 
-    # Route for Employees page
-    @app.route('/employees')
-    def employees():
-        return render_template('employees.html', title="Employees")
-
     # Route for Products page
     @app.route('/products')
     def products():
@@ -124,3 +119,23 @@ def register_routes(app):
             return jsonify(data)
         except Exception as e:
             return jsonify({'error': str(e)}), 500
+
+
+    # Route for Employees page
+    @app.route('/employees')
+    def employees():
+        return render_template('employees.html', title="Employees")
+    
+    @app.route('/api/employees_of_the_month', methods=['GET'])
+    def employees_of_the_month():
+        query = text("EXEC EmployeesOfTheMonth;")
+        result = db.session.execute(query)
+        data = [{'employee_name': row[0], 'number__of_orders': row[1], 'store_name': row[2]} for row in result.fetchall()]
+        return jsonify(data)
+    
+    @app.route('/api/employees_eligible_for_promotion', methods=['GET'])
+    def employees_eligible_for_promotion():
+        query = text("EXEC EmployeesEligibleForPromotion;")
+        result = db.session.execute(query)
+        data = [{'number_of_orders': row[0], 'employee_name': row[1], 'store_name': row[2]} for row in result.fetchall()]
+        return jsonify(data)
