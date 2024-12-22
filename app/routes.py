@@ -13,10 +13,7 @@ def register_routes(app):
     def coffee_stores():
         return render_template('coffee_stores.html', title="Coffee Stores")
 
-    # Route for Products page
-    @app.route('/products')
-    def products():
-        return render_template('products.html', title="Products")
+
 
 
     @app.route('/api/coffee_stores_list', methods=['GET'])
@@ -158,4 +155,68 @@ def register_routes(app):
         query = text("EXEC GetUpcomingBirthdays")
         result = db.session.execute(query)
         data = [{'employee_name': row[0], 'birth_date': row[1]} for row in result.fetchall()]
+        return jsonify(data)
+
+    # Route for Products page
+    @app.route('/products')
+    def products():
+        return render_template('products.html', title="Products")
+    
+    @app.route('/api/products_list', methods=['GET'])
+    def products_list():
+        query = text("EXEC GetAllProducts")
+        result = db.session.execute(query)
+        data = [{'id': row[0], 'name': row[1]} for row in result.fetchall()]
+        return jsonify(data)
+    
+    @app.route('/api/low_stock_products', methods=['GET'])
+    def low_stock_products():
+        store_id = request.args.get('store_id')
+        quantity = request.args.get('quantity')
+        if not store_id or not quantity:
+            return jsonify({'error': 'store_id and quantity are required'}), 400
+        query = text("EXEC GetLowStockProducts @store_id = :store_id, @quantity = :quantity")
+        result = db.session.execute(query, {'store_id': store_id, 'quantity': quantity})
+        data = [{'id': row[0], 'name': row[1], 'unit_price': row[2], 'quantity': row[3], 'company_name': row[4]} for row in result.fetchall()]
+        return jsonify(data)
+    
+    @app.route('/api/max_stock', methods=['GET'])
+    def max_stock():
+        store_id = request.args.get('store_id')
+        if not store_id:
+            return jsonify({'error': 'store_id is required'}), 400
+        query = text("EXEC GetMaxStockProducts @store_id = :store_id")
+        result = db.session.execute(query, {'store_id': store_id})
+        data = [{'max_stock': row[0]} for row in result.fetchall()]
+        return jsonify(data)
+
+    @app.route('/api/best_selling_products_last_month', methods=['GET'])
+    def best_selling_products_last_month():
+        store_id = request.args.get('store_id')
+        if not store_id:
+            return jsonify({'error': 'store_id is required'}), 400
+        query = text("EXEC GetBestSellingProductsLastMonth @store_id = :store_id")
+        result = db.session.execute(query, {'store_id': store_id})
+        data = [{'product_name': row[0], 'quantity_sold': row[1], 'period': row[2]} for row in result.fetchall()]
+        return jsonify(data)
+    
+    @app.route('/api/profit_per_category', methods=['GET'])
+    def profit_per_category():
+        store_id = request.args.get('store_id')
+        if not store_id:
+            return jsonify({'error': 'store_id is required'}), 400
+        query = text("EXEC GetProfitPerCategory @store_id = :store_id")
+        result = db.session.execute(query, {'store_id': store_id})
+        data = [{'category': row[0], 'total_quantity_sold': row[1], 'total_profit': row[2], 'period': row[3]} for row in result.fetchall()]
+        return jsonify(data)
+    
+    @app.route('/api/product_sales_evolution', methods=['GET'])
+    def product_sales_evolution():
+        store_id = request.args.get('store_id')
+        product_id = request.args.get('product_id')
+        if not store_id or not product_id:
+            return jsonify({'error': 'store_id and product_id are required'}), 400
+        query = text("EXEC GetSalesEvolutionPerProduct @store_id = :store_id, @product_id = :product_id")
+        result = db.session.execute(query, {'store_id': store_id, 'product_id': product_id})
+        data = [{'product_id': row[0], 'product_name': row[1], 'sales_month_year': row[2], 'quantity_sold': row[3]} for row in result.fetchall()]
         return jsonify(data)

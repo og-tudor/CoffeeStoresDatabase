@@ -188,6 +188,10 @@ body {
     color: black !important;
 }
 
+.text-orange {
+    color: #BE7462 !important; /* Orange */
+}
+
 
 .select-custom {
     color: white;
@@ -198,3 +202,137 @@ body {
 .p-4 {
     padding: 1.5rem !important;
 }
+
+
+/* Slider when it can be moved */
+#stock-slider:enabled::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #BE7462;
+    border: 2px solid white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#stock-slider:enabled::-moz-range-thumb {
+    /* background-color: orange; */
+    border: 2px solid white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#stock-slider:enabled::-ms-thumb {
+    /* background-color: orange; */
+    border: 2px solid white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Slider track when it can be moved */
+#stock-slider:enabled::-webkit-slider-runnable-track {
+    background-color: #793243;
+    height: 5px;
+    border-radius: 10px;
+}
+
+#stock-slider:enabled::-moz-range-track {
+    background-color: #793243;
+    height: 5px;
+    border-radius: 10px;
+}
+
+#stock-slider:enabled::-ms-track {
+    background-color: #793243;
+    height: 5px;
+    border-radius: 10px;
+    border: none;
+}
+
+/* Slider when disabled */
+#stock-slider:disabled::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: grey;
+    border: 2px solid white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: not-allowed;
+}
+
+#stock-slider:disabled::-moz-range-thumb {
+    background-color: grey;
+    border: 2px solid white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: not-allowed;
+}
+
+#stock-slider:disabled::-ms-thumb {
+    background-color: grey;
+    border: 2px solid white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: not-allowed;
+}
+
+/* Slider track when disabled */
+#stock-slider:disabled::-webkit-slider-runnable-track {
+    background-color: grey;
+    height: 5px;
+    border-radius: 10px;
+}
+
+#stock-slider:disabled::-moz-range-track {
+    background-color: grey;
+    height: 5px;
+    border-radius: 10px;
+}
+
+#stock-slider:disabled::-ms-track {
+    background-color: grey;
+    height: 5px;
+    border-radius: 10px;
+    border: none;
+}
+
+
+
+
+/* Fix for .fixed-height-row */
+.fixed-height-row {
+    height: auto; /* Let it expand based on content */
+    flex-wrap: wrap; /* Allow wrapping for child elements */
+    gap: 1rem; /* Add space between rows and columns */
+    display: flex;
+}
+
+/* Adjust .sticky-column and .scrollable-content to respect grid */
+.sticky-column {
+    flex: 0 0 100%; /* Full width on small screens */
+    max-width: 25%; /* 25% of parent width on larger screens */
+    padding: 1rem;
+}
+
+/* Scrollable accordion container */
+.scrollable-content {
+    flex: 1; /* Take remaining space */
+    max-height: 300px; /* Set a fixed height for scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding-left: 1rem; /* Optional: Add padding for better aesthetics */
+}
+
+
+/* Add spacing for second-row columns */
+.row.align-items-start.g-3 > div {
+    margin-top: 1rem; /* Space between rows */
+}
+
