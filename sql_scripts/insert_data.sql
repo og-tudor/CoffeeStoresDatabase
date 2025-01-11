@@ -6,7 +6,7 @@ VALUES
     (2, 'Romania', 'Municipality of Bucharest', 'Bucharest', 'Calea Victoriei 100'),
     (3, 'Romania', 'Prahova', 'Sinaia', 'Str. Octavian Goga 5'),
     (4, 'Spain', 'Catalonia', 'Barcelona', 'Carrer de Mallorca 101'),
-    (5, 'Colombia', 'Bogotá', 'Bogotá', 'Carrera 15 #23-10');
+    (5, 'Colombia', 'Bogota', 'Bogota', 'Carrera 15 #23-10');
 SET IDENTITY_INSERT Locations OFF;
 
 -- Populating Suppliers
@@ -65,7 +65,7 @@ VALUES
 
 SET IDENTITY_INSERT Customers OFF;
 
--- Populating Products with coffee and food items
+-- Populating Products
 SET IDENTITY_INSERT Products ON;
 INSERT INTO Products (product_id, supplier_id, name, category, unit_price)
 VALUES
@@ -92,7 +92,7 @@ VALUES
 SET IDENTITY_INSERT Products OFF;
 
 
--- Populating ProductInventory (products distributed to specific coffee stores)
+-- Populating ProductInventory
 SET IDENTITY_INSERT ProductInventory ON;
 INSERT INTO ProductInventory (inventory_id, coffee_store_id, product_id, quantity, last_updated)
 VALUES
@@ -751,7 +751,6 @@ VALUES
     (599, 1, 6, 1, '2024-11-13 22:33:01'),
     (600, NULL, 8, 2, '2025-02-05 01:32:05');
 SET IDENTITY_INSERT Orders OFF;
-
 
 
 
@@ -5537,7 +5536,7 @@ SET IDENTITY_INSERT OrderDetails OFF;
 
 
 
--- Populate the Expenses table
+-- Populate Expenses
 SET IDENTITY_INSERT Expenses ON;
 INSERT INTO Expenses (expense_id, coffee_store_id, cost, date, expense_type) VALUES
                                                                                  (1, 1, 589.0, '2024-08-01', 'Electricity'),

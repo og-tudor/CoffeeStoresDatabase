@@ -3,18 +3,16 @@ from sqlalchemy.sql import text
 from . import db
 
 def register_routes(app):
-    # Route for index page
+    # Index page
     @app.route('/')
     def index():
-        return render_template('index.html')
+        return render_template('coffee_stores.html', title="Coffee Stores")
 
-    # Route for Coffee Stores page
+    # -----------------------------
+    # Routes for Coffee Stores page
     @app.route('/coffee_stores')
     def coffee_stores():
         return render_template('coffee_stores.html', title="Coffee Stores")
-
-
-
 
     @app.route('/api/coffee_stores_list', methods=['GET'])
     def coffee_stores_list():
@@ -44,22 +42,16 @@ def register_routes(app):
 
     @app.route('/api/monthly_sales_expenses', methods=['GET'])
     def monthly_sales_expenses():
-        # Get parameters from query string
         store_id = request.args.get('store_id')
         year = request.args.get('year')
-
-        # Validate inputs
         if not store_id or not year:
             return jsonify({'error': 'store_id and year are required'}), 400
 
         try:
-            # Execute the procedure with parameters
             query = text("""
                 EXEC GetMonthlySalesAndExpenses @store_id = :store_id, @year = :year
             """)
             result = db.session.execute(query, {'store_id': store_id, 'year': year}).fetchall()
-
-            # Process the data into a JSON response
             data = [{
                 'store_name': row[0],
                 'month': row[1],
@@ -80,11 +72,8 @@ def register_routes(app):
             return jsonify({'error': 'store_id is required'}), 400
 
         try:
-            # Execută procedura stocată cu parametru
             query = text("EXEC GetRegisteredANDUnregisteredCustomers @store_id = :store_id")
             result = db.session.execute(query, {'store_id': store_id}).fetchone()
-
-            # Verificăm dacă există rezultate
             if result:
                 data = {
                     'registered_customers': result[1],
@@ -118,7 +107,8 @@ def register_routes(app):
             return jsonify({'error': str(e)}), 500
 
 
-    # Route for Employees page
+    # ---------------------------
+    # Routes for Employees page
     @app.route('/employees')
     def employees():
         return render_template('employees.html', title="Employees")
@@ -145,10 +135,26 @@ def register_routes(app):
         store_id = request.args.get('store_id')
         if not store_id:
             return jsonify({'error': 'store_id is required'}), 400
+
         query = text("EXEC GetUnderperformingManagers @store_id = :store_id")
         result = db.session.execute(query, {'store_id': store_id})
-        data = [{'manager_name': row[0], 'store_name': row[1], 'manager_salary': row[2], 'max_employee_salary': row[3], 'revenue_goal': row[4]} for row in result.fetchall()]
+
+        if not result.returns_rows:
+            return jsonify([])
+
+        rows = result.fetchall()
+        data = [
+            {
+                'manager_name': row[0],
+                'store_name': row[1],
+                'manager_salary': row[2],
+                'max_employee_salary': row[3],
+                'revenue_goal': row[4]
+            }
+            for row in rows
+        ]
         return jsonify(data)
+
     
     @app.route('/api/upcoming_birthdays', methods=['GET'])
     def get_upcoming_birthdays():
@@ -157,6 +163,9 @@ def register_routes(app):
         data = [{'employee_name': row[0], 'birth_date': row[1]} for row in result.fetchall()]
         return jsonify(data)
 
+
+
+    # ---------------------------
     # Route for Products page
     @app.route('/products')
     def products():

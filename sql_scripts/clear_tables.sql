@@ -1,4 +1,4 @@
--- Disable foreign key constraints temporarily
+-- deactivating foreign keys to be able to delete
 ALTER TABLE ProductInventory NOCHECK CONSTRAINT ALL;
 ALTER TABLE OrderDetails NOCHECK CONSTRAINT ALL;
 ALTER TABLE Orders NOCHECK CONSTRAINT ALL;
@@ -10,21 +10,19 @@ ALTER TABLE Employees NOCHECK CONSTRAINT ALL;
 ALTER TABLE Customers NOCHECK CONSTRAINT ALL;
 ALTER TABLE Locations NOCHECK CONSTRAINT ALL;
 
--- Delete data from child tables first
-DELETE FROM ProductInventory; -- Dependent on CoffeeStores and Products
+-- clearing the data
+DELETE FROM ProductInventory;
 DELETE FROM OrderDetails;
 DELETE FROM Orders;
 DELETE FROM Expenses;
-
--- Delete data from parent tables
-DELETE FROM Products; -- Dependent on Suppliers
+DELETE FROM Products;
 DELETE FROM Suppliers;
-DELETE FROM CoffeeStores; -- Dependent on Employees
+DELETE FROM CoffeeStores;
 DELETE FROM Employees;
 DELETE FROM Customers;
 DELETE FROM Locations;
 
--- Re-enable foreign key constraints
+-- reactivating foreign keys
 ALTER TABLE ProductInventory CHECK CONSTRAINT ALL;
 ALTER TABLE OrderDetails CHECK CONSTRAINT ALL;
 ALTER TABLE Orders CHECK CONSTRAINT ALL;

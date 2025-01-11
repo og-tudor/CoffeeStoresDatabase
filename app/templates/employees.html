@@ -6,6 +6,14 @@
 
 {% block content %}
 <div class="container-fluid">
+
+    <!-- Managers header -->
+    <div class="row mt-1">
+        <div class="col-12">
+            <h1 class="text-white">Employees</h1>
+            <hr class="bg-orange">
+        </div>
+    </div>
     <!-- Employees content -->
     <div class="row mb-4">
         <!-- Employee of the month -->
@@ -22,7 +30,7 @@
                 </h4>
                 
                 <div id="birthday-timeline" class="timeline mt-3">
-                    <!-- Timeline items will be populated here -->
+                    <!-- birthdays will be injjected here -->
                 </div>
             </div>
         </div>
@@ -65,7 +73,7 @@
 
 <script>
     $(document).ready(function () {
-        // Populate dropdown with coffee stores
+        // populating the coffee store dropdown
         $.get('/api/coffee_stores_list', function (data) {
             const dropdown = $('#coffee-store-select');
             data.forEach(item => {
@@ -74,7 +82,7 @@
         });
 
 
-        // Fetch Upcoming Birthdays
+        // gets the upcoming birthdays
         $.get('/api/upcoming_birthdays', function (data) {
             const timeline = $('#birthday-timeline');
             timeline.empty();
@@ -101,7 +109,7 @@
         });
 
 
-        // Fetch Employee of the Month Data
+        // gets the employee of the month, most orders
         $.get('/api/employees_of_the_month', function (data) {
             const storeNames = [];
             const employeeNames = [];
@@ -148,13 +156,13 @@
             });
         });
 
-        // Handle Coffee Store Selection
+        // handles coffee store selection for managers
         $('#coffee-store-select').change(function () {
             const storeId = $(this).val();
 
-            // Fetch Employees Eligible for Promotion
+            // get s people eligible for promotion
             $.get(`/api/employees_eligible_for_promotion?store_id=${storeId}`, function (data) {
-                const promotionDiv = $('.bg-light-purple:eq(0)'); // First light purple container
+                const promotionDiv = $('.bg-light-purple:eq(0)');
                 promotionDiv.empty().append('<h4 class="text-white">Employees eligible for promotion</h4>');
 
                 if (data.error) {
@@ -172,11 +180,11 @@
                 }
             });
 
-            // Fetch Underperforming Managers
+            // gets underperforming managers
             $.get(`/api/underperforming_managers?store_id=${storeId}`, function (data) {
-                console.log(data); // Debug: Ensure data is logged to the console
+                // console.log(data);
                 
-                const underperformingDiv = $('.bg-light-purple:eq(1)'); // Second light purple container
+                const underperformingDiv = $('.bg-light-purple:eq(1)');
                 underperformingDiv.empty().append('<h4 class="text-white">Underperforming Manager</h4>');
 
                 if (data.error) {

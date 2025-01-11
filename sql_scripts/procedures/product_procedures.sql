@@ -23,13 +23,15 @@ BEGIN
              LEFT JOIN CoffeeStores cs
                        on pi.coffee_store_id = cs.coffee_store_id
              JOIN Suppliers s on p.supplier_id = s.supplier_id
-    WHERE ISNULL(pi.quantity, 0 ) < @quantity OR pi.quantity IS NULL
-    ORDER BY ISNULL(pi.quantity, 0 ) ASC
+    WHERE ISNULL(pi.quantity, 0 ) < @quantity
+       or pi.quantity IS NULL
+    order by ISNULL(pi.quantity, 0 ) ASC
 end
 
 EXEC GetLowStockProducts 1, 30
 
 -- procedura pentru a afla pentru store_id = x, cel mai mare stock la produse
+-- folosita pentru slider ul de stock (val min = 0 si max = asta)
 CREATE or ALTER PROCEDURE GetMaxStockProducts
     @store_id INT
 AS
@@ -57,10 +59,10 @@ BEGIN
              JOIN OrderDetails od on o.order_id = od.order_id
              JOIN Products p on od.product_id = p.product_id
     WHERE cs.coffee_store_id = @store_id
-      AND o.order_date BETWEEN DATEFROMPARTS(YEAR(DATEADD(MONTH, -1, GETDATE())), MONTH(DATEADD(MONTH, -1, GETDATE())), 1)
-        AND EOMONTH(DATEADD(MONTH, -1, GETDATE()))
-    GROUP BY p.product_id, p.name
-    ORDER BY count(*) DESC
+        and o.order_date BETWEEN DATEFROMPARTS(YEAR(DATEADD(MONTH, -1, GETDATE())), MONTH(DATEADD(MONTH, -1, GETDATE())), 1)
+        and EOMONTH(DATEADD(MONTH, -1, GETDATE()))
+    group by p.product_id, p.name
+    order by count(*) DESC
 end
 
 EXEC GetBestSellingProductsLastMonth 2
@@ -79,8 +81,8 @@ BEGIN
              JOIN OrderDetails od on p.product_id = od.product_id
              JOIN Orders o on od.order_id = o.order_id
     WHERE o.coffee_store_id = @store_id
-      AND o.order_date BETWEEN DATEFROMPARTS(YEAR(DATEADD(MONTH, -1, GETDATE())), MONTH(DATEADD(MONTH, -1, GETDATE())), 1)
-        AND EOMONTH(DATEADD(MONTH, -1, GETDATE()))
+        and o.order_date BETWEEN DATEFROMPARTS(YEAR(DATEADD(MONTH, -1, GETDATE())), MONTH(DATEADD(MONTH, -1, GETDATE())), 1)
+        and EOMONTH(DATEADD(MONTH, -1, GETDATE()))
     group by p.category
     order by sum(p.unit_price * od.quantity) desc
 end
@@ -104,12 +106,9 @@ BEGIN
              JOIN OrderDetails od ON p.product_id = od.product_id
              JOIN Orders o ON od.order_id = o.order_id
     WHERE p.product_id = @product_id
-        AND o.coffee_store_id = @store_id
-    GROUP BY p.product_id, p.name, MONTH(o.order_date), YEAR(o.order_date)
-    ORDER BY p.product_id, YEAR(o.order_date), MONTH(o.order_date);
+        and o.coffee_store_id = @store_id
+    group by p.product_id, p.name, MONTH(o.order_date), YEAR(o.order_date)
+    order by p.product_id, YEAR(o.order_date), MONTH(o.order_date);
 end
 
 EXECUTE GetSalesEvolutionPerProduct 2, 10
-
-
-

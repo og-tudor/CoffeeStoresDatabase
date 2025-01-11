@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="container bg-medium-purple p-4 rounded">
-    <!-- First Row: Store Dropdown and Slider -->
+    <!-- First Row, dropdown and slider -->
     <div class="row align-items-center mb-3">
         <div class="col-md-6">
             <div class="p-3 bg-medium-purple rounded">
@@ -27,23 +27,23 @@
         </div>
     </div>
 
-    <!-- Second Row: Accordion and Pie Charts -->
+    <!-- Second Row, accordion and charts -->
     <div class="row align-items-start g-3 mt-3">
         <!-- Accordion -->
         <div class="col-md-4">
             <div class="accordion" id="lowStockAccordion" style="max-height: 430px; overflow-y: auto;">
-                <!-- Dynamic accordion items will be injected here -->
+                <!-- injected here by js -->
             </div>
         </div>
 
-        <!-- Best Selling Products Pie Chart -->
+        <!-- best selling products chart -->
         <div class="col-md-4">
             <div class="p-3 bg-light rounded text-center">
                 <div id="bestSellingProductsChart" style="width:100%; height:400px;"></div>
             </div>
         </div>
 
-        <!-- Profit per Category Pie Chart -->
+        <!-- profit per category chart -->
         <div class="col-md-4">
             <div class="p-3 bg-light rounded text-center">
                 <div id="profitPerCategoryChart" style="width:100%; height:400px;"></div>
@@ -52,17 +52,17 @@
     </div>
 </div>
 
-<!-- Third Container: Searchable Product Dropdown and Sales Evolution Graph -->
+<!-- product sales evolution graph -->
 <div class="container bg-medium-purple p-4 rounded">
     <div class="row mb-4 bg-medium-purple rounded p-4">
         <div class="col-2">
-            <!-- Combined Search Bar and Dropdown -->
+            <!-- Search Bar and Dropdown -->
             <div class="p-3 bg-medium-purple rounded">
                 <label for="product-search-dropdown" class="form-label text-white">Search Products:</label>
                 <div class="dropdown">
                     <input type="text" id="product-search-dropdown" class="form-control bg-light text-dark dropdown-toggle" placeholder="Type to search..." data-bs-toggle="dropdown" aria-expanded="false" autocomplete="off">
                     <ul class="dropdown-menu w-100" id="product-dropdown-menu" style="max-height: 200px; overflow-y: auto;">
-                        <!-- Dynamic product items will be injected here -->
+                        <!-- injected graph -->
                     </ul>
                 </div>
             </div>
@@ -71,16 +71,14 @@
             <div id="graph-container" 
                     class="p-4 bg-medium-purple rounded text-white d-flex justify-content-center align-items-center" 
                     style="height: 700px;">
-                <p class="text-center">Please select a store and a product to view sales evolution.</p>
+                <p class="text-center">Please select a store and product.</p>
             </div>
        
         </div>
     </div>
 </div>
 
-<!-- Include Bootstrap JS (required for dropdown functionality) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Include Plotly and jQuery -->
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -117,16 +115,17 @@
                 $.get('/api/max_stock', { store_id: storeId }, function (data) {
                     if (data && data.length > 0) {
                         const maxStock = data[0].max_stock;
-                        slider.attr('max', maxStock).val(0); // Reset slider value to 0
-                        slider.prop('disabled', false); // Enable slider
-                        sliderValue.text(0); // Reset displayed value
-                        fetchLowStockData(); // Trigger fetch for initial state
-                        fetchBestSellingProducts(storeId); // Trigger fetch for best-selling products
-                        fetchProfitPerCategory(storeId); // Trigger fetch for profit per category
-                        renderSalesEvolutionGraph(); // Update graph if a product is selected
+                        slider.attr('max', maxStock).val(0);
+                        slider.prop('disabled', false);
+                        sliderValue.text(0);
+                        // trigger all the fetch functions
+                        fetchLowStockData();
+                        fetchBestSellingProducts(storeId);
+                        fetchProfitPerCategory(storeId);
+                        renderSalesEvolutionGraph();
                     } else {
                         alert('Failed to fetch max stock value.');
-                        slider.prop('disabled', true); // Disable slider
+                        slider.prop('disabled', true);
                         resetCharts();
                         clearGraph();
                     }
@@ -137,7 +136,8 @@
                     clearGraph();
                 });
             } else {
-                slider.prop('disabled', true); // Disable slider if no store is selected
+                // disabled if no store is selected
+                slider.prop('disabled', true);
                 slider.val(0);
                 sliderValue.text(0);
                 accordion.empty();
@@ -146,7 +146,7 @@
             }
         });
 
-        // Fetch low stock data and populate the accordion
+        // populates the accordion with low stock data
         function fetchLowStockData() {
             const storeId = $('#coffee-store-select').val();
             const quantity = slider.val();
@@ -154,7 +154,7 @@
             if (!storeId) return;
 
             $.get('/api/low_stock_products', { store_id: storeId, quantity: quantity }, function (data) {
-                accordion.empty(); // Clear previous accordion items
+                accordion.empty();
                 if (data.length > 0) {
                     data.forEach((item, index) => {
                         const accordionItem = `
@@ -190,7 +190,7 @@
             });
         }
 
-        // Fetch best-selling products and render Plotly pie chart
+        // generates the graph for best selling products
         function fetchBestSellingProducts(storeId) {
             $.get('/api/best_selling_products_last_month', { store_id: storeId }, function (data) {
                 if (data && data.length > 0) {
@@ -200,13 +200,12 @@
 
                     // Ensure the container exists before plotting
                     if ($('#bestSellingProductsChart').length) {
-                        // Create Plotly pie chart without labels on the slices
                         const plotData = [{
                             values: quantities,
                             labels: labels,
                             type: 'pie',
-                            textinfo: 'none', // Remove labels from slices
-                            hoverinfo: 'label+percent', // Show labels and percentages on hover
+                            textinfo: 'none',
+                            hoverinfo: 'label+percent',
                             marker: {
                                 colors: ['#F2C94C', '#BE7462', '#514A73', '#6C757D', '#9B5F50', '#8E44AD', '#3498DB']
                             }
@@ -219,7 +218,7 @@
                             margin: { t: 50, b: 50 },
                             paper_bgcolor: '#312a55',
                             font: { color: 'white' },
-                            showlegend: true // Ensure legend is visible since labels are removed
+                            showlegend: true
                         };
 
                         Plotly.newPlot('bestSellingProductsChart', plotData, layout);
@@ -234,7 +233,7 @@
             });
         }
 
-        // Fetch profit per category and render Plotly pie chart
+        // generates graphic, profit per category
         function fetchProfitPerCategory(storeId) {
             $.get('/api/profit_per_category', { store_id: storeId }, function (data) {
                 if (data && data.length > 0) {
@@ -244,14 +243,13 @@
 
                     // Ensure the container exists before plotting
                     if ($('#profitPerCategoryChart').length) {
-                        // Create Plotly pie chart with labels on the slices
                         const plotData = [{
                             values: profits,
                             labels: labels,
                             type: 'pie',
-                            textinfo: 'label+percent', // Show labels and percentages on slices
-                            hoverinfo: 'label+value', // Show labels and values on hover
-                            textposition: 'inside', // Position labels inside slices
+                            textinfo: 'label+percent',
+                            hoverinfo: 'label+value',
+                            textposition: 'inside',
                             marker: {
                                 colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2']
                             }
@@ -264,7 +262,7 @@
                             margin: { t: 50, b: 50 },
                             paper_bgcolor: '#312a55',
                             font: { color: 'white' },
-                            showlegend: true // Ensure legend is visible since labels are present
+                            showlegend: true
                         };
 
                         Plotly.newPlot('profitPerCategoryChart', plotData, layout);
@@ -279,38 +277,36 @@
             });
         }
 
-        // Reset charts when no store is selected or on failure
+        // reset when no store is selected
         function resetCharts() {
             $('#bestSellingProductsChart').empty().html('<p class="text-center text-white">Please select a store to view data.</p>');
             $('#profitPerCategoryChart').empty().html('<p class="text-center text-white">Please select a store to view data.</p>');
         }
 
-        // Clear the sales evolution graph
+        // clear the sales evo graph
         function clearGraph() {
-            $('#graph-container').empty().html('<p class="text-center text-white">Please select a store and a product to view sales evolution.</p>');
+            $('#graph-container').empty().html('<p class="text-center text-white">Please select a store and a product.</p>');
         }
 
-        // Combined Search Bar and Dropdown Functionality
+        // searchbar and dropdown for product sales evolution
         const productSearchInput = $('#product-search-dropdown');
         const productDropdownMenu = $('#product-dropdown-menu');
-        let allProducts = []; // To store all fetched products
-        let selectedProductId = null; // To store the selected product ID
+        let allProducts = [];
+        let selectedProductId = null;
 
-        // Fetch all products and populate the dropdown menu
+        // getting all the product names for the dropdown
         function fetchAndPopulateProducts() {
             $.get('/api/products_list', function (data) {
-                allProducts = data; // Store all products for filtering
+                allProducts = data;
                 populateDropdown(allProducts);
             }).fail(function () {
                 alert('Failed to fetch products. Please try again.');
             });
         }
 
-        // Populate the dropdown menu with products
+        // populating the dropdown with the products
         function populateDropdown(products) {
-            // Clear existing items except the first 'All Products' option if present
             productDropdownMenu.find('li').remove();
-
             products.forEach(product => {
                 productDropdownMenu.append(`
                     <li><a class="dropdown-item" href="#" data-id="${product.id}">${product.name}</a></li>
@@ -318,13 +314,12 @@
             });
         }
 
-        // Handle input in the search bar to filter products
+        // handle input in the search bar
         productSearchInput.on('input', function () {
             const query = $(this).val().toLowerCase();
             const filteredProducts = allProducts.filter(product => product.name.toLowerCase().includes(query));
             populateDropdown(filteredProducts);
 
-            // Show dropdown only if there are filtered results
             if (filteredProducts.length > 0) {
                 productDropdownMenu.addClass('show');
             } else {
@@ -333,42 +328,37 @@
         });
 
 
-        // Handle click on a dropdown item
+        // click on a dropdown item
         productDropdownMenu.on('click', 'a.dropdown-item', function (e) {
-            e.preventDefault(); // Prevent default link behavior
+            e.preventDefault();
             const selectedName = $(this).text();
             selectedProductId = $(this).data('id');
 
-            // Set the input value to the selected product name
             productSearchInput.val(selectedName);
 
-            // Close the dropdown after selection
             productDropdownMenu.removeClass('show');
 
-            // Check if both storeId and productId are selected
+            // checks if both store and product are selected
             const storeId = $('#coffee-store-select').val();
             if (storeId && selectedProductId) {
-                // Invoke the graph rendering only if both are selected
                 renderSalesEvolutionGraph();
             }
         });
 
 
-        // Initialize: Fetch and populate products on page load
+        // initialise the dropdown on page load
         fetchAndPopulateProducts();
 
-        // Function to render the sales evolution graph
+        // renders the graph for sales evolution
         function renderSalesEvolutionGraph() {
             const storeId = $('#coffee-store-select').val();
             const productId = selectedProductId;
 
-            // Ensure both storeId and productId are selected
             if (!storeId || !productId) {
                 $('#graph-container').html('<p class="text-center text-white">Please select both a store and a product to view sales evolution.</p>');
                 return;
             }
 
-            // Fetch data from the API
             $.get('/api/product_sales_evolution', { store_id: storeId, product_id: productId }, function (data) {
                 if (data.error) {
                     $('#graph-container').html(`<p class="text-center text-white">${data.error}</p>`);
@@ -376,7 +366,6 @@
                 }
 
                 if (data.length > 0) {
-                    // Process data for Plotly
                     const labels = data.map(item => item.sales_month_year);
                     const values = data.map(item => item.quantity_sold);
                     const productName = data[0].product_name;
@@ -409,66 +398,12 @@
             });
         }
 
-        // Optional: Handle clicking outside the dropdown to close it
+        // clicking outside the dropdown hides it
         $(document).on('click', function (event) {
             if (!$(event.target).closest('.dropdown').length) {
                 productDropdownMenu.dropdown('hide');
             }
         });
-
-        // Function to render the sales evolution graph
-        function renderSalesEvolutionGraph() {
-            const storeId = $('#coffee-store-select').val();
-            const productId = selectedProductId;
-
-            // Ensure both storeId and productId are selected
-            if (!storeId || !productId) {
-                $('#graph-container').html('<p class="text-center text-white">Please select both a store and a product to view sales evolution.</p>');
-                return;
-            }
-
-            // Fetch data from the API
-            $.get('/api/product_sales_evolution', { store_id: storeId, product_id: productId }, function (data) {
-                if (data.error) {
-                    $('#graph-container').html(`<p class="text-center text-white">${data.error}</p>`);
-                    return;
-                }
-
-                if (data.length > 0) {
-                    // Process data for Plotly
-                    const labels = data.map(item => item.sales_month_year);
-                    const values = data.map(item => item.quantity_sold);
-                    const productName = data[0].product_name;
-
-                    const plotData = [{
-                        x: labels,
-                        y: values,
-                        type: 'scatter',
-                        mode: 'lines+markers',
-                        marker: { color: '#F2C94C' },
-                        line: { color: '#F2C94C' }
-                    }];
-                    const layout = {
-                        title: `Sales Evolution for ${productName}`,
-                        xaxis: { title: 'Month-Year' },
-                        yaxis: { title: 'Quantity Sold' },
-                        paper_bgcolor: '#312a55',
-                        plot_bgcolor: '#312a55',
-                        font: { color: 'white' },
-                        margin: { t: 50, b: 50, l: 50, r: 50 },
-                        height: 600 // Increase this value to make the graph taller
-                    };
-
-
-                    Plotly.newPlot('graph-container', plotData, layout);
-                } else {
-                    $('#graph-container').html('<p class="text-center text-white">No sales data available for the selected product and store.</p>');
-                }
-            }).fail(function () {
-                $('#graph-container').html('<p class="text-center text-white">Failed to fetch sales data. Please try again.</p>');
-            });
-        }
-
 
     });
 </script>

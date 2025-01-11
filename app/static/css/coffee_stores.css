@@ -1,9 +1,9 @@
 .statistic1 {
-    padding: 2vw; /* Increase padding inside the box */
-    margin: 1vw; /* Optional: Add some margin for external spacing */
-    border-radius: 1.5vw; /* Keep rounded edges */
-    background-color: #BE7462; /* Ensure background color remains */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    padding: 2vw;
+    margin: 1vw;
+    border-radius: 1.5vw;
+    background-color: #BE7462;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     min-width: 600px;
     min-height: 30%;
 }
@@ -16,7 +16,6 @@
 }
 
 #statistic1-table th, #statistic1-table td {
-    /* border: 1px solid #ffffff; */
     padding: 0.8vw;
     text-align: center;
     font-size: 1vw;
@@ -43,8 +42,8 @@
 
 .details_container {
     display: flex;
-    justify-content: space-between; /* Spațiu între dropdown-uri și detalii */
-    align-items: flex-start; /* Aliniază elementele la partea de sus */
+    justify-content: space-between;
+    align-items: flex-start;
     margin-top: 20px;
     background: #312a55;
     border-radius: 10px;
@@ -54,21 +53,21 @@
 
 .dropdown-container {
     display: flex;
-    flex-direction: column; /* Aliniază etichetele și dropdown-urile vertical */
-    gap: 15px; /* Spațiu între elemente */
-    flex: 1; /* Ocupă 1 unitate din spațiu */
-    max-width: 300px; /* Lățime maximă pentru dropdown */
+    flex-direction: column;
+    gap: 15px;
+    flex: 1;
+    max-width: 300px;
 }
 
 #coffee-store-details {
-    flex: 2; /* Ocupă mai mult spațiu decât dropdown-ul */
+    flex: 2;
     background-color: #514A73;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     color: white;
     font-size: 1.2rem;
-    margin-left: 20px; /* Adaugă spațiu între dropdown-uri și detalii */
+    margin-left: 20px;
 }
 
 .dropdown-container label {
@@ -94,12 +93,12 @@
     align-items: center;
     background-color: #312a55;
     border-radius: 10px;
-    padding: 40px; /* Adaugă padding mai mare */
+    padding: 40px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     color: white;
-    min-height: 400px; /* Înălțime minimă */
-    min-width: 100%; /* Lățime minimă */
-    max-width: 90%; /* Lățime maximă ajustată */
+    min-height: 400px;
+    min-width: 100%;
+    max-width: 90%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -107,14 +106,14 @@
 
 .details-and-chart {
     display: flex;
-    justify-content: space-between; /* Separă detaliile și graficul */
-    align-items: flex-start; /* Aliniază ambele coloane la partea de sus */
-    gap: 20px; /* Spațiu între coloane */
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
     margin-top: 20px;
 }
 
 .details-column {
-    flex: 1; /* Coloana pentru detalii ocupă 1 unitate */
+    flex: 1;
     padding: 20px;
     background-color: #312a55;
     border-radius: 10px;
@@ -132,8 +131,6 @@
     border-radius: 1vw;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
-
-
 
 
 /* 

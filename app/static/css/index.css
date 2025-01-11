@@ -11,19 +11,19 @@ body {
     color: white;
     font-size: 1.2vw;
     height: 100vh;
-    display: flex; /* Flex pentru sidebar și conținut */
+    display: flex;
     overflow: hidden;
 }
 
 /* Sidebar */
 .report-sidebar {
-    width: 18%; /* Fixăm lățimea sidebar-ului */
-    height: 100vh; /* Sidebar pe toată înălțimea ecranului */
+    width: 18%;
+    height: 100vh;
     background: #292441;
     padding: 2%;
     display: flex;
     flex-direction: column;
-    position: sticky; /* Sticky la stânga */
+    position: sticky;
     top: 0;
 }
 
@@ -72,11 +72,11 @@ body {
 
 /* Main Wrapper */
 .main-wrapper {
-    flex: 1; /* Ocupă restul spațiului */
+    flex: 1;
     display: flex;
     flex-direction: column;
     padding: 2vw;
-    overflow-y: auto; /* Permite scroll pe conținut */
+    overflow-y: auto;
 }
 
 .statistic1, .statistic2, .statistic3 {
@@ -89,26 +89,26 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 300px; /* Formă pătrată */
+    min-height: 300px;
 }
 
 .statistic1, .statistic2 {
-    flex: 1 1 30%; /* Ajustare proporțională */
+    flex: 1 1 30%;
     min-width: 250px;
     max-width: 30%;
 }
 
 .statistic3 {
-    flex: 1 1 60%; /* Adjusted to take 60% of parent container */
+    flex: 1 1 60%;
     max-width: 80%px; 
     max-height: 400px;
-    min-height: 400px; /* Minimum height */
+    min-height: 400px;
     background: #514A73;
     border-radius: 1.5vw;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 auto; /* Center horizontally */
+    margin: 0 auto;
     padding: 1.5vw;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
@@ -122,7 +122,7 @@ body {
 }
 
 
-/* Override Bootstrap Default Background Classes */
+/* override the bootstrap default classes */
 .bg-primary {
     background-color: #514A73 !important;
     color: white !important;
@@ -144,52 +144,50 @@ body {
 }
 
 
-/* Custom Background Colors */
+/* custom background colors */
 .bg-dark-purple {
-    background-color: #120F1F !important; /* Dark purple */
+    background-color: #120F1F !important;
     color: white !important;
 }
 
 .bg-medium-purple {
-    background-color: #312a55 !important; /* Medium purple */
+    background-color: #312a55 !important;
     color: white !important;
 }
 
 
 .bg-light-purple {
-    background-color: #514a73 !important; /* Medium purple */
+    background-color: #514a73 !important;
     color: white !important;
 }
 
 .bg-green {
-    background-color: #5FB68B !important; /* Green */
+    background-color: #5FB68B !important;
     color: black !important;
 }
 
 .bg-dark-red {
-    background-color: #793243 !important; /* Dark red */
+    background-color: #793243 !important;
     color: white !important;
 }
 
 .bg-orange {
-    background-color: #BE7462 !important; /* Orange */
+    background-color: #BE7462 !important;
     color: rgb(240, 240, 240) !important;
-    /* bold text */
-    
 }
 
 .bg-tan {
-    background-color: #CDA27E !important; /* Tan */
+    background-color: #CDA27E !important;
     color: black !important;
 }
 
 .bg-light-gray {
-    background-color: #DFDCE8 !important; /* Light gray */
+    background-color: #DFDCE8 !important;
     color: black !important;
 }
 
 .text-orange {
-    color: #BE7462 !important; /* Orange */
+    color: #BE7462 !important;
 }
 
 
@@ -204,7 +202,7 @@ body {
 }
 
 
-/* Slider when it can be moved */
+/* SLIDER */
 #stock-slider:enabled::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -217,7 +215,6 @@ body {
 }
 
 #stock-slider:enabled::-moz-range-thumb {
-    /* background-color: orange; */
     border: 2px solid white;
     width: 20px;
     height: 20px;
@@ -226,7 +223,6 @@ body {
 }
 
 #stock-slider:enabled::-ms-thumb {
-    /* background-color: orange; */
     border: 2px solid white;
     width: 20px;
     height: 20px;
@@ -234,7 +230,6 @@ body {
     cursor: pointer;
 }
 
-/* Slider track when it can be moved */
 #stock-slider:enabled::-webkit-slider-runnable-track {
     background-color: #793243;
     height: 5px;
@@ -254,7 +249,7 @@ body {
     border: none;
 }
 
-/* Slider when disabled */
+/* DISABLED slider */
 #stock-slider:disabled::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -284,7 +279,6 @@ body {
     cursor: not-allowed;
 }
 
-/* Slider track when disabled */
 #stock-slider:disabled::-webkit-slider-runnable-track {
     background-color: grey;
     height: 5px;
@@ -305,34 +299,27 @@ body {
 }
 
 
-
-
-/* Fix for .fixed-height-row */
 .fixed-height-row {
-    height: auto; /* Let it expand based on content */
-    flex-wrap: wrap; /* Allow wrapping for child elements */
-    gap: 1rem; /* Add space between rows and columns */
+    height: auto;
+    flex-wrap: wrap;
+    gap: 1rem;
     display: flex;
 }
 
-/* Adjust .sticky-column and .scrollable-content to respect grid */
 .sticky-column {
-    flex: 0 0 100%; /* Full width on small screens */
-    max-width: 25%; /* 25% of parent width on larger screens */
+    flex: 0 0 100%;
+    max-width: 25%;
     padding: 1rem;
 }
 
-/* Scrollable accordion container */
 .scrollable-content {
-    flex: 1; /* Take remaining space */
-    max-height: 300px; /* Set a fixed height for scrolling */
-    overflow-y: auto; /* Enable vertical scrolling */
-    padding-left: 1rem; /* Optional: Add padding for better aesthetics */
+    flex: 1;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-left: 1rem;
 }
 
-
-/* Add spacing for second-row columns */
 .row.align-items-start.g-3 > div {
-    margin-top: 1rem; /* Space between rows */
+    margin-top: 1rem; 
 }
 

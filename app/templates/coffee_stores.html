@@ -6,9 +6,9 @@
 
 {% block content %}
 <div class="container-fluid">
-    <!-- Wrapper for Dropdowns, Details, and Pie Chart -->    
+    <!-- container for dropdown select, details, and expenses pie chart -->    
     <div class="row mb-4 bg-medium-purple rounded p-4">
-        <!-- Dropdown Column -->
+        <!-- dropdown selection -->
         <div class="col-12 col-lg-3">
             <div class="p-3 bg-medium-purple rounded">
                 <label for="coffee-store-select" class="form-label text-white">Select Coffee Store:</label>
@@ -37,7 +37,7 @@
             </div>
         </div>
 
-        <!-- Details and Pie Chart -->
+        <!-- details and expenses pie chart -->
         <div class="col-12 col-lg-9">
             <div class="row bg-light-purple rounded p-3">
                 <div class="col-12 col-md-6 mb-3 mb-md-0">
@@ -55,11 +55,11 @@
         </div>
     </div>
 
-    <!-- Graph -->
+    <!-- graph -->
     <div class="row mb-4 bg-medium-purple rounded p-4">
         <div class="col-12">
             <div id="graph-container" class="p-4 bg-medium-purple rounded text-white d-flex justify-content-center align-items-center">
-                <!-- Graph content -->
+                <!-- graph content -->
             </div>
         </div>
     </div>
@@ -69,7 +69,7 @@
     // global variable to store the revenue goal
     let revenueGoal = 0;
     $(document).ready(function () {
-        // Populate dropdown with coffee stores
+        // populating the dropdown with coffee stores
         $.get('/api/coffee_stores_list', function (data) {
             const dropdown = $('#coffee-store-select');
             data.forEach(item => {
@@ -77,7 +77,7 @@
             });
         });
 
-        // Fetch details when all dropdowns are selected
+        // gets the details of the selected coffee store
         $('#coffee-store-select').change(function () {
             const storeId = $('#coffee-store-select').val();
             // const month = $('#month-select').val();
@@ -90,8 +90,8 @@
                 spinner.removeClass('d-none');
 
                 $.get(`/api/coffee_store_details/${storeId}`, function (data) {
-                    spinner.addClass('d-none'); // Hide spinner
-                    detailsDiv.removeClass('d-none'); // Show content
+                    spinner.addClass('d-none');
+                    detailsDiv.removeClass('d-none');
                     detailsDiv.empty();
 
                     if (data.error) {
@@ -107,6 +107,7 @@
                         `);
 
                         // store the revenue goal in the global variable
+                        // used later in the graph
                         revenueGoal = data.revenue_goal;
                     }
                 }).fail(function () {
@@ -117,9 +118,9 @@
         });
 
         function fetchAndPlotPieChart() {
-            const storeId = $('#coffee-store-select').val(); // Store ID
-            const year = $('#year-select').val();           // Selected year
-            const month = $('#month_select').val();         // Selected month
+            const storeId = $('#coffee-store-select').val();
+            const year = $('#year-select').val();
+            const month = $('#month_select').val();
 
             if (storeId && year && month) {
                 $.get('/api/expenses_by_category', { store_id: storeId, month: month, year: year }, function (data) {
@@ -130,21 +131,18 @@
                     }
 
                     if (data.length === 0) {
-                        // alert('No expenses found for the selected criteria.');
+                        // alert('----- no expenses found -----');
                         $('#expenses_per_month').html('<p class="text-center">No expenses found for the selected criteria.</p>');
                         return;
                     }
 
-                    // in case the p is present, remove it
+                    // in case the text p is present, remove it
                     $('#expenses_per_month').empty();
                     // $('#expenses_per_month p').empty();
 
-
-                    // Extract categories and their total values
                     const categories = data.map(item => item.category);
                     const totals = data.map(item => item.total);
 
-                    // Define data for the Pie Chart
                     const chartData = [{
                         values: totals,
                         labels: categories,
@@ -154,20 +152,19 @@
                         }
                     }];
 
-                    // Define layout for the chart
                     const layout = {
                         title: 'Expenses by Category',
                         paper_bgcolor: '#312a55',
                         plot_bgcolor: '#312a55',
                         font: { color: 'white' },
-                        width: 450,  // Lățime mai mică
-                        height: 300, // Înălțime mai mică
-                        margin: { t: 100, b: 40, l: 80, r: 40 }, // Marginile ajustate
+                        width: 450,
+                        height: 300,
+                        margin: { t: 100, b: 40, l: 80, r: 40 },
                         showlegend: true
                     };
 
 
-                    // Render the Pie Chart in the designated container
+                    // places the pie chart in the expenses_per_month div
                     Plotly.newPlot('expenses_per_month', chartData, layout);
 
                 }).fail(function () {
@@ -180,11 +177,11 @@
 
         
         function fetchAndPlotGraph() {
-            const storeId = $('#coffee-store-select').val(); // Get store ID from dropdown
-            const year = $('#year-select').val(); // Get selected year from dropdown
+            const storeId = $('#coffee-store-select').val();
+            const year = $('#year-select').val();
 
             if (storeId && year) {
-                // Clear the existing graph before rendering a new one
+                // removes the previous graph if present
                 Plotly.purge('graph-container'); 
 
                 $.get('/api/monthly_sales_expenses', { store_id: storeId, year: year }, function (data) {
@@ -194,11 +191,12 @@
                         return;
                     }
 
-                    // Map for actual month names
+                    // month names for x-axis
                     const monthNames = ["January", "February", "March", "April", "May", "June", 
                                         "July", "August", "September", "October", "November", "December"];
 
-                    // Extract months, revenues, and expenses
+                    // reverse the data to plot from January to December
+                    // query returns in good order but when set into data it is reversed
                     const months = data.map(item => monthNames[item.month - 1]).reverse();
                     const revenues = data.map(item => item.monthly_revenue).reverse();
                     const expenses = data.map(item => item.monthly_expenses).reverse();
@@ -221,7 +219,6 @@
                     };
 
 
-                    // Define traces for revenue and expenses as lines
                     const revenueTrace = {
                         x: months,
                         y: revenues,
@@ -242,7 +239,6 @@
                         marker: { size: 6 }
                     };
 
-                    // Layout for the graph
                     const layout = {
                         title: `Monthly Revenue and Expenses - Year ${year}`,
                         paper_bgcolor: '#312a55',
@@ -250,14 +246,14 @@
                         font: { color: 'white' },
                         xaxis: { title: 'Month', tickangle: -45 },
                         yaxis: { title: 'Amount ($)' },
-                        margin: { t: 60, b: 80, l: 80, r: 40 }, // Marginile ajustate
-                        width: 1400,  // Lățime mai mică
-                        height: 400, // Înălțime mai mică
+                        margin: { t: 60, b: 80, l: 80, r: 40 },
+                        width: 1400,
+                        height: 400,
                         showlegend: true
                     };
 
 
-                    // Render the graph with Plotly
+                    // placing the graph in the graph-container div
                     Plotly.newPlot('graph-container', [revenueGoalLine, revenueTrace, expenseTrace], layout);
                 }).fail(function () {
                     alert('Failed to fetch graph data. Please try again.');
@@ -266,7 +262,7 @@
         }
 
 
-    // Attach event to fetch and plot graph when dropdowns are changed
+    // when the dropdown is triggered, fetch and plot the pie chart
     $('#coffee-store-select, #year-select, #month_select').change(fetchAndPlotPieChart);
     $('#coffee-store-select, #year-select').change(fetchAndPlotGraph);
 
