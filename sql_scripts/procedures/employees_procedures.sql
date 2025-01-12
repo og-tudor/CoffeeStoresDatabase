@@ -29,7 +29,7 @@ EXECUTE EmployeesOfTheMonth
 -- toti angajatii care pot beneficia de o promotie la manager daca se deschide o noua cafenea
 -- au cel putin 2 ani vechime in companie
 -- nu sunt deja manageri (nu au manager_id = 1)
--- numarul de comenzi procesate > de 40
+-- numarul de comenzi procesate > de 100
 
 CREATE or ALTER PROCEDURE EmployeesEligibleForPromotion
     @store_id INT
@@ -45,10 +45,10 @@ BEGIN
         AND e.hire_date < DATEADD(YEAR, -2, GETDATE())
         AND cs.coffee_store_id = @store_id
     group by e.first_name, e.last_name, cs.store_name
-    having count(*) > 0;
+    having count(*) >= 100;
 end;
 
-EXECUTE  EmployeesEligibleForPromotion 2;
+EXECUTE  EmployeesEligibleForPromotion 3;
 
 
 
