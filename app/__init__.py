@@ -15,6 +15,5 @@ def create_app():
     with app.app_context():
         from .routes import register_routes
         register_routes(app)
-        db.create_all()
 
     return app

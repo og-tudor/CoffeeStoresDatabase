@@ -125,7 +125,14 @@ Seteaza automat data curenta pentru inregistrari noi, etc.
 - **Structura:**  
   Pagini html sunt inserate in `base.html`, in functie de ruta accesata. Clasa wrapper base contine un sidebar de unde se poate naviga pe dashboard si un main content unde se incarca datele.
 
-  Folosing bootstrap si css unde este cazul se creeaza un layout responsiv si usor de navigat iar graficele sunt generate cu Plotly.js prin jQuery.
+  Folosing bootstrap si css unde este cazul se creeaza un layout rapid si usor de folosit iar graficele sunt generate cu Plotly.js prin jQuery.
+
+## Conexiunea cu Baza de Date
+Utilizand Flask impreuna cu SQLAlchemy, se realizeaza conexiunea cu baza de date. In fisierul config.py este definita clasa `Config` care defineste parametii necesari pentru construirea strin ului de conexiune `SQLALCHEMY_DATABASE_URI`
+care este folosit pentru a stabili conexiunea.
+
+In init.py se initializeaza aplicatia Flask, aici se configureaza folosindu-se clasa `Config`.
+Tot aici se initializeaza obiectul SQLAlchemy, `db`, care este folosit pentru a executa brut procedurile stocate din baza de date prin `db.session.execute(query)`.
 
 ## Workflow-ul Aplicatiei
    - **Navigare:** Utilizatorul acceseaza paginile principale (ex. Coffee Stores, Employees, Products) din dashboard.
@@ -135,8 +142,12 @@ Seteaza automat data curenta pentru inregistrari noi, etc.
    - **Actualizarea UI:** Datele primite sunt afisate si prelucrate pe client-side, incluzand generarea de grafice cu Plotly.js.
 
 ![Pagina de vizualizare a cafenelelor](screenshots/coffee_page.png){ width=600px }
+<br><br><br>
 ![Pagina de vizualizare a angajatilor](screenshots/employees_page.png){ width=600px }
+<br><br><br>
 ![Pagina de vizualizare a produselor](screenshots/products_page.png){ width=600px }
+
+\newpage
 
 
 ## Rularea aplicatiei:
@@ -152,4 +163,5 @@ Proiectul s-a dovedit o experienta buna pentru a intelege cum se poate crea o ap
 * **Bootstrap**: https://getbootstrap.com/docs/
 * **jQuery**: https://api.jquery.com/
 * **Plotly.js**: https://plotly.com/javascript/
-
+* **DrawSQL**: https://drawsql.app/
+* **Laboratoare**: https://ocw.cs.pub.ro/courses/bdd

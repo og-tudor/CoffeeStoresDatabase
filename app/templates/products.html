@@ -30,7 +30,7 @@
     <!-- Second Row, accordion and charts -->
     <div class="row align-items-start g-3 mt-3">
         <!-- Accordion -->
-        <div class="col-md-4">
+        <div class="col-md-4 pb-3">
             <div class="accordion" id="lowStockAccordion" style="max-height: 430px; overflow-y: auto;">
                 <!-- injected here by js -->
             </div>
@@ -62,15 +62,14 @@
                 <div class="dropdown">
                     <input type="text" id="product-search-dropdown" class="form-control bg-light text-dark dropdown-toggle" placeholder="Type to search..." data-bs-toggle="dropdown" aria-expanded="false" autocomplete="off">
                     <ul class="dropdown-menu w-100" id="product-dropdown-menu" style="max-height: 200px; overflow-y: auto;">
-                        <!-- injected graph -->
                     </ul>
                 </div>
             </div>
         </div>
         <div class="col-10">
             <div id="graph-container" 
-                    class="p-4 bg-medium-purple rounded text-white d-flex justify-content-center align-items-center" 
-                    style="height: 700px;">
+                    class="p-4 bg-light-purple rounded text-white d-flex justify-content-center align-items-center" 
+                    style="height: 500px;">
                 <p class="text-center">Please select a store and product.</p>
             </div>
        
@@ -213,8 +212,8 @@
 
                         const layout = {
                             title: `Best Selling Products (${period})`,
-                            height: 400,
-                            width: 400,
+                            height: 390,
+                            width: 380,
                             margin: { t: 50, b: 50 },
                             paper_bgcolor: '#312a55',
                             font: { color: 'white' },
@@ -257,8 +256,8 @@
 
                         const layout = {
                             title: `Profit per Category (${period})`,
-                            height: 400,
-                            width: 400,
+                            height: 390,
+                            width: 390,
                             margin: { t: 50, b: 50 },
                             paper_bgcolor: '#312a55',
                             font: { color: 'white' },
@@ -365,6 +364,9 @@
                     return;
                 }
 
+                // removing the paragraph with info text if it exists
+                $('#graph-container').find('p').remove();
+
                 if (data.length > 0) {
                     const labels = data.map(item => item.sales_month_year);
                     const values = data.map(item => item.quantity_sold);
@@ -386,6 +388,8 @@
                         paper_bgcolor: '#312a55',
                         plot_bgcolor: '#312a55',
                         font: { color: 'white' },
+                        width: 1000,
+                        height: 480,
                         margin: { t: 50, b: 50, l: 50, r: 50 }
                     };
 
