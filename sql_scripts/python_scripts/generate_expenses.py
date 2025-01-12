@@ -1,7 +1,7 @@
 import random
 from datetime import datetime, timedelta
 
-# Define constants
+# constants for the inserts
 coffee_stores = [1, 2, 3]
 expense_types = {
     "Electricity": (400, 600),
@@ -15,7 +15,7 @@ expense_types = {
 start_date = datetime(2024, 8, 1)
 end_date = datetime(2025, 5, 1)
 
-# Generate expenses
+# generating expenses
 def generate_expenses():
     expenses = []
     expense_id = 1
@@ -25,20 +25,20 @@ def generate_expenses():
         for store_id in coffee_stores:
             for expense_type, (min_cost, max_cost) in expense_types.items():
                 if expense_type in ["Marketing", "Equipment", "Repairs"]:
-                    # Include optional expenses randomly
+                    # randomly include these expenses
                     if random.choice([True, False]):
                         cost = round(random.uniform(min_cost, max_cost), 2)
                         expenses.append((expense_id, store_id, cost, current_date, expense_type))
                         expense_id += 1
                 else:
-                    # Mandatory expenses
+                    # mandatory expenses
                     cost = round(random.uniform(min_cost, max_cost), 2)
                     expenses.append((expense_id, store_id, cost, current_date, expense_type))
                     expense_id += 1
-        current_date += timedelta(days=30)  # Move to next month
+        current_date += timedelta(days=30)
     return expenses
 
-# Export expenses to SQL format
+# transform expenses into SQL script
 def export_to_sql(expenses):
     sql_statements = ["SET IDENTITY_INSERT Expenses ON;", "INSERT INTO Expenses (expense_id, coffee_store_id, cost, date, expense_type) VALUES"]
     values = []
@@ -50,11 +50,11 @@ def export_to_sql(expenses):
     sql_statements.append("SET IDENTITY_INSERT Expenses OFF;")
     return "\n".join(sql_statements)
 
-# Generate and export
+# generate and export
 expenses = generate_expenses()
 sql_script = export_to_sql(expenses)
 
-# Write to file
+# write to the file
 with open("populate_expenses.sql", "w") as file:
     file.write(sql_script)
 
